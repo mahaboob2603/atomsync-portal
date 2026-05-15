@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { computeScore } from "@/lib/scoring";
 import type { UoMType, Quarter } from "@/lib/types";
+import { sendTeamsNotification } from "@/lib/teams";
 
 // Map quarter to cycle phase
 const quarterToPhase: Record<Quarter, string> = {
@@ -175,6 +176,16 @@ export async function addCheckIn(
     field_name: quarter,
     new_value: comment,
   });
+
+  // Teams Integration Bonus
+  if (process.env.TEAMS_WEBHOOK_URL) {
+    const { data: manager } = await supabase.from("profiles").select("full_name").eq("id", user.id).single();
+    await sendTeamsNotification(
+      process.env.TEAMS_WEBHOOK_URL,
+      `${quarter} Check-in Completed`,
+      `**${manager?.full_name || "Manager"}** has completed the ${quarter} check-in for a team member.`
+    );
+  }
 
   revalidatePath("/dashboard/checkins");
   return { success: true };

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { loginAction, switchDemoRole } from "@/app/actions/auth";
 import { Target, User, Shield, Crown, LogIn, Zap, Eye, EyeOff } from "lucide-react";
 
+import { createClient } from "@/lib/supabase/client";
+
 export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,6 +29,24 @@ export default function LoginPage() {
     if (result?.error) {
       setError(result.error);
       setSwitchingRole(null);
+    }
+  }
+
+  async function handleAzureSSO() {
+    setLoading(true);
+    setError("");
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "azure",
+      options: {
+        scopes: "email profile",
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
     }
   }
 
@@ -120,6 +140,30 @@ export default function LoginPage() {
               )}
             </button>
           </form>
+
+          <div className="mt-4 relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[var(--border)]"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-[var(--card)] text-[var(--muted-foreground)]">Or continue with</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleAzureSSO}
+            disabled={loading}
+            className="btn btn-outline w-full mt-4 flex items-center justify-center gap-2"
+          >
+            <svg viewBox="0 0 21 21" className="w-5 h-5">
+              <path fill="#f25022" d="M0 0h10v10H0z"/>
+              <path fill="#7fba00" d="M11 0h10v10H11z"/>
+              <path fill="#00a4ef" d="M0 11h10v10H0z"/>
+              <path fill="#ffb900" d="M11 11h10v10H11z"/>
+            </svg>
+            Microsoft Entra ID (SSO)
+          </button>
         </div>
 
         {/* Demo Role Switcher */}

@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import type { GoalFormValues } from "@/lib/validations";
 import { sendNotificationEmail, emailTemplates } from "@/lib/email";
+import { sendTeamsNotification } from "@/lib/teams";
 
 // Helper: check if current date is within the cycle's active window
 async function validateCycleWindow(supabase: Awaited<ReturnType<typeof createClient>>, cycleId: string) {
@@ -260,6 +261,15 @@ export async function submitGoalSheet(goalSheetId: string) {
         emailTemplates.goalSubmitted(profile.full_name)
       );
     }
+    
+    // Teams Integration Bonus
+    if (process.env.TEAMS_WEBHOOK_URL) {
+      await sendTeamsNotification(
+        process.env.TEAMS_WEBHOOK_URL,
+        "Goal Sheet Submitted",
+        `**${profile.full_name}** has submitted their goal sheet for approval.`
+      );
+    }
   }
 
   revalidatePath("/dashboard/goals");
@@ -304,6 +314,15 @@ export async function approveGoalSheet(goalSheetId: string) {
         emailTemplates.goalApproved(managerProfile.full_name)
       );
     }
+
+    // Teams Integration Bonus
+    if (process.env.TEAMS_WEBHOOK_URL) {
+      await sendTeamsNotification(
+        process.env.TEAMS_WEBHOOK_URL,
+        "Goal Sheet Approved",
+        `**${managerProfile.full_name}** has approved the goal sheet for the team.`
+      );
+    }
   }
 
   revalidatePath("/dashboard/team-goals");
@@ -345,6 +364,15 @@ export async function returnGoalSheet(goalSheetId: string, reason: string) {
         employee.email,
         "Goal Sheet Returned for Rework",
         emailTemplates.goalReturned(managerProfile.full_name, reason)
+      );
+    }
+
+    // Teams Integration Bonus
+    if (process.env.TEAMS_WEBHOOK_URL) {
+      await sendTeamsNotification(
+        process.env.TEAMS_WEBHOOK_URL,
+        "Goal Sheet Returned",
+        `**${managerProfile.full_name}** has returned a goal sheet for rework. Reason: ${reason}`
       );
     }
   }
