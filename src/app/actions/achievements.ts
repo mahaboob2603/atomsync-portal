@@ -61,6 +61,35 @@ export async function updateAchievement(
     new_value: JSON.stringify({ ...data, score }),
   });
 
+  // Shared goal sync: if this goal is shared, sync achievements to all linked copies
+  if (goal) {
+    const { data: linkedGoals } = await supabase
+      .from("goals")
+      .select("id")
+      .eq("is_shared", true)
+      .eq("title", (await supabase.from("goals").select("title").eq("id", goalId).single()).data?.title || "")
+      .neq("id", goalId);
+
+    if (linkedGoals && linkedGoals.length > 0) {
+      for (const linked of linkedGoals) {
+        await supabase
+          .from("achievements")
+          .upsert(
+            {
+              goal_id: linked.id,
+              quarter,
+              planned_value: data.planned_value ?? null,
+              actual_value: data.actual_value ?? null,
+              status: data.status,
+              score,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "goal_id,quarter" }
+          );
+      }
+    }
+  }
+
   revalidatePath("/dashboard/checkins");
   revalidatePath("/dashboard/goals");
   return { success: true, score };

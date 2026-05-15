@@ -88,6 +88,18 @@ export async function updateGoal(goalId: string, updates: Partial<GoalFormValues
     .eq("id", goalId)
     .single();
 
+  // Shared goal enforcement: recipients can only edit weightage
+  if (oldGoal?.is_shared) {
+    const allowedFields = ["weightage"];
+    const restrictedUpdates = Object.fromEntries(
+      Object.entries(updates).filter(([key]) => allowedFields.includes(key))
+    );
+    if (Object.keys(restrictedUpdates).length === 0) {
+      return { error: "Shared goals can only have their weightage adjusted" };
+    }
+    updates = restrictedUpdates as Partial<GoalFormValues>;
+  }
+
   const { error } = await supabase
     .from("goals")
     .update(updates)
