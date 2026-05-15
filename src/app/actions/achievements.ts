@@ -5,6 +5,14 @@ import { revalidatePath } from "next/cache";
 import { computeScore } from "@/lib/scoring";
 import type { UoMType, Quarter } from "@/lib/types";
 
+// Map quarter to cycle phase
+const quarterToPhase: Record<Quarter, string> = {
+  Q1: "q1_checkin",
+  Q2: "q2_checkin",
+  Q3: "q3_checkin",
+  Q4: "q4_annual",
+};
+
 export async function updateAchievement(
   goalId: string,
   quarter: Quarter,
@@ -17,6 +25,28 @@ export async function updateAchievement(
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  // Enforce check-in window dates
+  const phase = quarterToPhase[quarter];
+  const { data: checkinCycle } = await supabase
+    .from("cycles")
+    .select("window_opens, window_closes, name")
+    .eq("phase", phase)
+    .single();
+
+  if (checkinCycle) {
+    const now = new Date();
+    const opens = new Date(checkinCycle.window_opens);
+    const closes = new Date(checkinCycle.window_closes);
+    closes.setHours(23, 59, 59, 999);
+
+    if (now < opens) {
+      return { error: `${quarter} check-in window opens on ${checkinCycle.window_opens}. Please wait.` };
+    }
+    if (now > closes) {
+      return { error: `${quarter} check-in window closed on ${checkinCycle.window_closes}. The deadline has passed.` };
+    }
+  }
 
   // Get goal info for score computation
   const { data: goal } = await supabase
@@ -104,6 +134,28 @@ export async function addCheckIn(
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  // Enforce check-in window dates
+  const phase = quarterToPhase[quarter];
+  const { data: checkinCycle } = await supabase
+    .from("cycles")
+    .select("window_opens, window_closes, name")
+    .eq("phase", phase)
+    .single();
+
+  if (checkinCycle) {
+    const now = new Date();
+    const opens = new Date(checkinCycle.window_opens);
+    const closes = new Date(checkinCycle.window_closes);
+    closes.setHours(23, 59, 59, 999);
+
+    if (now < opens) {
+      return { error: `${quarter} check-in window opens on ${checkinCycle.window_opens}. Please wait.` };
+    }
+    if (now > closes) {
+      return { error: `${quarter} check-in window closed on ${checkinCycle.window_closes}. The deadline has passed.` };
+    }
+  }
 
   const { error } = await supabase.from("check_ins").insert({
     goal_sheet_id: goalSheetId,

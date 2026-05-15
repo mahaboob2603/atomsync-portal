@@ -5,10 +5,39 @@ import { revalidatePath } from "next/cache";
 import type { GoalFormValues } from "@/lib/validations";
 import { sendNotificationEmail, emailTemplates } from "@/lib/email";
 
+// Helper: check if current date is within the cycle's active window
+async function validateCycleWindow(supabase: Awaited<ReturnType<typeof createClient>>, cycleId: string) {
+  const { data: cycle } = await supabase
+    .from("cycles")
+    .select("window_opens, window_closes, name, phase")
+    .eq("id", cycleId)
+    .single();
+
+  if (!cycle) return { valid: false, error: "Cycle not found" };
+
+  const now = new Date();
+  const opens = new Date(cycle.window_opens);
+  const closes = new Date(cycle.window_closes);
+  // Set closes to end of day
+  closes.setHours(23, 59, 59, 999);
+
+  if (now < opens) {
+    return { valid: false, error: `${cycle.name} window opens on ${cycle.window_opens}. Please wait until then.` };
+  }
+  if (now > closes) {
+    return { valid: false, error: `${cycle.name} window closed on ${cycle.window_closes}. The deadline has passed.` };
+  }
+  return { valid: true, cycle };
+}
+
 export async function createGoalSheet(cycleId: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  // Enforce cycle window
+  const windowCheck = await validateCycleWindow(supabase, cycleId);
+  if (!windowCheck.valid) return { error: windowCheck.error };
 
   // Check if already exists
   const { data: existing } = await supabase
@@ -35,6 +64,17 @@ export async function addGoal(goalSheetId: string, goal: GoalFormValues) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  // Enforce cycle window
+  const { data: sheet } = await supabase
+    .from("goal_sheets")
+    .select("cycle_id")
+    .eq("id", goalSheetId)
+    .single();
+  if (sheet) {
+    const windowCheck = await validateCycleWindow(supabase, sheet.cycle_id);
+    if (!windowCheck.valid) return { error: windowCheck.error };
+  }
 
   // Check goal count
   const { count } = await supabase
@@ -154,6 +194,17 @@ export async function submitGoalSheet(goalSheetId: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  // Enforce cycle window
+  const { data: sheetInfo } = await supabase
+    .from("goal_sheets")
+    .select("cycle_id")
+    .eq("id", goalSheetId)
+    .single();
+  if (sheetInfo) {
+    const windowCheck = await validateCycleWindow(supabase, sheetInfo.cycle_id);
+    if (!windowCheck.valid) return { error: windowCheck.error };
+  }
 
   // Validate total weightage = 100%
   const { data: goals } = await supabase
