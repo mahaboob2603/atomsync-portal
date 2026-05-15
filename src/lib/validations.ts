@@ -4,25 +4,25 @@ import { z } from "zod";
 // Goal Form Validation Schema
 // ==========================================
 
+const uomValues = [
+  "numeric_min",
+  "numeric_max",
+  "percentage_min",
+  "percentage_max",
+  "timeline",
+  "zero",
+] as const;
+
 export const goalSchema = z.object({
   thrust_area_id: z.string().min(1, "Thrust area is required"),
   title: z.string().min(3, "Title must be at least 3 characters").max(200),
   description: z.string().optional(),
-  uom: z.enum([
-    "numeric_min",
-    "numeric_max",
-    "percentage_min",
-    "percentage_max",
-    "timeline",
-    "zero",
-  ], { required_error: "Unit of measurement is required" }),
-  target: z.preprocess((v) => Number(v), z.number().positive("Target must be positive")),
-  weightage: z.preprocess(
-    (v) => Number(v),
-    z.number()
-      .min(10, "Minimum weightage is 10%")
-      .max(100, "Maximum weightage is 100%")
-  ),
+  uom: z.enum(uomValues, { error: "Unit of measurement is required" }),
+  target: z.coerce.number().positive("Target must be positive"),
+  weightage: z.coerce
+    .number()
+    .min(10, "Minimum weightage is 10%")
+    .max(100, "Maximum weightage is 100%"),
 });
 
 export type GoalFormValues = z.infer<typeof goalSchema>;
@@ -64,8 +64,8 @@ export function validateGoalSheet(goals: GoalFormValues[]): string[] {
 // ==========================================
 
 export const achievementSchema = z.object({
-  planned_value: z.preprocess((v) => (v ? Number(v) : undefined), z.number().optional()),
-  actual_value: z.preprocess((v) => (v ? Number(v) : undefined), z.number().optional()),
+  planned_value: z.coerce.number().optional(),
+  actual_value: z.coerce.number().optional(),
   status: z.enum(["not_started", "on_track", "completed"]),
 });
 

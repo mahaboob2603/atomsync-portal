@@ -35,9 +35,9 @@ export async function switchDemoRole(role: "employee" | "manager" | "admin") {
 
   // Sign in with demo credentials
   const demoCredentials: Record<string, { email: string; password: string }> = {
-    employee: { email: "employee@atomquest.demo", password: "demo123456" },
-    manager: { email: "manager@atomquest.demo", password: "demo123456" },
-    admin: { email: "admin@atomquest.demo", password: "demo123456" },
+    employee: { email: "employee@atomquest.com", password: "demo123456" },
+    manager: { email: "manager@atomquest.com", password: "demo123456" },
+    admin: { email: "admin@atomquest.com", password: "demo123456" },
   };
 
   const creds = demoCredentials[role];

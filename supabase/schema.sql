@@ -262,13 +262,9 @@ INSERT INTO cycles (name, year, phase, window_opens, window_closes, is_active) V
   ('FY 2026-27 Q4 / Annual', 2026, 'q4_annual', '2027-03-01', '2027-04-30', false);
 
 -- ==========================================
--- NOTE: Demo users must be created through Supabase Auth
--- Then insert corresponding profiles:
---
--- INSERT INTO profiles (id, email, full_name, role, department) VALUES
---   ('<employee-auth-uuid>', 'employee@atomquest.demo', 'Alex Johnson', 'employee', 'Engineering'),
---   ('<manager-auth-uuid>', 'manager@atomquest.demo', 'Sarah Williams', 'manager', 'Engineering'),
---   ('<admin-auth-uuid>', 'admin@atomquest.demo', 'Mike Chen', 'admin', 'HR');
---
--- UPDATE profiles SET manager_id = '<manager-auth-uuid>' WHERE email = 'employee@atomquest.demo';
+-- NOTE: Demo users are created via /api/seed endpoint
+-- Credentials:
+--   employee@atomquest.com / demo123456
+--   manager@atomquest.com  / demo123456
+--   admin@atomquest.com    / demo123456
 -- ==========================================
