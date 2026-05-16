@@ -39,9 +39,10 @@ export default function LoginPage() {
           <img
             className="login-brand-img"
             alt="Atomberg Engineering"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjr_cbxinEExfAg1n4vQgj7Vy0Jt3muIUfMHWrfZ16C5p8mVuBIv9WJKAu28YPScTNp_fWPT9914S5WBWD-N2IZ0IwXrxSJcySnbVezDvMRGqnmZ3Nb4crPR9PENZtnQlXfE3Jan5FuGopBh13CJDJAQynwhd3CF8Q_Q4AmtUvDAKOl5O16fqwCA4AoAc1-_3aexcAxnohstv1HkZKmEjBpacW0FuIpN8jL_Pmv9OAqjUxxe7uJ-vgjEPcLPxyaZgGm3HXCpzOTfYZ"
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
           />
           <div className="login-brand-overlay"></div>
+          <div className="login-brand-grid"></div>
         </div>
         <div className="login-brand-content">
           <div className="login-brand-logo">
@@ -51,23 +52,80 @@ export default function LoginPage() {
             <span className="login-logo-text">AtomSync</span>
           </div>
           <h1 className="login-brand-title">
-            Precision in every <span className="login-gold">Synchronization</span>.
+            Precision in every <br/>
+            <span className="login-gold">Synchronization</span>.
           </h1>
           <p className="login-brand-desc">
             Welcome to the central portal for high-performance engineering data and collaborative industrial intelligence. Manage fleet diagnostics with atomic precision.
           </p>
-          <div className="login-stats-row">
-            <div className="login-stat-card">
-              <span className="login-stat-icon">⚙️</span>
-              <h3 className="login-stat-label">RELIABILITY</h3>
-              <p className="login-stat-value">99.9% Uptime</p>
+          
+          {/* Institutional Command-Center Modules */}
+          <div className="command-modules-container">
+            {/* Reliability Module */}
+            <div className="command-module">
+              <div className="command-module-header">
+                <div className="cmd-indicator cmd-indicator-active"></div>
+                <span className="cmd-label">SYSTEM RELIABILITY</span>
+                <span className="cmd-status">OPTIMAL</span>
+              </div>
+              <div className="command-module-body">
+                <div className="cmd-ring-container">
+                  <svg viewBox="0 0 36 36" className="cmd-ring">
+                    <path
+                      className="cmd-ring-bg"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      className="cmd-ring-fill"
+                      strokeDasharray="99.9, 100"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                  </svg>
+                  <div className="cmd-ring-text">99.9<span className="cmd-ring-percent">%</span></div>
+                </div>
+                <div className="cmd-details">
+                  <div className="cmd-detail-row">
+                    <span className="cmd-detail-label">UPTIME</span>
+                    <span className="cmd-detail-value">99.998%</span>
+                  </div>
+                  <div className="cmd-detail-row">
+                    <span className="cmd-detail-label">LATENCY</span>
+                    <span className="cmd-detail-value">12ms</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="login-stat-card">
-              <span className="login-stat-icon">🔐</span>
-              <h3 className="login-stat-label">SECURITY</h3>
-              <p className="login-stat-value">Tier-4 Encrypted</p>
+
+            {/* Security Module */}
+            <div className="command-module">
+              <div className="command-module-header">
+                <div className="cmd-indicator cmd-indicator-secure"></div>
+                <span className="cmd-label">PROTOCOL SECURITY</span>
+                <span className="cmd-status">SECURED</span>
+              </div>
+              <div className="command-module-body">
+                <div className="cmd-security-visual">
+                  <div className="cmd-scan-line"></div>
+                  <div className="cmd-tech-bars">
+                    {[...Array(12)].map((_, i) => (
+                      <div key={i} className="cmd-bar" style={{ height: `${40 + Math.random() * 60}%`, animationDelay: `${i * 0.1}s` }}></div>
+                    ))}
+                  </div>
+                </div>
+                <div className="cmd-details">
+                  <div className="cmd-detail-row">
+                    <span className="cmd-detail-label">ENCRYPTION</span>
+                    <span className="cmd-detail-value cmd-gold">TIER-4</span>
+                  </div>
+                  <div className="cmd-detail-row">
+                    <span className="cmd-detail-label">INTEGRITY</span>
+                    <span className="cmd-detail-value">VERIFIED</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -277,6 +335,7 @@ export default function LoginPage() {
           justify-content: center;
           padding: 3rem;
           overflow: hidden;
+          border-right: 1px solid rgba(255,255,255,0.05);
         }
         @media (min-width: 768px) {
           .login-brand-panel { display: flex; }
@@ -285,83 +344,248 @@ export default function LoginPage() {
           position: absolute;
           inset: 0;
           z-index: 0;
+          background: #050505;
         }
         .login-brand-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          opacity: 0.5;
-          filter: grayscale(0.3);
+          opacity: 0.15;
+          filter: grayscale(1) contrast(1.2);
+          mix-blend-mode: overlay;
         }
         .login-brand-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(10,10,10,1) 100%);
+          background: radial-gradient(circle at center, transparent 0%, #0a0a0a 100%),
+                      linear-gradient(180deg, rgba(10,10,10,0.4) 0%, #0a0a0a 100%);
+        }
+        .login-brand-grid {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+          background-size: 30px 30px;
+          mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+          -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
         .login-brand-content {
           position: relative;
           z-index: 10;
-          max-width: 520px;
+          max-width: 540px;
+          width: 100%;
         }
         .login-brand-logo {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
-          margin-bottom: 2.5rem;
+          gap: 0.85rem;
+          margin-bottom: 3rem;
         }
         .login-logo-icon {
-          width: 48px;
-          height: 48px;
-          background: #fdb913;
-          border-radius: 12px;
+          width: 52px;
+          height: 52px;
+          background: linear-gradient(135deg, #fdb913, #e5a300);
+          border-radius: 14px;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 0 30px rgba(253,185,19,0.2);
+          box-shadow: 0 0 40px rgba(253,185,19,0.25), inset 0 2px 4px rgba(255,255,255,0.3);
+          border: 1px solid rgba(253,185,19,0.5);
         }
         .login-logo-text {
           font-weight: 800;
-          font-size: 1.5rem;
-          letter-spacing: 0.15em;
+          font-size: 1.75rem;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           color: #fff;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .login-brand-title {
-          font-size: clamp(2.2rem, 4vw, 3.2rem);
+          font-size: clamp(2.5rem, 4.5vw, 3.8rem);
           font-weight: 800;
-          line-height: 1.1;
+          line-height: 1.05;
           margin-bottom: 1.5rem;
           color: #fff;
-          letter-spacing: -0.02em;
+          letter-spacing: -0.03em;
+          text-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
-        .login-gold { color: #fdb913; }
+        .login-gold { 
+          color: transparent;
+          background: linear-gradient(135deg, #fdb913 0%, #ffdf80 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+        }
         .login-brand-desc {
-          font-size: 1rem;
-          color: #999;
+          font-size: 1.05rem;
+          color: #a0a0a0;
           line-height: 1.7;
-          margin-bottom: 2.5rem;
+          margin-bottom: 3.5rem;
+          max-width: 90%;
+          font-weight: 400;
         }
-        .login-stats-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
+
+        /* Institutional Command-Center Modules */
+        .command-modules-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
         }
-        .login-stat-card {
-          padding: 1.25rem;
-          background: rgba(255,255,255,0.04);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 12px;
+        .command-module {
+          background: rgba(15, 15, 15, 0.6);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          padding: 1.5rem;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+          position: relative;
+          overflow: hidden;
         }
-        .login-stat-icon { font-size: 1.2rem; display: block; margin-bottom: 0.5rem; }
-        .login-stat-label {
-          font-size: 0.65rem;
+        .command-module::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; width: 100%; height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        }
+        .command-module-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1.25rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .cmd-indicator {
+          width: 8px; height: 8px;
+          border-radius: 50%;
+          margin-right: 0.75rem;
+          box-shadow: 0 0 10px currentColor;
+        }
+        .cmd-indicator-active {
+          background: #10b981; color: #10b981;
+          animation: pulse-glow 2s infinite;
+        }
+        .cmd-indicator-secure {
+          background: #3b82f6; color: #3b82f6;
+        }
+        .cmd-label {
+          flex: 1;
+          font-size: 0.7rem;
           font-weight: 700;
-          letter-spacing: 0.1em;
-          color: #fdb913;
-          margin-bottom: 0.25rem;
+          letter-spacing: 0.15em;
+          color: #888;
         }
-        .login-stat-value { font-size: 0.85rem; color: #ccc; }
+        .cmd-status {
+          font-size: 0.65rem;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          color: #fff;
+          background: rgba(255,255,255,0.1);
+          padding: 0.2rem 0.5rem;
+          border-radius: 4px;
+        }
+        .command-module-body {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+        
+        /* Ring Visualization */
+        .cmd-ring-container {
+          position: relative;
+          width: 64px; height: 64px;
+          flex-shrink: 0;
+        }
+        .cmd-ring {
+          transform: rotate(-90deg);
+          width: 100%; height: 100%;
+        }
+        .cmd-ring-bg {
+          fill: none;
+          stroke: rgba(255,255,255,0.05);
+          stroke-width: 2.5;
+        }
+        .cmd-ring-fill {
+          fill: none;
+          stroke: #fdb913;
+          stroke-width: 2.5;
+          stroke-linecap: round;
+          filter: drop-shadow(0 0 4px rgba(253,185,19,0.5));
+          animation: draw-ring 1.5s ease-out forwards;
+        }
+        .cmd-ring-text {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: #fff;
+        }
+        .cmd-ring-percent { font-size: 0.6rem; color: #888; margin-left: 1px; }
+
+        /* Security Visualization */
+        .cmd-security-visual {
+          width: 64px; height: 48px;
+          position: relative;
+          display: flex;
+          align-items: flex-end;
+          gap: 2px;
+          overflow: hidden;
+          flex-shrink: 0;
+          background: rgba(0,0,0,0.2);
+          border-radius: 4px;
+          padding: 4px;
+        }
+        .cmd-bar {
+          flex: 1;
+          background: #3b82f6;
+          opacity: 0.7;
+          border-radius: 1px;
+          animation: eq-bars 1s ease-in-out infinite alternate;
+        }
+        .cmd-scan-line {
+          position: absolute;
+          left: 0; right: 0;
+          height: 2px;
+          background: rgba(255,255,255,0.8);
+          box-shadow: 0 0 8px #fff;
+          top: 0;
+          animation: scan 2s linear infinite;
+          z-index: 2;
+        }
+
+        /* Detail Rows */
+        .cmd-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        .cmd-detail-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .cmd-detail-label {
+          font-size: 0.65rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          color: #666;
+        }
+        .cmd-detail-value {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #ccc;
+          font-family: 'JetBrains Mono', monospace, sans-serif;
+        }
+        .cmd-gold { color: #fdb913; text-shadow: 0 0 10px rgba(253,185,19,0.3); }
+
+        @keyframes draw-ring { from { stroke-dasharray: 0, 100; } }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        @keyframes eq-bars { 0% { transform: scaleY(0.7); } 100% { transform: scaleY(1); } }
+        @keyframes pulse-glow { 0%, 100% { opacity: 1; box-shadow: 0 0 10px currentColor; } 50% { opacity: 0.5; box-shadow: 0 0 2px currentColor; } }
 
         /* ======= RIGHT FORM PANEL ======= */
         .login-form-panel {
