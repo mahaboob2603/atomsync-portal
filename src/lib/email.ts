@@ -21,15 +21,22 @@ export async function sendNotificationEmail(
   try {
     const client = getResend();
     if (!client) return { error: "No API key" };
+    console.log(`[Email Attempt] Sending email to: ${to} | Subject: ${subject}`);
     const data = await client.emails.send({
       from: "AtomQuest Portal <onboarding@resend.dev>",
       to: [to],
       subject: subject,
       html: html,
     });
+    console.log(`[Email Response]`, data);
+    
+    if (data.error) {
+      console.error("[Email Error Details]:", data.error);
+    }
+    
     return { data };
   } catch (error) {
-    console.error("Email sending failed:", error);
+    console.error("[Email Catch Error]:", error);
     return { error };
   }
 }
