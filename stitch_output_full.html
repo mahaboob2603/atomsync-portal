@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AtomSync | Portal Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#5e5e5e",
+                        "primary-fixed-dim": "#ffbb16",
+                        "primary-fixed": "#ffdea6",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-tertiary-fixed": "#001f27",
+                        "surface-gray": "#f8f9fa",
+                        "error": "#ba1a1a",
+                        "primary-container": "#fdb913",
+                        "surface-container-highest": "#ede1d1",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#f9ecdc",
+                        "outline-variant": "#d5c4ac",
+                        "on-secondary-container": "#646464",
+                        "inverse-surface": "#362f25",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "on-primary-fixed-variant": "#5e4200",
+                        "tertiary": "#00677d",
+                        "border-subtle": "#e9ecef",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-tertiary-container": "#00596d",
+                        "surface-tint": "#7c5800",
+                        "on-primary-fixed": "#271900",
+                        "primary": "#7c5800",
+                        "on-surface-variant": "#504533",
+                        "inverse-primary": "#ffbb16",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#fff8f3",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#37d7ff",
+                        "on-surface": "#201b11",
+                        "on-background": "#201b11",
+                        "text-muted": "#495057",
+                        "surface-variant": "#ede1d1",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#e2e2e2",
+                        "surface-dim": "#e4d8c8",
+                        "on-tertiary-fixed-variant": "#004e5f",
+                        "surface-container-low": "#fff2e1",
+                        "inverse-on-surface": "#fcefdf",
+                        "outline": "#837560",
+                        "tertiary-fixed": "#b3ebff",
+                        "surface": "#fff8f3",
+                        "on-primary-container": "#6b4c00",
+                        "surface-container-high": "#f3e6d6",
+                        "error-container": "#ffdad6",
+                        "background": "#fff8f3",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#27d6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-desktop": "32px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .isometric-bg {
+            background-color: #050505;
+            background-image: linear-gradient(30deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
+            linear-gradient(150deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
+            linear-gradient(30deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
+            linear-gradient(150deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
+            linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111),
+            linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111);
+            background-size: 80px 140px;
+        }
+        .scan-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #fdb913, transparent);
+            animation: scan 3s ease-in-out infinite;
+        }
+        @keyframes scan {
+            0%, 100% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(40px); }
+        }
+    </style>
+</head>
+<body class="bg-inverse-surface font-body-md text-on-primary antialiased selection:bg-primary-container selection:text-on-primary-container">
+<main class="min-h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- LEFT SIDE: BRANDING -->
+<section class="relative w-full md:w-3/5 lg:w-[65%] isometric-bg flex flex-col justify-between p-margin-mobile md:p-margin-desktop min-h-[512px] md:min-h-screen border-r border-white/5">
+<!-- Branding/Logo -->
+<div class="z-10 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-primary-container">AtomSync</h1>
+</div>
+<!-- Hero Image Overlay (Subtle) -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none overflow-hidden">
+<img alt="Industrial Microchip" class="w-full h-full object-cover mix-blend-overlay" data-alt="A macro cinematic shot of a high-end black circuit board with golden copper traces and premium metallic heatsinks. The lighting is low-key with sharp highlights reflecting off the polished industrial components. Deep shadows and vibrant gold details create a technological noir aesthetic consistent with precision engineering and professional hardware design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhhf0KL3mKEQP2m4U0KghEl01fo9mST30zWkdks_1sCnEPZi1Css8RXHI12RYDF7IJjNP81OiIJMFnMsyKRNHMObv4JI3VODEMiVt2schX1RzXWcGQ2S3Ne4LVazz0IMaU4Xy5MScm6npxVfHuPAS4ZQdehDCFAZKHKx4aF3TyetCQOrCg3HGbH1avxrYAzAinLICHwBHzAwQywS6iHIDTZjPI_iHzTs3MTDBQQbYDCKoik6Oum4NEkLLBeX21EElwwG56mymAqu88"/>
+</div>
+<!-- Center Content -->
+<div class="z-10 max-w-xl">
+<h2 class="font-display text-display leading-tight mb-8">
+                    Precision in every <span class="text-primary-container">Synchronization</span>.
+                </h2>
+<!-- Status Cards Bento Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-secondary-fixed-dim">SYSTEM RELIABILITY</span>
+<span class="material-symbols-outlined text-primary-fixed-dim">verified_user</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-white/10" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary-container" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="176" stroke-dashoffset="1.76" stroke-width="4"></circle>
+</svg>
+<span class="absolute text-[10px] font-bold">99.9%</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-white">Operational</p>
+<p class="font-caption text-caption text-secondary-fixed-dim">Global Node Status</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-4 relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-secondary-fixed-dim">PROTOCOL SECURITY</span>
+<span class="material-symbols-outlined text-primary-fixed-dim">security</span>
+</div>
+<div class="flex flex-col gap-2">
+<p class="font-headline-md text-headline-md text-white">Tier-4 Encrypted</p>
+<div class="w-full bg-white/10 h-10 rounded-lg relative overflow-hidden flex items-center px-3">
+<div class="scan-line absolute inset-x-0 w-full"></div>
+<div class="flex gap-1">
+<div class="w-1 h-4 bg-primary-container/40 rounded-full"></div>
+<div class="w-1 h-6 bg-primary-container/60 rounded-full"></div>
+<div class="w-1 h-3 bg-primary-container/20 rounded-full"></div>
+<div class="w-1 h-5 bg-primary-container/80 rounded-full"></div>
+<div class="w-1 h-4 bg-primary-container rounded-full"></div>
+</div>
+<span class="ml-auto font-caption text-caption text-primary-container font-mono">ACTIVE SCAN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Footer -->
+<div class="z-10 font-caption text-caption text-secondary-fixed-dim/60">
+                © 2024 AtomSync Industrial Systems. v4.2.0-Alpha. Security Clearance Required.
+            </div>
+</section>
+<!-- RIGHT SIDE: AUTH -->
+<section class="w-full md:w-2/5 lg:w-[35%] bg-[#0f0f0f] flex flex-col justify-center p-margin-mobile md:p-margin-desktop">
+<div class="w-full max-w-sm mx-auto flex flex-col gap-8">
+<header class="flex flex-col gap-2">
+<h3 class="font-headline-lg text-headline-lg text-white">Portal Access</h3>
+<p class="text-secondary-fixed-dim font-body-md">Enter your industrial credentials to continue.</p>
+</header>
+<form class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-secondary-fixed-dim">CORPORATE EMAIL</label>
+<input class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all outline-none" placeholder="name@atomsync.industrial" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-secondary-fixed-dim">PASSWORD</label>
+<a class="font-caption text-caption text-primary-fixed-dim hover:underline" href="#">Forgot?</a>
+</div>
+<input class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all outline-none" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 rounded border-white/10 bg-[#1a1a1a] text-primary-container focus:ring-offset-[#0f0f0f] focus:ring-primary-container" id="remember" type="checkbox"/>
+<label class="font-body-md text-secondary-fixed-dim text-sm cursor-pointer" for="remember">Stay authenticated for 24 hours</label>
+</div>
+<button class="w-full bg-primary-container hover:bg-primary-fixed-dim active:scale-[0.98] transition-all text-on-primary-fixed font-bold py-4 rounded-lg flex items-center justify-center gap-2" type="submit">
+<span>Sign In</span>
+<span class="material-symbols-outlined text-xl">login</span>
+</button>
+</form>
+<div class="relative py-4">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/5"></div></div>
+<div class="relative flex justify-center text-xs"><span class="bg-[#0f0f0f] px-4 text-secondary-fixed-dim font-label-md">QUICK DEMO LOGIN</span></div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 py-2.5 rounded-lg font-label-md text-secondary-fixed text-sm transition-colors">Employee</button>
+<button class="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 py-2.5 rounded-lg font-label-md text-secondary-fixed text-sm transition-colors">Manager</button>
+<button class="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 py-2.5 rounded-lg font-label-md text-secondary-fixed text-sm transition-colors">Admin</button>
+</div>
+<footer class="mt-8 flex flex-wrap gap-4 text-secondary-fixed-dim/40 font-caption text-[11px] justify-center md:justify-start">
+<a class="hover:text-white transition-colors" href="#">Security Policy</a>
+<a class="hover:text-white transition-colors" href="#">API Documentation</a>
+<a class="hover:text-white transition-colors" href="#">Support</a>
+<a class="hover:text-white transition-colors" href="#">System Status</a>
+</footer>
+</div>
+</section>
+</main>
+</body></html>

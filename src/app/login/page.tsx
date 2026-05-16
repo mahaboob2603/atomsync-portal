@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { loginAction, signUpAction, switchDemoRole } from "@/app/actions/auth";
-import { Target, User, Shield, Crown, ChevronRight, Eye, EyeOff, Activity } from "lucide-react";
+import { Target, Shield, Eye, EyeOff, Activity, Hub, Lock, User, Crown, LogIn, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -32,158 +32,216 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="login-shell">
-      {/* Left Panel: Minimalist Fluid Design */}
-      <section className="login-brand-panel">
-        <div className="creative-bg">
-          <div className="orb orb-1"></div>
-          <div className="orb orb-2"></div>
-          <div className="orb orb-3"></div>
-          <div className="glass-overlay"></div>
+    <main className="min-h-screen flex flex-col md:flex-row overflow-hidden bg-[#050505]">
+      {/* Custom Styles for Stitch Design */}
+      <style jsx global>{`
+        .glass-card {
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+          background: rgba(255, 255, 255, 0.05);
+          border-color: rgba(253, 185, 19, 0.2);
+          transform: translateY(-2px);
+        }
+        .isometric-bg {
+          background-color: #050505;
+          background-image: 
+            linear-gradient(30deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
+            linear-gradient(150deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
+            linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111);
+          background-size: 80px 140px;
+        }
+        .scan-line {
+          height: 2px;
+          background: linear-gradient(to right, transparent, #fdb913, transparent);
+          animation: scan 4s ease-in-out infinite;
+        }
+        @keyframes scan {
+          0%, 100% { transform: translateY(0); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translateY(40px); }
+        }
+        .text-glow {
+          text-shadow: 0 0 20px rgba(253, 185, 19, 0.3);
+        }
+      `}</style>
+
+      {/* LEFT SIDE: BRANDING */}
+      <section className="relative w-full md:w-3/5 lg:w-[65%] isometric-bg flex flex-col justify-between p-8 md:p-12 min-h-[512px] md:min-h-screen border-r border-white/5">
+        {/* Branding/Logo */}
+        <div className="z-10 flex items-center gap-3 animate-fade-in">
+          <div className="w-10 h-10 bg-[#fdb913] rounded flex items-center justify-center shadow-[0_0_20px_rgba(253,185,19,0.3)]">
+            <Activity className="text-black" size={24} />
+          </div>
+          <h1 className="text-2xl font-black tracking-tighter text-[#fdb913]">AtomSync</h1>
         </div>
 
-        <div className="login-brand-content creative-layout">
-          <div className="creative-logo">
-            <Target color="#fff" size={28} strokeWidth={2.5} className="target-spin" />
-            <span className="login-logo-text-clean">AtomSync</span>
-          </div>
+        {/* Hero Image Overlay (Subtle) */}
+        <div className="absolute inset-0 z-0 opacity-10 pointer-events-none overflow-hidden">
+          <img 
+            alt="Industrial Tech" 
+            className="w-full h-full object-cover mix-blend-overlay scale-110"
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2070" 
+          />
+        </div>
 
-          <div className="creative-text-wrap">
-            <h1 className="creative-title">
-              <span className="line-1">Precision.</span>
-              <span className="line-2">Power.</span>
-              <span className="line-3">Perfection.</span>
-            </h1>
-            <p className="creative-desc">
-              The premier platform for high-performance appliance engineering and collaborative industrial intelligence. 
-            </p>
-          </div>
+        {/* Center Content */}
+        <div className="z-10 max-w-xl animate-slide-in-left">
+          <h2 className="text-5xl md:text-6xl font-bold leading-[1.1] mb-8 text-white">
+            Precision in every <br />
+            <span className="text-[#fdb913] text-glow italic">Synchronization</span>.
+          </h2>
+          
+          {/* Status Cards Bento Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12">
+            {/* Card 1 */}
+            <div className="glass-card p-6 rounded-2xl flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold tracking-[0.2em] text-[#888] uppercase">SYSTEM RELIABILITY</span>
+                <CheckCircle2 className="text-[#fdb913]" size={16} />
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="relative w-16 h-16 flex items-center justify-center">
+                  <svg className="w-full h-full transform -rotate-90">
+                    <circle className="text-white/5" cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" />
+                    <circle className="text-[#fdb913]" cx="32" cy="32" r="28" stroke="currentColor" strokeDasharray="176" strokeDashoffset="1.76" strokeWidth="4" fill="transparent" strokeLinecap="round" />
+                  </svg>
+                  <span className="absolute text-[10px] font-black text-white">99.9%</span>
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-white">Operational</p>
+                  <p className="text-xs text-[#666]">Global Node Status</p>
+                </div>
+              </div>
+            </div>
 
-          <div className="creative-vitals">
-            <div className="vital-pill">
-              <div className="vital-dot pulse"></div>
-              <span>Systems Online</span>
-            </div>
-            <div className="vital-pill">
-              <Shield size={14} className="vital-icon text-blue-400" />
-              <span>Tier-4 Secured</span>
+            {/* Card 2 */}
+            <div className="glass-card p-6 rounded-2xl flex flex-col gap-4 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold tracking-[0.2em] text-[#888] uppercase">PROTOCOL SECURITY</span>
+                <Lock className="text-[#fdb913]" size={16} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="text-xl font-bold text-white">Tier-4 Encrypted</p>
+                <div className="w-full bg-white/5 h-10 rounded-lg relative overflow-hidden flex items-center px-3 border border-white/5">
+                  <div className="scan-line absolute inset-x-0 w-full z-0 opacity-50"></div>
+                  <div className="flex gap-1 items-end h-4 z-10">
+                    <div className="w-1 h-2 bg-[#fdb913]/30 rounded-full animate-pulse"></div>
+                    <div className="w-1 h-4 bg-[#fdb913]/60 rounded-full animate-pulse delay-75"></div>
+                    <div className="w-1 h-3 bg-[#fdb913]/20 rounded-full animate-pulse delay-150"></div>
+                    <div className="w-1 h-5 bg-[#fdb913]/80 rounded-full animate-pulse delay-200"></div>
+                  </div>
+                  <span className="ml-auto text-[9px] font-bold text-[#fdb913] tracking-widest uppercase z-10">ACTIVE_SCAN</span>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Left Footer */}
+        <div className="z-10 text-[10px] font-medium text-[#444] tracking-wider uppercase">
+          © 2024 AtomSync Industrial Systems. v4.2.0-Alpha. Security Clearance Required.
         </div>
       </section>
 
-      {/* Right Panel: Clean Auth Form */}
-      <section className="login-form-panel">
-        <div className="login-form-wrapper">
-          {/* Tab Toggle */}
-          <div className="login-tab-bar">
-            <button
-              type="button"
+      {/* RIGHT SIDE: AUTH */}
+      <section className="w-full md:w-2/5 lg:w-[35%] bg-[#080808] flex flex-col justify-center p-8 md:p-12 relative">
+        <div className="w-full max-w-sm mx-auto flex flex-col gap-8 animate-slide-in-right">
+          
+          {/* Tab Switcher */}
+          <div className="flex p-1 bg-white/5 rounded-xl border border-white/5 self-start">
+            <button 
               onClick={() => { setIsLogin(true); setError(""); }}
-              className={`login-tab ${isLogin ? "login-tab-active" : ""}`}
+              className={`px-6 py-2 rounded-lg text-xs font-bold transition-all ${isLogin ? 'bg-[#fdb913] text-black' : 'text-[#888] hover:text-white'}`}
             >
               Sign In
             </button>
-            <button
-              type="button"
+            <button 
               onClick={() => { setIsLogin(false); setError(""); }}
-              className={`login-tab ${!isLogin ? "login-tab-active" : ""}`}
+              className={`px-6 py-2 rounded-lg text-xs font-bold transition-all ${!isLogin ? 'bg-[#fdb913] text-black' : 'text-[#888] hover:text-white'}`}
             >
               Register
             </button>
           </div>
 
-          {/* Header */}
-          <div className="login-form-header">
-            <h2 className="login-form-title">
+          <header className="flex flex-col gap-2">
+            <h3 className="text-3xl font-bold text-white tracking-tight">
               {isLogin ? "Portal Access" : "Initialize Profile"}
-            </h2>
-            <p className="login-form-subtitle">
-              {isLogin
-                ? "Enter your enterprise credentials to continue."
-                : "Join the AtomSync data grid."}
+            </h3>
+            <p className="text-[#888] text-sm">
+              {isLogin ? "Enter your industrial credentials to continue." : "Join the AtomSync data grid."}
             </p>
-          </div>
+          </header>
 
           {error && (
-            <div className="login-error">
-              <div className="login-error-dot"></div>
-              <span>{error}</span>
+            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 animate-shake">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
+              <span className="text-red-400 text-xs font-medium">{error}</span>
             </div>
           )}
 
-          <form action={handleSubmit} className="login-form">
+          <form action={handleSubmit} className="flex flex-col gap-6">
             {!isLogin && (
-              <div className="login-reg-fields">
-                <div className="login-field">
-                  <label htmlFor="full_name" className="login-label">Full Name</label>
-                  <input
-                    id="full_name"
-                    name="full_name"
-                    type="text"
-                    placeholder="John Doe"
-                    className="login-input"
-                    required={!isLogin}
-                  />
+              <div className="space-y-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">FULL NAME</label>
+                  <div className="relative group">
+                    <input 
+                      name="full_name"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913]/20 transition-all outline-none" 
+                      placeholder="John Doe" 
+                      required={!isLogin}
+                    />
+                  </div>
                 </div>
-                <div className="login-field-row">
-                  <div className="login-field">
-                    <label htmlFor="role" className="login-label">Role</label>
-                    <select id="role" name="role" className="login-input login-select" required={!isLogin}>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">ROLE</label>
+                    <select name="role" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] outline-none appearance-none">
                       <option value="employee">Employee</option>
                       <option value="manager">Manager</option>
                     </select>
                   </div>
-                  <div className="login-field">
-                    <label htmlFor="department" className="login-label">Department</label>
-                    <input
-                      id="department"
-                      name="department"
-                      type="text"
-                      placeholder="Engineering"
-                      className="login-input"
-                      required={!isLogin}
-                    />
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">DEPT</label>
+                    <input name="department" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] outline-none" placeholder="ENG" />
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Email */}
-            <div className="login-field">
-              <label htmlFor="email" className="login-label">Corporate Email</label>
-              <input
-                id="email"
+            <div className="flex flex-col gap-2">
+              <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">CORPORATE EMAIL</label>
+              <input 
+                type="email" 
                 name="email"
-                type="email"
-                placeholder="name@atomsync.com"
-                className="login-input"
-                required
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913]/20 transition-all outline-none" 
+                placeholder="name@atomsync.industrial" 
+                required 
               />
             </div>
 
-            {/* Password */}
-            <div className="login-field">
-              <div className="login-label-row">
-                <label htmlFor="password" className="login-label">Password</label>
-                {isLogin && (
-                  <a className="login-forgot" href="#">Forgot?</a>
-                )}
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between items-center">
+                <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">PASSWORD</label>
+                {isLogin && <a className="text-[10px] font-bold text-[#fdb913] hover:underline" href="#">FORGOT?</a>}
               </div>
-              <div className="login-password-wrap">
-                <input
-                  id="password"
+              <div className="relative">
+                <input 
+                  type={showPassword ? "text" : "password"} 
                   name="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  className="login-input"
-                  required
-                  minLength={6}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913]/20 transition-all outline-none pr-12" 
+                  placeholder="••••••••" 
+                  required 
                 />
-                <button
-                  type="button"
+                <button 
+                  type="button" 
                   onClick={() => setShowPassword(!showPassword)}
-                  className="login-eye-btn"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#444] hover:text-[#fdb913] transition-colors"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -191,573 +249,68 @@ export default function LoginPage() {
             </div>
 
             {isLogin && (
-              <div className="login-remember">
-                <input type="checkbox" id="remember" className="login-checkbox" />
-                <label htmlFor="remember" className="login-remember-text">Remember this workstation</label>
+              <div className="flex items-center gap-3">
+                <input type="checkbox" id="remember" className="w-4 h-4 rounded border-white/10 bg-white/5 text-[#fdb913] focus:ring-offset-[#080808] focus:ring-[#fdb913]" />
+                <label className="text-xs text-[#666] cursor-pointer hover:text-[#888]" htmlFor="remember">Stay authenticated for 24 hours</label>
               </div>
             )}
 
-            <button type="submit" className="login-submit" disabled={loading}>
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="w-full bg-[#fdb913] hover:bg-[#ffca4d] active:scale-[0.98] disabled:opacity-50 disabled:scale-100 transition-all text-black font-black py-4 rounded-xl flex items-center justify-center gap-2 shadow-[0_10px_30px_rgba(253,185,19,0.2)]"
+            >
               {loading ? (
-                <>
-                  <svg className="login-spinner" viewBox="0 0 24 24">
-                    <circle className="login-spinner-bg" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="login-spinner-fg" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  <span>Authenticating...</span>
-                </>
+                <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin"></div>
               ) : (
                 <>
                   <span>{isLogin ? "Sign In" : "Initialize Profile"}</span>
-                  <ChevronRight size={18} strokeWidth={2.5} />
+                  <LogIn size={18} strokeWidth={3} />
                 </>
               )}
             </button>
           </form>
 
-          {/* Demo Divider */}
-          <div className="login-divider">
-            <div className="login-divider-line"></div>
-            <span className="login-divider-text">Quick Demo Login</span>
+          {/* Quick Demo Login Section */}
+          <div className="relative py-4">
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5"></div></div>
+            <div className="relative flex justify-center text-[10px] font-bold tracking-[0.2em]"><span className="bg-[#080808] px-4 text-[#444] uppercase">QUICK DEMO ACCESS</span></div>
           </div>
 
-          <div className="login-demo-grid">
-            {([
-              { role: "employee" as const, label: "Employee", icon: User },
-              { role: "manager" as const, label: "Manager", icon: Shield },
-              { role: "admin" as const, label: "Admin", icon: Crown },
-            ]).map(({ role, label, icon: Icon }) => (
-              <button
-                key={role}
-                type="button"
-                onClick={() => handleDemoSwitch(role)}
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { role: "employee" as const, label: "User", icon: User },
+              { role: "manager" as const, label: "Lead", icon: Shield },
+              { role: "admin" as const, label: "Admin", icon: Crown }
+            ].map((btn) => (
+              <button 
+                key={btn.role}
+                onClick={() => handleDemoSwitch(btn.role)}
                 disabled={switchingRole !== null}
-                className={`login-demo-btn ${switchingRole === role ? "login-demo-active" : ""}`}
+                className="flex flex-col items-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 rounded-xl transition-all group"
               >
-                {switchingRole === role ? (
-                  <svg className="login-spinner" viewBox="0 0 24 24">
-                    <circle className="login-spinner-bg" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="login-spinner-fg" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
+                {switchingRole === btn.role ? (
+                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fdb913] rounded-full animate-spin"></div>
                 ) : (
-                  <Icon size={18} strokeWidth={1.5} />
+                  <btn.icon size={20} className="text-[#888] group-hover:text-[#fdb913] transition-colors" strokeWidth={1.5} />
                 )}
-                <span className="login-demo-label">{label}</span>
+                <span className="text-[9px] font-bold text-[#888] group-hover:text-white uppercase tracking-wider">{btn.label}</span>
               </button>
             ))}
           </div>
 
-          <div className="login-footer">
-            <p>Engineering Precision © 2024 AtomSync Portal.</p>
-            <p>Authorized access only. Subject to monitoring.</p>
-          </div>
+          <footer className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[#444] font-bold text-[10px] justify-center md:justify-start uppercase tracking-widest">
+            <a className="hover:text-[#fdb913] transition-colors" href="#">Security</a>
+            <a className="hover:text-[#fdb913] transition-colors" href="#">API</a>
+            <a className="hover:text-[#fdb913] transition-colors" href="#">Status</a>
+            <a className="hover:text-[#fdb913] transition-colors" href="#">Support</a>
+          </footer>
         </div>
       </section>
 
-      {/* Ambient Glows */}
-      <div className="login-glow login-glow-gold"></div>
-      <div className="login-glow login-glow-teal"></div>
-
-      <style jsx>{`
-        /* ======= SHELL ======= */
-        .login-shell {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: row;
-          background: #0a0a0a;
-          color: #fff;
-          font-family: 'Inter', system-ui, sans-serif;
-        }
-
-        /* ======= LEFT BRAND PANEL (CREATIVE) ======= */
-        .login-brand-panel {
-          display: none;
-          position: relative;
-          width: 55%;
-          align-items: center;
-          justify-content: center;
-          padding: 4rem;
-          overflow: hidden;
-          background: #000;
-        }
-        @media (min-width: 768px) {
-          .login-brand-panel { display: flex; }
-        }
-        
-        .creative-bg {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-        }
-        
-        .orb {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(90px);
-          opacity: 0.7;
-          animation: float 25s infinite ease-in-out alternate;
-        }
-        .orb-1 {
-          width: 700px; height: 700px;
-          background: #fdb913; /* Signal Gold */
-          top: -200px; left: -250px;
-          animation-delay: 0s;
-        }
-        .orb-2 {
-          width: 600px; height: 600px;
-          background: #00677d; /* Deep Blue */
-          bottom: -200px; right: -150px;
-          animation-delay: -7s;
-        }
-        .orb-3 {
-          width: 500px; height: 500px;
-          background: rgba(255,255,255,0.1);
-          top: 30%; left: 30%;
-          animation-duration: 30s;
-        }
-        
-        .glass-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
-          backdrop-filter: blur(40px);
-          -webkit-backdrop-filter: blur(40px);
-          z-index: 1;
-        }
-        
-        @keyframes float {
-          0% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(80px, -80px) scale(1.1); }
-          100% { transform: translate(-40px, 60px) scale(0.9); }
-        }
-
-        .login-brand-content.creative-layout {
-          position: relative;
-          z-index: 10;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-
-        .creative-logo {
-          display: flex;
-          align-items: center;
-          gap: 0.85rem;
-        }
-        .target-spin {
-          animation: slow-spin 12s linear infinite;
-        }
-        @keyframes slow-spin { 100% { transform: rotate(360deg); } }
-        
-        .login-logo-text-clean {
-          font-weight: 800;
-          font-size: 1.4rem;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #fff;
-        }
-
-        .creative-text-wrap {
-          margin-top: auto;
-          margin-bottom: 5rem;
-        }
-
-        .creative-title {
-          display: flex;
-          flex-direction: column;
-          font-size: clamp(3rem, 6vw, 5.5rem);
-          font-weight: 800;
-          line-height: 1.1;
-          letter-spacing: -0.04em;
-          margin-bottom: 2rem;
-        }
-
-        .line-1 { color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .line-2 { color: #fdb913; text-shadow: 0 4px 30px rgba(253,185,19,0.4); }
-        .line-3 { 
-          color: transparent;
-          -webkit-text-stroke: 1px rgba(255,255,255,0.4);
-        }
-
-        .creative-desc {
-          font-size: 1.15rem;
-          color: rgba(255,255,255,0.75);
-          line-height: 1.6;
-          max-width: 85%;
-          font-weight: 400;
-          letter-spacing: 0.01em;
-        }
-
-        .creative-vitals {
-          display: flex;
-          gap: 1.25rem;
-        }
-
-        .vital-pill {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          padding: 0.6rem 1.25rem;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 100px;
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          font-size: 0.75rem;
-          font-weight: 600;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #e0e0e0;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .vital-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #10b981;
-        }
-        .vital-dot.pulse {
-          box-shadow: 0 0 12px #10b981;
-          animation: pulse-glow 2s infinite;
-        }
-        
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.4; transform: scale(0.85); }
-        }
-
-        /* ======= RIGHT FORM PANEL ======= */
-        .login-form-panel {
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 2rem;
-          background: #0a0a0a;
-          position: relative;
-          overflow-y: auto;
-        }
-        .login-form-wrapper {
-          width: 100%;
-          max-width: 440px;
-          z-index: 10;
-        }
-
-        /* Tab Bar */
-        .login-tab-bar {
-          display: flex;
-          padding: 4px;
-          background: rgba(255,255,255,0.05);
-          border-radius: 12px;
-          margin-bottom: 2rem;
-          border: 1px solid rgba(255,255,255,0.08);
-        }
-        .login-tab {
-          flex: 1;
-          padding: 0.65rem 1rem;
-          border-radius: 10px;
-          font-size: 0.8rem;
-          font-weight: 700;
-          letter-spacing: 0.03em;
-          color: #666;
-          background: none;
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s;
-        }
-        .login-tab:hover { color: #aaa; }
-        .login-tab-active {
-          background: #1a1a1a;
-          color: #fff;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-          border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        /* Form Header */
-        .login-form-header { margin-bottom: 1.75rem; }
-        .login-form-title {
-          font-size: 1.75rem;
-          font-weight: 800;
-          color: #fff;
-          margin: 0 0 0.5rem 0;
-          letter-spacing: -0.02em;
-        }
-        .login-form-subtitle {
-          font-size: 0.9rem;
-          color: #777;
-          margin: 0;
-        }
-
-        /* Error */
-        .login-error {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.85rem 1rem;
-          margin-bottom: 1.25rem;
-          border-radius: 12px;
-          background: rgba(220,38,38,0.08);
-          border: 1px solid rgba(220,38,38,0.2);
-          color: #f87171;
-          font-size: 0.85rem;
-          font-weight: 500;
-        }
-        .login-error-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #ef4444;
-          animation: pulse 2s infinite;
-          flex-shrink: 0;
-        }
-
-        /* Form Fields */
-        .login-form { display: flex; flex-direction: column; gap: 1.25rem; }
-        .login-reg-fields { display: flex; flex-direction: column; gap: 1.25rem; }
-        .login-field { display: flex; flex-direction: column; gap: 0.5rem; }
-        .login-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .login-label {
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: #888;
-          display: block;
-        }
-        .login-label-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .login-forgot {
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 0.03em;
-          color: #fdb913;
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-        .login-forgot:hover { color: #ffca4d; }
-
-        /* Clean Inputs - NO icons inside */
-        .login-input {
-          width: 100%;
-          padding: 0.85rem 1rem;
-          font-size: 0.9rem;
-          color: #fff;
-          background: #111;
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 10px;
-          outline: none;
-          transition: all 0.25s ease;
-          font-family: inherit;
-          box-sizing: border-box;
-        }
-        .login-input::placeholder { color: #444; }
-        .login-input:focus {
-          border-color: #fdb913;
-          box-shadow: 0 0 0 3px rgba(253,185,19,0.1);
-        }
-        .login-input:-webkit-autofill,
-        .login-input:-webkit-autofill:hover,
-        .login-input:-webkit-autofill:focus {
-          -webkit-box-shadow: 0 0 0 30px #111 inset !important;
-          -webkit-text-fill-color: #fff !important;
-          transition: background-color 5000s ease-in-out 0s;
-          border-color: rgba(255,255,255,0.1);
-        }
-        .login-select {
-          appearance: none;
-          cursor: pointer;
-          background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-          background-repeat: no-repeat;
-          background-position: right 1rem center;
-          padding-right: 2.5rem;
-        }
-        .login-select option { background: #111; color: #fff; }
-
-        /* Password wrapper */
-        .login-password-wrap { position: relative; }
-        .login-password-wrap .login-input { padding-right: 3rem; }
-        .login-eye-btn {
-          position: absolute;
-          top: 50%;
-          right: 0.85rem;
-          transform: translateY(-50%);
-          background: none;
-          border: none;
-          color: #555;
-          cursor: pointer;
-          padding: 4px;
-          transition: color 0.2s;
-          display: flex;
-          align-items: center;
-        }
-        .login-eye-btn:hover { color: #fff; }
-
-        /* Remember */
-        .login-remember {
-          display: flex;
-          align-items: center;
-          gap: 0.65rem;
-        }
-        .login-checkbox {
-          width: 16px; height: 16px;
-          border-radius: 4px;
-          border: 1px solid rgba(255,255,255,0.2);
-          background: rgba(255,255,255,0.04);
-          accent-color: #fdb913;
-          cursor: pointer;
-        }
-        .login-remember-text {
-          font-size: 0.85rem;
-          color: #888;
-          cursor: pointer;
-        }
-
-        /* Submit */
-        .login-submit {
-          width: 100%;
-          padding: 0.9rem 1.5rem;
-          margin-top: 0.5rem;
-          font-size: 0.9rem;
-          font-weight: 700;
-          letter-spacing: 0.02em;
-          color: #000;
-          background: #fdb913;
-          border: none;
-          border-radius: 12px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          transition: all 0.25s;
-          box-shadow: 0 0 20px rgba(253,185,19,0.12);
-        }
-        .login-submit:hover {
-          background: #ffca4d;
-          box-shadow: 0 0 30px rgba(253,185,19,0.2);
-        }
-        .login-submit:active { transform: scale(0.98); }
-        .login-submit:disabled { opacity: 0.7; cursor: wait; }
-
-        /* Divider */
-        .login-divider {
-          position: relative;
-          margin: 2rem 0 1.5rem;
-          text-align: center;
-        }
-        .login-divider-line {
-          position: absolute;
-          top: 50%;
-          left: 0; right: 0;
-          height: 1px;
-          background: rgba(255,255,255,0.08);
-        }
-        .login-divider-text {
-          position: relative;
-          background: #0a0a0a;
-          padding: 0 1rem;
-          font-size: 0.6rem;
-          font-weight: 700;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: #555;
-        }
-
-        /* Demo Buttons */
-        .login-demo-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.75rem;
-        }
-        .login-demo-btn {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          padding: 0.85rem 0.5rem;
-          border-radius: 12px;
-          border: 1px solid rgba(255,255,255,0.08);
-          background: #111;
-          color: #777;
-          cursor: pointer;
-          transition: all 0.25s;
-          font-family: inherit;
-        }
-        .login-demo-btn:hover {
-          border-color: rgba(255,255,255,0.15);
-          background: rgba(255,255,255,0.04);
-          color: #fff;
-        }
-        .login-demo-active {
-          border-color: #fdb913 !important;
-          background: rgba(253,185,19,0.08) !important;
-          color: #fdb913 !important;
-          box-shadow: 0 0 15px rgba(253,185,19,0.1);
-        }
-        .login-demo-label {
-          font-size: 0.6rem;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-
-        /* Footer */
-        .login-footer {
-          margin-top: 2rem;
-          text-align: center;
-        }
-        .login-footer p {
-          font-size: 0.6rem;
-          color: #444;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          margin: 0;
-          line-height: 1.8;
-        }
-
-        /* Ambient Glows */
-        .login-glow {
-          position: fixed;
-          border-radius: 50%;
-          pointer-events: none;
-          z-index: 0;
-        }
-        .login-glow-gold {
-          top: -200px; right: -200px;
-          width: 500px; height: 500px;
-          background: rgba(253,185,19,0.06);
-          filter: blur(120px);
-        }
-        .login-glow-teal {
-          bottom: -200px; left: -200px;
-          width: 400px; height: 400px;
-          background: rgba(0,180,220,0.04);
-          filter: blur(100px);
-        }
-
-        /* Spinner */
-        .login-spinner {
-          width: 20px; height: 20px;
-          animation: spin 1s linear infinite;
-        }
-        .login-spinner-bg { opacity: 0.25; }
-        .login-spinner-fg { opacity: 0.75; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-        /* Mobile */
-        @media (max-width: 767px) {
-          .login-form-panel { padding: 1.5rem; }
-          .login-field-row { grid-template-columns: 1fr; }
-        }
-      `}</style>
+      {/* Decorative Blur Orbs */}
+      <div className="absolute -top-[10%] -right-[5%] w-[400px] h-[400px] bg-[#fdb913] opacity-[0.03] blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute -bottom-[10%] -left-[5%] w-[500px] h-[500px] bg-[#00677d] opacity-[0.03] blur-[150px] rounded-full pointer-events-none"></div>
     </main>
   );
 }
