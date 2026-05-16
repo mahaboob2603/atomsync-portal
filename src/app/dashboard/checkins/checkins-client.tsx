@@ -345,30 +345,44 @@ export function CheckinsClient({
                           (ci) =>
                             ci.quarter === selectedQuarter && (ci as any).employee_id === sheet.employee_id
                         ).length > 0 && (
-                          <div className="mt-4">
-                            <h4 className="text-sm font-semibold mb-2">
-                              {selectedQuarter} Check-in Notes
-                            </h4>
-                            <div className="space-y-2">
-                              {checkIns
-                                .filter((ci) => ci.quarter === selectedQuarter && (ci as any).employee_id === sheet.employee_id)
-                                .map((ci) => (
-                                  <div
-                                    key={ci.id}
-                                    className="p-3 rounded-lg text-sm"
-                                    style={{ background: "var(--card)" }}
-                                  >
-                                    <p>{ci.comment}</p>
-                                    <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
-                                      {ci.manager?.full_name && `By ${ci.manager.full_name} • `}
-                                      {new Intl.DateTimeFormat('en-IN', {
-                                        dateStyle: 'short',
-                                        timeStyle: 'medium',
-                                        timeZone: 'Asia/Kolkata'
-                                      }).format(new Date(ci.created_at))}
-                                    </p>
-                                  </div>
-                                ))}
+                          <div className="mt-8">
+                            <div className="flex items-center gap-2 mb-4">
+                              <MessageSquare size={16} className="text-[#fdb913]" />
+                              <h4 className="text-sm font-bold tracking-wide uppercase text-[#fdb913]">
+                                {selectedQuarter} Check-in History
+                              </h4>
+                            </div>
+                            <div className="table-wrapper">
+                              <table className="table">
+                                <thead>
+                                  <tr className="text-[#fdb913]">
+                                    <th className="tracking-[0.08em] uppercase text-xs" style={{ width: "20%" }}>Date & Time</th>
+                                    <th className="tracking-[0.08em] uppercase text-xs" style={{ width: "20%" }}>Added By</th>
+                                    <th className="tracking-[0.08em] uppercase text-xs">Discussion / Notes</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {checkIns
+                                    .filter((ci) => ci.quarter === selectedQuarter && (ci as any).employee_id === sheet.employee_id)
+                                    .map((ci) => (
+                                      <tr key={ci.id}>
+                                        <td className="text-xs font-mono" style={{ color: "var(--muted)" }}>
+                                          {new Intl.DateTimeFormat('en-IN', {
+                                            dateStyle: 'short',
+                                            timeStyle: 'medium',
+                                            timeZone: 'Asia/Kolkata'
+                                          }).format(new Date(ci.created_at))}
+                                        </td>
+                                        <td className="text-xs font-medium">
+                                          {ci.manager?.full_name || "Self"}
+                                        </td>
+                                        <td className="text-sm leading-relaxed" style={{ color: "var(--foreground)" }}>
+                                          {ci.comment}
+                                        </td>
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
                             </div>
                           </div>
                         )}
