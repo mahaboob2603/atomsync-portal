@@ -109,9 +109,15 @@ export function CheckinsClient({
 
   return (
     <div>
-      <div className="page-header">
-        <div>
-          <h1 className="text-2xl font-bold">
+      <div className="page-header relative">
+        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#fdb913] to-transparent"></div>
+        <div className="pl-4">
+          <div className="flex items-center gap-3 mb-1">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#fdb913] uppercase">
+              INSTITUTIONAL GRADE
+            </span>
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight">
             {isEmployee ? "My Check-ins" : "Team Check-ins"}
           </h1>
           <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
@@ -124,12 +130,12 @@ export function CheckinsClient({
 
       <div className="page-body space-y-6">
         {/* Quarter Selector */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 p-1 rounded-lg w-max" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
           {QUARTERS.map((q) => (
             <button
               key={q}
               onClick={() => setSelectedQuarter(q)}
-              className={`btn ${selectedQuarter === q ? "btn-primary" : "btn-secondary"} btn-sm`}
+              className={`btn btn-sm ${selectedQuarter === q ? "bg-[#fdb913] text-black hover:bg-[#e5a610]" : "btn-ghost"}`}
             >
               {q}
             </button>
@@ -138,8 +144,8 @@ export function CheckinsClient({
 
         {/* Goal Sheets */}
         {goalSheets.length === 0 ? (
-          <div className="glass-card p-12 text-center">
-            <Target size={48} className="mx-auto mb-4" style={{ color: "var(--muted)" }} />
+          <div className="glass-module p-12 text-center border border-[#fdb913]/20">
+            <Target size={48} className="mx-auto mb-4 text-[#fdb913]/40" />
             <h2 className="text-xl font-semibold mb-2">No Approved Goals</h2>
             <p style={{ color: "var(--muted)" }}>
               {isEmployee
@@ -156,18 +162,21 @@ export function CheckinsClient({
                 : sheet.employee?.full_name || "Unknown";
 
               return (
-                <div key={sheet.id} className="glass-card overflow-hidden animate-fade-in">
+                <div key={sheet.id} className="glass-module p-0 overflow-hidden animate-fade-in border border-[#fdb913]/20 group hover:border-[#fdb913]/40 transition-colors duration-300">
                   <div
                     onClick={() => setExpandedSheet(isExpanded ? null : sheet.id)}
-                    className="w-full p-5 flex items-center justify-between text-left cursor-pointer"
+                    className="w-full p-5 flex items-center justify-between text-left cursor-pointer relative"
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setExpandedSheet(isExpanded ? null : sheet.id); }}
                   >
-                    <div className="flex items-center gap-4">
+                    {/* Subtle glow on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#fdb913]/0 via-[#fdb913]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
+                    <div className="flex items-center gap-4 relative z-10">
                       <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold"
-                        style={{ background: "var(--accent-glow)", color: "var(--accent-light)" }}
+                        className="w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold border border-[#fdb913]/30"
+                        style={{ background: "linear-gradient(135deg, rgba(253, 185, 19, 0.2), rgba(0, 0, 0, 0.5))", color: "#fdb913" }}
                       >
                         {employeeName.charAt(0)}
                       </div>
@@ -204,15 +213,15 @@ export function CheckinsClient({
                         <div className="table-wrapper">
                           <table className="table">
                             <thead>
-                              <tr>
-                                <th>Goal</th>
-                                <th>UoM</th>
-                                <th>Target</th>
-                                <th>Planned</th>
-                                <th>Actual</th>
-                                <th>Status</th>
-                                <th>Score</th>
-                                {isEmployee && <th>Actions</th>}
+                              <tr className="text-[#fdb913]">
+                                <th className="tracking-[0.08em] uppercase text-xs">Goal</th>
+                                <th className="tracking-[0.08em] uppercase text-xs">UoM</th>
+                                <th className="tracking-[0.08em] uppercase text-xs">Target</th>
+                                <th className="tracking-[0.08em] uppercase text-xs">Planned</th>
+                                <th className="tracking-[0.08em] uppercase text-xs">Actual</th>
+                                <th className="tracking-[0.08em] uppercase text-xs">Status</th>
+                                <th className="tracking-[0.08em] uppercase text-xs">Score</th>
+                                {isEmployee && <th className="tracking-[0.08em] uppercase text-xs">Actions</th>}
                               </tr>
                             </thead>
                             <tbody>

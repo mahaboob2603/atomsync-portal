@@ -83,27 +83,30 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
     const totalWeightage = sheet.goals.reduce((s, g) => s + Number(g.weightage), 0);
 
     return (
-      <div key={sheet.id} className="glass-card animate-fade-in overflow-hidden">
+      <div key={sheet.id} className="glass-module p-0 overflow-hidden animate-fade-in border border-[#fdb913]/20 group hover:border-[#fdb913]/40 transition-colors duration-300">
         {/* Header */}
         <button
           onClick={() => setExpandedSheet(isExpanded ? null : sheet.id)}
-          className="w-full p-5 flex items-center justify-between text-left"
+          className="w-full p-5 flex items-center justify-between text-left relative"
         >
-          <div className="flex items-center gap-4">
+          {/* Subtle glow on hover */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#fdb913]/0 via-[#fdb913]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          
+          <div className="flex items-center gap-4 relative z-10">
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold"
-              style={{ background: "var(--info-bg)", color: "var(--info)" }}
+              className="w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold border border-[#fdb913]/30"
+              style={{ background: "linear-gradient(135deg, rgba(253, 185, 19, 0.2), rgba(0, 0, 0, 0.5))", color: "#fdb913" }}
             >
               {sheet.employee?.full_name?.charAt(0) || "?"}
             </div>
             <div>
-              <h3 className="font-semibold">{sheet.employee?.full_name}</h3>
-              <p className="text-xs" style={{ color: "var(--muted)" }}>
+              <h3 className="font-semibold text-lg">{sheet.employee?.full_name}</h3>
+              <p className="text-xs uppercase tracking-wider text-[#fdb913]/70 font-mono mt-1">
                 {sheet.employee?.department || "—"} • {sheet.goals.length} goals • {totalWeightage}% weightage
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4 relative z-10">
             <span
               className={`badge badge-${
                 sheet.status === "pending_approval" ? "pending" : sheet.status
@@ -112,7 +115,9 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
               {sheet.locked && <Lock size={10} />}
               {formatStatus(sheet.status)}
             </span>
-            {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#fdb913]/40 group-hover:text-[#fdb913] transition-colors">
+              {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            </div>
           </div>
         </button>
 
@@ -124,13 +129,13 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
               <div className="table-wrapper">
                 <table className="table">
                   <thead>
-                    <tr>
-                      <th>Goal</th>
-                      <th>Thrust Area</th>
-                      <th>UoM</th>
-                      <th>Target</th>
-                      <th>Weightage</th>
-                      {sheet.status === "pending_approval" && <th>Actions</th>}
+                    <tr className="text-[#fdb913]">
+                      <th className="tracking-[0.08em] uppercase text-xs">Goal Blueprint</th>
+                      <th className="tracking-[0.08em] uppercase text-xs">Thrust Area</th>
+                      <th className="tracking-[0.08em] uppercase text-xs">UoM</th>
+                      <th className="tracking-[0.08em] uppercase text-xs">Target</th>
+                      <th className="tracking-[0.08em] uppercase text-xs">Weightage</th>
+                      {sheet.status === "pending_approval" && <th className="tracking-[0.08em] uppercase text-xs">Actions</th>}
                     </tr>
                   </thead>
                   <tbody>
@@ -242,11 +247,20 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
 
   return (
     <div>
-      <div className="page-header">
-        <div>
-          <h1 className="text-2xl font-bold">Team Goals</h1>
+      <div className="page-header relative">
+        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#fdb913] to-transparent"></div>
+        <div className="pl-4">
+          <div className="flex items-center gap-3 mb-1">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#fdb913] uppercase">
+              INSTITUTIONAL GRADE
+            </span>
+            <span className="px-2 py-0.5 rounded-sm bg-[#fdb913]/10 text-[#fdb913] border border-[#fdb913]/20 text-[10px] font-bold tracking-wider">
+              {pendingSheets.length} PENDING
+            </span>
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight">Team Goal Architecture</h1>
           <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
-            {pendingSheets.length} pending approval
+            Review, approve, and direct team objectives
           </p>
         </div>
       </div>
@@ -255,9 +269,9 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
         {/* Pending Approval */}
         {pendingSheets.length > 0 && (
           <div>
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: "var(--warning)" }} />
-              Pending Approval ({pendingSheets.length})
+            <h2 className="text-sm font-bold tracking-[0.1em] uppercase mb-4 flex items-center gap-2 text-white">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b] animate-pulse shadow-[0_0_8px_#f59e0b]" />
+              Awaiting Approval ({pendingSheets.length})
             </h2>
             <div className="space-y-4">
               {pendingSheets.map(renderSheetCard)}
@@ -268,9 +282,9 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
         {/* Approved */}
         {approvedSheets.length > 0 && (
           <div>
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: "var(--success)" }} />
-              Approved ({approvedSheets.length})
+            <h2 className="text-sm font-bold tracking-[0.1em] uppercase mb-4 flex items-center gap-2 text-white mt-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] shadow-[0_0_8px_#22c55e]" />
+              Active Blueprints ({approvedSheets.length})
             </h2>
             <div className="space-y-4">
               {approvedSheets.map(renderSheetCard)}
@@ -281,9 +295,9 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
         {/* Others */}
         {otherSheets.length > 0 && (
           <div>
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: "var(--muted)" }} />
-              Other ({otherSheets.length})
+            <h2 className="text-sm font-bold tracking-[0.1em] uppercase mb-4 flex items-center gap-2 text-white mt-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
+              Drafts & Revisions ({otherSheets.length})
             </h2>
             <div className="space-y-4">
               {otherSheets.map(renderSheetCard)}
@@ -292,10 +306,10 @@ export function TeamGoalsClient({ profile, goalSheets }: TeamGoalsClientProps) {
         )}
 
         {goalSheets.length === 0 && (
-          <div className="glass-card p-12 text-center">
-            <User size={48} className="mx-auto mb-4" style={{ color: "var(--muted)" }} />
-            <h2 className="text-xl font-semibold mb-2">No Goal Sheets</h2>
-            <p style={{ color: "var(--muted)" }}>No team members have created goal sheets yet.</p>
+          <div className="glass-module p-12 text-center border border-[#fdb913]/20">
+            <User size={48} className="mx-auto mb-4 text-[#fdb913]/40" />
+            <h2 className="text-xl font-semibold mb-2">No Architectures Found</h2>
+            <p style={{ color: "var(--muted)" }}>Team members have not yet submitted goal blueprints.</p>
           </div>
         )}
       </div>

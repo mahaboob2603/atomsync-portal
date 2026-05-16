@@ -111,9 +111,15 @@ export function GoalsClient({
 
   return (
     <div>
-      <div className="page-header">
-        <div>
-          <h1 className="text-2xl font-bold">My Goals</h1>
+      <div className="page-header relative">
+        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#fdb913] to-transparent"></div>
+        <div className="pl-4">
+          <div className="flex items-center gap-3 mb-1">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#fdb913] uppercase">
+              INSTITUTIONAL GRADE
+            </span>
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight">Personal Blueprint</h1>
           <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
             {activeCycle.name} • Weightage: {totalWeightage}/100%
           </p>
@@ -166,15 +172,16 @@ export function GoalsClient({
 
         {/* No goal sheet yet */}
         {!goalSheet && (
-          <div className="glass-card p-12 text-center animate-fade-in">
-            <Target size={48} className="mx-auto mb-4" style={{ color: "var(--accent-light)" }} />
-            <h2 className="text-xl font-semibold mb-2">Start Your Goal Sheet</h2>
-            <p className="mb-6" style={{ color: "var(--muted)" }}>
-              Create your goal sheet for {activeCycle.name} to begin setting your goals.
+          <div className="glass-module p-12 text-center animate-fade-in border border-[#fdb913]/20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-[#fdb913]/5 to-transparent pointer-events-none"></div>
+            <Target size={48} className="mx-auto mb-4 text-[#fdb913]/50 relative z-10" />
+            <h2 className="text-xl font-semibold mb-2 relative z-10">Initialize Architecture Blueprint</h2>
+            <p className="mb-6 relative z-10" style={{ color: "var(--muted)" }}>
+              Create your goal sheet for {activeCycle.name} to begin planning execution.
             </p>
-            <button onClick={handleCreateSheet} className="btn btn-primary btn-lg">
+            <button onClick={handleCreateSheet} className="btn bg-[#fdb913] hover:bg-[#e5a610] text-black font-bold relative z-10">
               <Target size={18} />
-              Create Goal Sheet
+              Initialize Blueprint
             </button>
           </div>
         )}
@@ -234,13 +241,13 @@ export function GoalsClient({
             {goals.map((goal, idx) => (
               <div
                 key={goal.id}
-                className="glass-card p-5 animate-fade-in"
+                className="glass-module p-0 overflow-hidden animate-fade-in border border-[#fdb913]/10"
                 style={{ animationDelay: `${idx * 0.05}s` }}
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="p-5 flex items-start justify-between gap-4 bg-gradient-to-r from-[#fdb913]/5 to-transparent">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold">{goal.title}</h3>
+                      <h3 className="font-semibold text-lg">{goal.title}</h3>
                       {goal.is_shared && (
                         <span className="badge" style={{
                           background: "rgba(168, 85, 247, 0.1)",
@@ -252,38 +259,38 @@ export function GoalsClient({
                       )}
                     </div>
                     {goal.description && (
-                      <p className="text-sm mb-2" style={{ color: "var(--muted)" }}>
+                      <p className="text-sm mb-3 text-white/60">
                         {goal.description}
                       </p>
                     )}
                     <div className="flex flex-wrap gap-3 text-xs">
-                      <span className="badge badge-draft">
+                      <span className="badge border border-[#fdb913]/20 bg-[#fdb913]/10 text-[#fdb913] tracking-wider uppercase font-bold">
                         {goal.thrust_area?.name || "—"}
                       </span>
-                      <span style={{ color: "var(--muted)" }}>
+                      <span className="flex items-center px-2 py-0.5 rounded-sm bg-white/5 border border-white/10 uppercase tracking-wider font-mono">
                         UoM: {getUoMLabel(goal.uom as Parameters<typeof getUoMLabel>[0])}
                       </span>
-                      <span style={{ color: "var(--muted)" }}>
+                      <span className="flex items-center px-2 py-0.5 rounded-sm bg-white/5 border border-white/10 uppercase tracking-wider font-mono">
                         Target: {goal.target}
                       </span>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="text-right">
-                      <div className="text-2xl font-bold" style={{ color: "var(--accent-light)" }}>
+                      <div className="text-3xl font-bold text-[#fdb913] tabular-nums">
                         {goal.weightage}%
                       </div>
-                      <div className="text-[10px]" style={{ color: "var(--muted)" }}>
+                      <div className="text-[10px] uppercase tracking-wider font-bold text-[#fdb913]/50">
                         weightage
                       </div>
                     </div>
                     {canEdit && !goal.is_shared && (
                       <button
                         onClick={() => handleDeleteGoal(goal.id)}
-                        className="btn btn-ghost btn-icon"
+                        className="btn btn-ghost btn-icon hover:bg-red-500/10 hover:text-red-500 transition-colors"
                         title="Delete goal"
                       >
-                        <Trash2 size={16} style={{ color: "var(--danger)" }} />
+                        <Trash2 size={16} />
                       </button>
                     )}
                   </div>
@@ -291,23 +298,21 @@ export function GoalsClient({
 
                 {/* Achievement scores if any */}
                 {goal.achievements && goal.achievements.length > 0 && (
-                  <div className="mt-4 pt-4" style={{ borderTop: "1px solid var(--border)" }}>
+                  <div className="border-t border-[#fdb913]/10 p-5 bg-black/40">
                     <div className="grid grid-cols-4 gap-3">
                       {["Q1", "Q2", "Q3", "Q4"].map((q) => {
                         const ach = goal.achievements?.find((a) => a.quarter === q);
                         return (
-                          <div key={q} className="text-center p-2 rounded-lg" style={{
-                            background: "var(--card)",
-                          }}>
-                            <div className="text-xs font-medium mb-1" style={{ color: "var(--muted)" }}>
+                          <div key={q} className="text-center p-3 rounded-lg border border-white/5 bg-white/5">
+                            <div className="text-[10px] font-bold tracking-[0.1em] uppercase mb-1" style={{ color: "var(--muted)" }}>
                               {q}
                             </div>
                             {ach ? (
                               <>
-                                <div className={`text-sm font-bold ${getScoreColor(ach.score)}`}>
+                                <div className={`text-lg font-bold tabular-nums ${getScoreColor(ach.score)}`}>
                                   {ach.score !== null ? `${ach.score}%` : "—"}
                                 </div>
-                                <div className="text-[10px]" style={{ color: "var(--muted)" }}>
+                                <div className="text-[10px] uppercase tracking-wider mt-1" style={{ color: "var(--muted)" }}>
                                   {formatStatus(ach.status)}
                                 </div>
                               </>

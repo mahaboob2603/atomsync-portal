@@ -93,14 +93,20 @@ export function ReportsClient({ goalSheets, checkIns }: ReportsClientProps) {
 
   return (
     <div>
-      <div className="page-header">
-        <div>
-          <h1 className="text-2xl font-bold">Reports</h1>
+      <div className="page-header relative">
+        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#fdb913] to-transparent"></div>
+        <div className="pl-4">
+          <div className="flex items-center gap-3 mb-1">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#fdb913] uppercase">
+              INSTITUTIONAL GRADE
+            </span>
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight">Reports Intelligence</h1>
           <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
-            Achievement reports and completion dashboard
+            Executive achievement reports and check-in completion dashboard
           </p>
         </div>
-        <button onClick={exportCSV} className="btn btn-primary">
+        <button onClick={exportCSV} className="btn text-[#fdb913] border border-[#fdb913]/30 hover:bg-[#fdb913]/10" style={{ background: "rgba(253, 185, 19, 0.05)" }}>
           <Download size={16} />
           Export CSV
         </button>
@@ -108,17 +114,17 @@ export function ReportsClient({ goalSheets, checkIns }: ReportsClientProps) {
 
       <div className="page-body space-y-6">
         {/* Tab Selector */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 p-1 rounded-lg w-max" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
           <button
             onClick={() => setView("achievement")}
-            className={`btn ${view === "achievement" ? "btn-primary" : "btn-secondary"}`}
+            className={`btn btn-sm ${view === "achievement" ? "bg-[#fdb913] text-black hover:bg-[#e5a610]" : "btn-ghost"}`}
           >
             <FileText size={16} />
             Achievement Report
           </button>
           <button
             onClick={() => setView("completion")}
-            className={`btn ${view === "completion" ? "btn-primary" : "btn-secondary"}`}
+            className={`btn btn-sm ${view === "completion" ? "bg-[#fdb913] text-black hover:bg-[#e5a610]" : "btn-ghost"}`}
           >
             <CheckCircle2 size={16} />
             Completion Dashboard
@@ -126,21 +132,28 @@ export function ReportsClient({ goalSheets, checkIns }: ReportsClientProps) {
         </div>
 
         {view === "achievement" ? (
-          <div className="table-wrapper">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Employee</th>
-                  <th>Goal</th>
-                  <th>Target</th>
-                  <th>Wt%</th>
-                  <th>Q1 Score</th>
-                  <th>Q2 Score</th>
-                  <th>Q3 Score</th>
-                  <th>Q4 Score</th>
-                </tr>
-              </thead>
-              <tbody>
+          <div className="glass-module p-0 overflow-hidden border border-[#fdb913]/20">
+            <div className="p-4 border-b border-[#fdb913]/20 bg-gradient-to-r from-[#fdb913]/5 to-transparent">
+               <h3 className="text-sm font-bold tracking-[0.08em] uppercase flex items-center gap-2">
+                 <FileText size={16} className="text-[#fdb913]" />
+                 Enterprise Goal Achievements
+               </h3>
+            </div>
+            <div className="table-wrapper">
+              <table className="table">
+                <thead>
+                  <tr className="text-[#fdb913]">
+                    <th className="tracking-[0.08em] uppercase text-xs">Employee</th>
+                    <th className="tracking-[0.08em] uppercase text-xs">Goal</th>
+                    <th className="tracking-[0.08em] uppercase text-xs">Target</th>
+                    <th className="tracking-[0.08em] uppercase text-xs">Wt%</th>
+                    <th className="tracking-[0.08em] uppercase text-xs">Q1 Score</th>
+                    <th className="tracking-[0.08em] uppercase text-xs">Q2 Score</th>
+                    <th className="tracking-[0.08em] uppercase text-xs">Q3 Score</th>
+                    <th className="tracking-[0.08em] uppercase text-xs">Q4 Score</th>
+                  </tr>
+                </thead>
+                <tbody>
                 {goalSheets.flatMap((sheet) =>
                   sheet.goals.map((goal) => (
                     <tr key={goal.id}>
@@ -192,40 +205,47 @@ export function ReportsClient({ goalSheets, checkIns }: ReportsClientProps) {
               </tbody>
             </table>
           </div>
+          </div>
         ) : (
           <div className="space-y-4">
             {goalSheets.map((sheet) => {
               const empCheckIns = employeeCheckIns.get(sheet.employee?.id || "") || new Set();
               return (
-                <div key={sheet.id} className="glass-card p-5 animate-fade-in">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                <div key={sheet.id} className="glass-module p-0 border border-[#fdb913]/10 overflow-hidden animate-fade-in group hover:border-[#fdb913]/30 transition-all duration-300">
+                  <div className="p-5 flex items-center justify-between relative">
+                    {/* Hover glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#fdb913]/0 via-[#fdb913]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
+                    <div className="flex items-center gap-4 relative z-10">
                       <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold"
+                        className="w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold border border-[#fdb913]/30"
                         style={{
-                          background: "var(--accent-glow)",
-                          color: "var(--accent-light)",
+                          background: "linear-gradient(135deg, rgba(253, 185, 19, 0.2), rgba(0, 0, 0, 0.5))",
+                          color: "#fdb913",
                         }}
                       >
                         {sheet.employee?.full_name?.charAt(0)}
                       </div>
                       <div>
-                        <h3 className="font-semibold">{sheet.employee?.full_name}</h3>
-                        <p className="text-xs" style={{ color: "var(--muted)" }}>
+                        <h3 className="font-semibold text-lg">{sheet.employee?.full_name}</h3>
+                        <p className="text-xs uppercase tracking-wider text-[#fdb913]/70 font-mono mt-1">
                           {sheet.employee?.department}
                         </p>
                       </div>
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex gap-6 relative z-10">
                       {(["Q1", "Q2", "Q3", "Q4"] as const).map((q) => (
-                        <div key={q} className="text-center">
-                          <div className="text-xs mb-1" style={{ color: "var(--muted)" }}>
+                        <div key={q} className="text-center flex flex-col items-center">
+                          <div className="text-[10px] font-bold tracking-[0.1em] mb-2 uppercase" style={{ color: "var(--muted)" }}>
                             {q}
                           </div>
                           {empCheckIns.has(q) ? (
-                            <CheckCircle2 size={20} style={{ color: "var(--success)" }} />
+                            <div className="relative">
+                              <div className="absolute inset-0 bg-green-500 blur-[8px] opacity-30"></div>
+                              <CheckCircle2 size={24} className="text-green-500 relative z-10 drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+                            </div>
                           ) : (
-                            <XCircle size={20} style={{ color: "var(--muted-foreground)" }} />
+                            <XCircle size={24} style={{ color: "rgba(255, 255, 255, 0.1)" }} />
                           )}
                         </div>
                       ))}
