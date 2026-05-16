@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { loginAction, signUpAction, switchDemoRole } from "@/app/actions/auth";
-import { Target, Shield, Eye, EyeOff, Activity, Hub, Lock, User, Crown, LogIn, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, Zap, Shield, User, Crown, LogIn } from "lucide-react";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,307 +10,493 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [switchingRole, setSwitchingRole] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [rotation, setRotation] = useState(0);
+
+  useEffect(() => {
+    let angle = 0;
+    const interval = setInterval(() => {
+      angle += 0.4;
+      setRotation(angle);
+    }, 16);
+    return () => clearInterval(interval);
+  }, []);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError("");
     const result = isLogin ? await loginAction(formData) : await signUpAction(formData);
-    if (result?.error) {
-      setError(result.error);
-      setLoading(false);
-    }
+    if (result?.error) { setError(result.error); setLoading(false); }
   }
 
   async function handleDemoSwitch(role: "employee" | "manager" | "admin") {
     setSwitchingRole(role);
     setError("");
     const result = await switchDemoRole(role);
-    if (result?.error) {
-      setError(result.error);
-      setSwitchingRole(null);
-    }
+    if (result?.error) { setError(result.error); setSwitchingRole(null); }
   }
 
   return (
-    <main className="min-h-screen flex flex-col md:flex-row overflow-hidden bg-[#050505]">
-      {/* Custom Styles for Stitch Design */}
-      <style jsx global>{`
-        .glass-card {
-          background: rgba(255, 255, 255, 0.03);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          transition: all 0.3s ease;
+    <main style={{ minHeight: "100vh", display: "flex", background: "#050505", fontFamily: "'Inter', sans-serif", overflow: "hidden", position: "relative" }}>
+
+      {/* ── GLOBAL STYLES ── */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Rotating fan blades */
+        @keyframes fanSpin {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
         }
-        .glass-card:hover {
-          background: rgba(255, 255, 255, 0.05);
-          border-color: rgba(253, 185, 19, 0.2);
+        @keyframes pulseRing {
+          0%,100% { opacity: 0.15; transform: scale(1); }
+          50%      { opacity: 0.35; transform: scale(1.08); }
+        }
+        @keyframes floatUp {
+          0%,100% { transform: translateY(0px); }
+          50%      { transform: translateY(-12px); }
+        }
+        @keyframes shimmer {
+          0%   { background-position: -400px 0; }
+          100% { background-position: 400px 0; }
+        }
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scanLine {
+          0%,100% { top: 0%; opacity: 0; }
+          10%      { opacity: 1; }
+          90%      { opacity: 1; }
+          100%     { top: 100%; opacity: 0; }
+        }
+        @keyframes blink {
+          0%,100% { opacity: 1; } 50% { opacity: 0; }
+        }
+        @keyframes dash {
+          to { stroke-dashoffset: 0; }
+        }
+
+        .fade-up { animation: fadeSlideUp 0.7s cubic-bezier(.22,1,.36,1) both; }
+        .fade-up-1 { animation-delay: 0.1s; }
+        .fade-up-2 { animation-delay: 0.2s; }
+        .fade-up-3 { animation-delay: 0.3s; }
+        .fade-up-4 { animation-delay: 0.4s; }
+        .fade-up-5 { animation-delay: 0.5s; }
+
+        .inp {
+          width: 100%;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 14px;
+          padding: 14px 18px;
+          color: #fff;
+          font-size: 14px;
+          outline: none;
+          transition: border-color .25s, box-shadow .25s;
+          font-family: 'Inter', sans-serif;
+        }
+        .inp:focus {
+          border-color: #fdb913;
+          box-shadow: 0 0 0 3px rgba(253,185,19,0.12);
+        }
+        .inp::placeholder { color: rgba(255,255,255,0.2); }
+
+        .sel {
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24' stroke='%23888' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 14px center;
+          background-color: rgba(255,255,255,0.04);
+        }
+        .sel option { background: #111; }
+
+        .cta-btn {
+          width: 100%;
+          background: linear-gradient(135deg, #fdb913 0%, #f5a500 100%);
+          color: #000;
+          font-weight: 800;
+          font-size: 15px;
+          padding: 16px;
+          border: none;
+          border-radius: 14px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          transition: all .25s;
+          box-shadow: 0 8px 32px rgba(253,185,19,0.25);
+          letter-spacing: 0.02em;
+          font-family: 'Inter', sans-serif;
+        }
+        .cta-btn:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 16px 48px rgba(253,185,19,0.35);
+          background: linear-gradient(135deg, #ffc62d 0%, #fdb913 100%);
+        }
+        .cta-btn:active:not(:disabled) { transform: translateY(0); }
+        .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .tab-pill {
+          flex: 1;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 10px;
+          font-size: 13px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all .2s;
+          font-family: 'Inter', sans-serif;
+          letter-spacing: 0.02em;
+        }
+        .tab-active { background: #fdb913; color: #000; }
+        .tab-inactive { background: transparent; color: rgba(255,255,255,0.4); }
+        .tab-inactive:hover { color: rgba(255,255,255,0.7); }
+
+        .demo-btn {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          padding: 14px 10px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 14px;
+          cursor: pointer;
+          transition: all .25s;
+          font-family: 'Inter', sans-serif;
+          color: rgba(255,255,255,0.5);
+        }
+        .demo-btn:hover {
+          background: rgba(253,185,19,0.07);
+          border-color: rgba(253,185,19,0.25);
+          color: #fdb913;
           transform: translateY(-2px);
         }
-        .isometric-bg {
-          background-color: #050505;
-          background-image: 
-            linear-gradient(30deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
-            linear-gradient(150deg, #0a0a0a 12%, transparent 12.5%, transparent 87%, #0a0a0a 87.5%, #0a0a0a),
-            linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111);
-          background-size: 80px 140px;
-        }
-        .scan-line {
-          height: 2px;
-          background: linear-gradient(to right, transparent, #fdb913, transparent);
-          animation: scan 4s ease-in-out infinite;
-        }
-        @keyframes scan {
-          0%, 100% { transform: translateY(0); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: translateY(40px); }
-        }
-        .text-glow {
-          text-shadow: 0 0 20px rgba(253, 185, 19, 0.3);
+        .demo-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .metric-chip {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 18px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 100px;
+          backdrop-filter: blur(12px);
         }
       `}</style>
 
-      {/* LEFT SIDE: BRANDING */}
-      <section className="relative w-full md:w-3/5 lg:w-[65%] isometric-bg flex flex-col justify-between p-8 md:p-12 min-h-[512px] md:min-h-screen border-r border-white/5">
-        {/* Branding/Logo */}
-        <div className="z-10 flex items-center gap-3 animate-fade-in">
-          <div className="w-10 h-10 bg-[#fdb913] rounded flex items-center justify-center shadow-[0_0_20px_rgba(253,185,19,0.3)]">
-            <Activity className="text-black" size={24} />
+      {/* ─────────────────────────────────────── */}
+      {/* LEFT BRAND PANEL                        */}
+      {/* ─────────────────────────────────────── */}
+      <section style={{
+        display: "none",
+        position: "relative",
+        width: "58%",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "48px 56px",
+        overflow: "hidden",
+        background: "linear-gradient(135deg, #070707 0%, #0e0e0e 50%, #060606 100%)",
+        borderRight: "1px solid rgba(255,255,255,0.05)",
+      }} className="md-brand-panel">
+        <style>{`@media(min-width:768px){.md-brand-panel{display:flex!important;}}`}</style>
+
+        {/* Background: gold noise + grid */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:"radial-gradient(circle at 20% 80%, rgba(253,185,19,0.06) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(253,185,19,0.04) 0%, transparent 50%)", pointerEvents:"none" }} />
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize:"60px 60px", pointerEvents:"none" }} />
+
+        {/* Scanning line */}
+        <div style={{ position:"absolute", left:0, right:0, height:"1px", background:"linear-gradient(90deg, transparent, rgba(253,185,19,0.4), transparent)", animation:"scanLine 6s ease-in-out infinite", pointerEvents:"none", zIndex:1 }} />
+
+        {/* ── LOGO ── */}
+        <div className="fade-up fade-up-1" style={{ position:"relative", zIndex:10, display:"flex", alignItems:"center", gap:"14px" }}>
+          <div style={{
+            width:44, height:44,
+            background:"linear-gradient(135deg,#fdb913,#f5a500)",
+            borderRadius:12,
+            display:"flex", alignItems:"center", justifyContent:"center",
+            boxShadow:"0 8px 24px rgba(253,185,19,0.3)"
+          }}>
+            <Zap size={22} color="#000" strokeWidth={3} />
           </div>
-          <h1 className="text-2xl font-black tracking-tighter text-[#fdb913]">AtomSync</h1>
-        </div>
-
-        {/* Hero Image Overlay (Subtle) */}
-        <div className="absolute inset-0 z-0 opacity-10 pointer-events-none overflow-hidden">
-          <img 
-            alt="Industrial Tech" 
-            className="w-full h-full object-cover mix-blend-overlay scale-110"
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2070" 
-          />
-        </div>
-
-        {/* Center Content */}
-        <div className="z-10 max-w-xl animate-slide-in-left">
-          <h2 className="text-5xl md:text-6xl font-bold leading-[1.1] mb-8 text-white">
-            Precision in every <br />
-            <span className="text-[#fdb913] text-glow italic">Synchronization</span>.
-          </h2>
-          
-          {/* Status Cards Bento Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12">
-            {/* Card 1 */}
-            <div className="glass-card p-6 rounded-2xl flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold tracking-[0.2em] text-[#888] uppercase">SYSTEM RELIABILITY</span>
-                <CheckCircle2 className="text-[#fdb913]" size={16} />
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="relative w-16 h-16 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle className="text-white/5" cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" />
-                    <circle className="text-[#fdb913]" cx="32" cy="32" r="28" stroke="currentColor" strokeDasharray="176" strokeDashoffset="1.76" strokeWidth="4" fill="transparent" strokeLinecap="round" />
-                  </svg>
-                  <span className="absolute text-[10px] font-black text-white">99.9%</span>
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-white">Operational</p>
-                  <p className="text-xs text-[#666]">Global Node Status</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="glass-card p-6 rounded-2xl flex flex-col gap-4 relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold tracking-[0.2em] text-[#888] uppercase">PROTOCOL SECURITY</span>
-                <Lock className="text-[#fdb913]" size={16} />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="text-xl font-bold text-white">Tier-4 Encrypted</p>
-                <div className="w-full bg-white/5 h-10 rounded-lg relative overflow-hidden flex items-center px-3 border border-white/5">
-                  <div className="scan-line absolute inset-x-0 w-full z-0 opacity-50"></div>
-                  <div className="flex gap-1 items-end h-4 z-10">
-                    <div className="w-1 h-2 bg-[#fdb913]/30 rounded-full animate-pulse"></div>
-                    <div className="w-1 h-4 bg-[#fdb913]/60 rounded-full animate-pulse delay-75"></div>
-                    <div className="w-1 h-3 bg-[#fdb913]/20 rounded-full animate-pulse delay-150"></div>
-                    <div className="w-1 h-5 bg-[#fdb913]/80 rounded-full animate-pulse delay-200"></div>
-                  </div>
-                  <span className="ml-auto text-[9px] font-bold text-[#fdb913] tracking-widest uppercase z-10">ACTIVE_SCAN</span>
-                </div>
-              </div>
-            </div>
+          <div>
+            <div style={{ fontSize:20, fontWeight:900, color:"#fff", letterSpacing:"-0.02em", lineHeight:1 }}>AtomSync</div>
+            <div style={{ fontSize:10, fontWeight:600, color:"rgba(255,255,255,0.3)", letterSpacing:"0.18em", textTransform:"uppercase", marginTop:2 }}>by Atomberg</div>
           </div>
         </div>
 
-        {/* Left Footer */}
-        <div className="z-10 text-[10px] font-medium text-[#444] tracking-wider uppercase">
-          © 2024 AtomSync Industrial Systems. v4.2.0-Alpha. Security Clearance Required.
+        {/* ── HERO CENTER ── */}
+        <div style={{ position:"relative", zIndex:10, display:"flex", flexDirection:"column", gap:40, flex:1, justifyContent:"center", paddingTop:48 }}>
+
+          {/* Giant rotating fan ring */}
+          <div className="fade-up fade-up-2" style={{ position:"relative", width:320, height:320, margin:"0 auto" }}>
+            {/* Outer glow rings */}
+            {[1,2,3].map(i => (
+              <div key={i} style={{
+                position:"absolute",
+                inset: `${(i-1)*24}px`,
+                borderRadius:"50%",
+                border:`1px solid rgba(253,185,19,${0.08 - i*0.02})`,
+                animation:`pulseRing ${2+i}s ease-in-out infinite`,
+                animationDelay:`${i*0.3}s`
+              }} />
+            ))}
+
+            {/* Fan SVG — rotating blades */}
+            <svg
+              viewBox="0 0 200 200"
+              style={{ width:"100%", height:"100%", position:"absolute", inset:0 }}
+            >
+              <defs>
+                <radialGradient id="fanGold" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#fdb913" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#f5a500" stopOpacity="0.6" />
+                </radialGradient>
+                <radialGradient id="fanDim" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#fdb913" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#f5a500" stopOpacity="0.05" />
+                </radialGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+
+              {/* Outer track ring */}
+              <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(253,185,19,0.08)" strokeWidth="1" />
+              <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(253,185,19,0.05)" strokeWidth="1" />
+
+              {/* Fan blades group — rotated via inline style */}
+              <g transform={`rotate(${rotation}, 100, 100)`} filter="url(#glow)">
+                {/* 5 fan blades */}
+                {[0,72,144,216,288].map((angle, i) => (
+                  <g key={i} transform={`rotate(${angle}, 100, 100)`}>
+                    <path
+                      d="M100,100 Q90,60 100,30 Q110,60 100,100"
+                      fill={i % 2 === 0 ? "url(#fanGold)" : "url(#fanDim)"}
+                    />
+                  </g>
+                ))}
+                {/* Center hub */}
+                <circle cx="100" cy="100" r="14" fill="#fdb913" />
+                <circle cx="100" cy="100" r="7" fill="#000" />
+              </g>
+
+              {/* Tick marks around ring */}
+              {Array.from({length:24}).map((_,i) => {
+                const a = (i / 24) * Math.PI * 2;
+                const r1 = 88, r2 = 92;
+                return (
+                  <line key={i}
+                    x1={100 + r1*Math.cos(a)} y1={100 + r1*Math.sin(a)}
+                    x2={100 + r2*Math.cos(a)} y2={100 + r2*Math.sin(a)}
+                    stroke="rgba(253,185,19,0.3)" strokeWidth={i%6===0?1.5:0.7}
+                  />
+                );
+              })}
+            </svg>
+
+            {/* Center label */}
+            <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:4 }}>
+              <div style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.3)", letterSpacing:"0.2em", textTransform:"uppercase", marginTop:8 }}>BLDC</div>
+            </div>
+          </div>
+
+          {/* Headline */}
+          <div className="fade-up fade-up-3" style={{ textAlign:"center" }}>
+            <div style={{ fontSize:11, fontWeight:700, color:"#fdb913", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:16 }}>
+              Why Not?
+            </div>
+            <h1 style={{ fontSize:42, fontWeight:900, lineHeight:1.1, letterSpacing:"-0.03em", color:"#fff", marginBottom:16 }}>
+              Engineering<br />
+              <span style={{ background:"linear-gradient(135deg,#fdb913,#ffd04d)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                Excellence
+              </span>
+              <br />Redefined.
+            </h1>
+            <p style={{ fontSize:14, color:"rgba(255,255,255,0.35)", lineHeight:1.7, maxWidth:360, margin:"0 auto" }}>
+              The central intelligence platform for Atomberg's precision-engineered ecosystem. Fleet diagnostics, real-time sync, enterprise-grade control.
+            </p>
+          </div>
+
+          {/* Metric chips */}
+          <div className="fade-up fade-up-4" style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center" }}>
+            <div className="metric-chip">
+              <div style={{ width:8, height:8, borderRadius:"50%", background:"#22c55e", boxShadow:"0 0 8px rgba(34,197,94,0.6)" }} />
+              <span style={{ fontSize:12, fontWeight:600, color:"rgba(255,255,255,0.7)" }}>Systems Online</span>
+            </div>
+            <div className="metric-chip">
+              <Shield size={14} color="#fdb913" strokeWidth={2} />
+              <span style={{ fontSize:12, fontWeight:600, color:"rgba(255,255,255,0.7)" }}>Tier-4 Secured</span>
+            </div>
+            <div className="metric-chip">
+              <span style={{ fontSize:12, fontWeight:800, color:"#fdb913" }}>99.9%</span>
+              <span style={{ fontSize:12, fontWeight:600, color:"rgba(255,255,255,0.5)" }}>Uptime SLA</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="fade-up fade-up-5" style={{ position:"relative", zIndex:10, fontSize:10, color:"rgba(255,255,255,0.2)", fontWeight:600, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+          © 2024 Atomberg Technologies · "Why Not?" · v4.2.0
         </div>
       </section>
 
-      {/* RIGHT SIDE: AUTH */}
-      <section className="w-full md:w-2/5 lg:w-[35%] bg-[#080808] flex flex-col justify-center p-8 md:p-12 relative">
-        <div className="w-full max-w-sm mx-auto flex flex-col gap-8 animate-slide-in-right">
-          
-          {/* Tab Switcher */}
-          <div className="flex p-1 bg-white/5 rounded-xl border border-white/5 self-start">
-            <button 
-              onClick={() => { setIsLogin(true); setError(""); }}
-              className={`px-6 py-2 rounded-lg text-xs font-bold transition-all ${isLogin ? 'bg-[#fdb913] text-black' : 'text-[#888] hover:text-white'}`}
-            >
-              Sign In
-            </button>
-            <button 
-              onClick={() => { setIsLogin(false); setError(""); }}
-              className={`px-6 py-2 rounded-lg text-xs font-bold transition-all ${!isLogin ? 'bg-[#fdb913] text-black' : 'text-[#888] hover:text-white'}`}
-            >
-              Register
-            </button>
+      {/* ─────────────────────────────────────── */}
+      {/* RIGHT AUTH PANEL                        */}
+      {/* ─────────────────────────────────────── */}
+      <section style={{
+        flex:1,
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"center",
+        alignItems:"center",
+        padding:"32px 24px",
+        background:"#080808",
+        position:"relative",
+        overflowY:"auto"
+      }}>
+        {/* BG glow */}
+        <div style={{ position:"absolute", top:"10%", right:"-10%", width:400, height:400, background:"radial-gradient(circle, rgba(253,185,19,0.04) 0%, transparent 70%)", pointerEvents:"none" }} />
+
+        <div style={{ width:"100%", maxWidth:400, display:"flex", flexDirection:"column", gap:28 }}>
+
+          {/* Mobile logo */}
+          <div className="fade-up" style={{ display:"flex", alignItems:"center", gap:12 }}>
+            <div style={{ width:36, height:36, background:"linear-gradient(135deg,#fdb913,#f5a500)", borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <Zap size={18} color="#000" strokeWidth={3} />
+            </div>
+            <div style={{ fontSize:18, fontWeight:900, color:"#fff", letterSpacing:"-0.02em" }}>AtomSync</div>
           </div>
 
-          <header className="flex flex-col gap-2">
-            <h3 className="text-3xl font-bold text-white tracking-tight">
-              {isLogin ? "Portal Access" : "Initialize Profile"}
-            </h3>
-            <p className="text-[#888] text-sm">
-              {isLogin ? "Enter your industrial credentials to continue." : "Join the AtomSync data grid."}
-            </p>
-          </header>
+          {/* Tabs */}
+          <div className="fade-up fade-up-1" style={{ display:"flex", gap:4, background:"rgba(255,255,255,0.04)", padding:4, borderRadius:14, border:"1px solid rgba(255,255,255,0.06)" }}>
+            <button className={`tab-pill ${isLogin ? "tab-active" : "tab-inactive"}`} onClick={() => { setIsLogin(true); setError(""); }}>Sign In</button>
+            <button className={`tab-pill ${!isLogin ? "tab-active" : "tab-inactive"}`} onClick={() => { setIsLogin(false); setError(""); }}>Register</button>
+          </div>
 
+          {/* Heading */}
+          <div className="fade-up fade-up-2">
+            <h2 style={{ fontSize:26, fontWeight:800, color:"#fff", letterSpacing:"-0.02em", marginBottom:6 }}>
+              {isLogin ? "Welcome back" : "Create account"}
+            </h2>
+            <p style={{ fontSize:13, color:"rgba(255,255,255,0.35)", lineHeight:1.6 }}>
+              {isLogin ? "Sign in to your AtomSync industrial portal." : "Join the Atomberg engineering intelligence platform."}
+            </p>
+          </div>
+
+          {/* Error */}
           {error && (
-            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 animate-shake">
-              <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
-              <span className="text-red-400 text-xs font-medium">{error}</span>
+            <div style={{ padding:"12px 16px", background:"rgba(239,68,68,0.08)", border:"1px solid rgba(239,68,68,0.2)", borderRadius:12, display:"flex", alignItems:"center", gap:10 }}>
+              <div style={{ width:6, height:6, borderRadius:"50%", background:"#ef4444", flexShrink:0 }} />
+              <span style={{ fontSize:13, color:"#f87171", fontWeight:500 }}>{error}</span>
             </div>
           )}
 
-          <form action={handleSubmit} className="flex flex-col gap-6">
+          {/* Form */}
+          <form action={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:16 }} className="fade-up fade-up-3">
             {!isLogin && (
-              <div className="space-y-4">
-                <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">FULL NAME</label>
-                  <div className="relative group">
-                    <input 
-                      name="full_name"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913]/20 transition-all outline-none" 
-                      placeholder="John Doe" 
-                      required={!isLogin}
-                    />
-                  </div>
+              <>
+                <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                  <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.15em", textTransform:"uppercase" }}>Full Name</label>
+                  <input name="full_name" className="inp" placeholder="John Doe" required={!isLogin} />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">ROLE</label>
-                    <select name="role" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] outline-none appearance-none">
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+                  <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.15em", textTransform:"uppercase" }}>Role</label>
+                    <select name="role" className="inp sel" required={!isLogin}>
                       <option value="employee">Employee</option>
                       <option value="manager">Manager</option>
                     </select>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">DEPT</label>
-                    <input name="department" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] outline-none" placeholder="ENG" />
+                  <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.15em", textTransform:"uppercase" }}>Department</label>
+                    <input name="department" className="inp" placeholder="Engineering" required={!isLogin} />
                   </div>
                 </div>
-              </div>
+              </>
             )}
 
-            <div className="flex flex-col gap-2">
-              <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">CORPORATE EMAIL</label>
-              <input 
-                type="email" 
-                name="email"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913]/20 transition-all outline-none" 
-                placeholder="name@atomsync.industrial" 
-                required 
-              />
+            <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+              <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.15em", textTransform:"uppercase" }}>Email</label>
+              <input name="email" type="email" className="inp" placeholder="you@atomberg.com" required />
             </div>
 
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-between items-center">
-                <label className="text-[10px] font-bold tracking-[0.1em] text-[#888] uppercase">PASSWORD</label>
-                {isLogin && <a className="text-[10px] font-bold text-[#fdb913] hover:underline" href="#">FORGOT?</a>}
+            <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.15em", textTransform:"uppercase" }}>Password</label>
+                {isLogin && <a href="#" style={{ fontSize:11, fontWeight:600, color:"#fdb913", textDecoration:"none", opacity:0.8 }}>Forgot?</a>}
               </div>
-              <div className="relative">
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  name="password"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913]/20 transition-all outline-none pr-12" 
-                  placeholder="••••••••" 
-                  required 
-                />
-                <button 
-                  type="button" 
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#444] hover:text-[#fdb913] transition-colors"
-                >
+              <div style={{ position:"relative" }}>
+                <input name="password" type={showPassword ? "text" : "password"} className="inp" placeholder="••••••••" required minLength={6} style={{ paddingRight:48 }} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position:"absolute", right:16, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"rgba(255,255,255,0.3)", display:"flex" }}>
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
 
             {isLogin && (
-              <div className="flex items-center gap-3">
-                <input type="checkbox" id="remember" className="w-4 h-4 rounded border-white/10 bg-white/5 text-[#fdb913] focus:ring-offset-[#080808] focus:ring-[#fdb913]" />
-                <label className="text-xs text-[#666] cursor-pointer hover:text-[#888]" htmlFor="remember">Stay authenticated for 24 hours</label>
-              </div>
+              <label style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer" }}>
+                <input type="checkbox" style={{ width:16, height:16, accentColor:"#fdb913", borderRadius:4 }} />
+                <span style={{ fontSize:13, color:"rgba(255,255,255,0.35)", fontWeight:500 }}>Keep me signed in for 24 hours</span>
+              </label>
             )}
 
-            <button 
-              type="submit" 
-              disabled={loading}
-              className="w-full bg-[#fdb913] hover:bg-[#ffca4d] active:scale-[0.98] disabled:opacity-50 disabled:scale-100 transition-all text-black font-black py-4 rounded-xl flex items-center justify-center gap-2 shadow-[0_10px_30px_rgba(253,185,19,0.2)]"
-            >
+            <button type="submit" className="cta-btn" disabled={loading} style={{ marginTop:4 }}>
               {loading ? (
-                <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin"></div>
+                <div style={{ width:20, height:20, border:"2.5px solid rgba(0,0,0,0.2)", borderTopColor:"#000", borderRadius:"50%", animation:"fanSpin 0.7s linear infinite" }} />
               ) : (
                 <>
-                  <span>{isLogin ? "Sign In" : "Initialize Profile"}</span>
-                  <LogIn size={18} strokeWidth={3} />
+                  <LogIn size={18} strokeWidth={2.5} />
+                  <span>{isLogin ? "Sign In to Portal" : "Create Account"}</span>
                 </>
               )}
             </button>
           </form>
 
-          {/* Quick Demo Login Section */}
-          <div className="relative py-4">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5"></div></div>
-            <div className="relative flex justify-center text-[10px] font-bold tracking-[0.2em]"><span className="bg-[#080808] px-4 text-[#444] uppercase">QUICK DEMO ACCESS</span></div>
+          {/* Divider */}
+          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
+            <span style={{ fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.2)", letterSpacing:"0.15em", textTransform:"uppercase", whiteSpace:"nowrap" }}>Quick Demo</span>
+            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          {/* Demo buttons */}
+          <div className="fade-up fade-up-5" style={{ display:"flex", gap:10 }}>
             {[
-              { role: "employee" as const, label: "User", icon: User },
-              { role: "manager" as const, label: "Lead", icon: Shield },
-              { role: "admin" as const, label: "Admin", icon: Crown }
-            ].map((btn) => (
-              <button 
-                key={btn.role}
-                onClick={() => handleDemoSwitch(btn.role)}
-                disabled={switchingRole !== null}
-                className="flex flex-col items-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 rounded-xl transition-all group"
-              >
-                {switchingRole === btn.role ? (
-                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fdb913] rounded-full animate-spin"></div>
+              { role:"employee" as const, label:"Employee", icon: User },
+              { role:"manager" as const, label:"Manager", icon: Shield },
+              { role:"admin" as const, label:"Admin", icon: Crown }
+            ].map(({ role, label, icon: Icon }) => (
+              <button key={role} className="demo-btn" onClick={() => handleDemoSwitch(role)} disabled={switchingRole !== null}>
+                {switchingRole === role ? (
+                  <div style={{ width:18, height:18, border:"2px solid rgba(253,185,19,0.2)", borderTopColor:"#fdb913", borderRadius:"50%", animation:"fanSpin 0.7s linear infinite" }} />
                 ) : (
-                  <btn.icon size={20} className="text-[#888] group-hover:text-[#fdb913] transition-colors" strokeWidth={1.5} />
+                  <Icon size={18} strokeWidth={1.5} />
                 )}
-                <span className="text-[9px] font-bold text-[#888] group-hover:text-white uppercase tracking-wider">{btn.label}</span>
+                <span style={{ fontSize:10, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" }}>{label}</span>
               </button>
             ))}
           </div>
 
-          <footer className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[#444] font-bold text-[10px] justify-center md:justify-start uppercase tracking-widest">
-            <a className="hover:text-[#fdb913] transition-colors" href="#">Security</a>
-            <a className="hover:text-[#fdb913] transition-colors" href="#">API</a>
-            <a className="hover:text-[#fdb913] transition-colors" href="#">Status</a>
-            <a className="hover:text-[#fdb913] transition-colors" href="#">Support</a>
-          </footer>
+          {/* Footer links */}
+          <div style={{ display:"flex", gap:20, flexWrap:"wrap" }}>
+            {["Privacy", "Security", "API Docs", "Status"].map(l => (
+              <a key={l} href="#" style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.2)", textDecoration:"none", letterSpacing:"0.05em", transition:"color .2s" }}
+                onMouseEnter={e => (e.currentTarget.style.color="#fdb913")}
+                onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.2)")}
+              >
+                {l}
+              </a>
+            ))}
+          </div>
         </div>
       </section>
-
-      {/* Decorative Blur Orbs */}
-      <div className="absolute -top-[10%] -right-[5%] w-[400px] h-[400px] bg-[#fdb913] opacity-[0.03] blur-[120px] rounded-full pointer-events-none"></div>
-      <div className="absolute -bottom-[10%] -left-[5%] w-[500px] h-[500px] bg-[#00677d] opacity-[0.03] blur-[150px] rounded-full pointer-events-none"></div>
     </main>
   );
 }
