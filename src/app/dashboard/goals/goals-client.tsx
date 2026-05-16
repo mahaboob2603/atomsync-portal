@@ -336,7 +336,7 @@ export function GoalsClient({
           <div className="flex justify-end pt-6 animate-fade-in">
             <button
               onClick={handleSubmit}
-              className="btn btn-submit-glow btn-lg"
+              className="btn btn-submit-glow"
               disabled={submitting}
             >
               {submitting ? (
