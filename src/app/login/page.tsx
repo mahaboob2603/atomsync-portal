@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { loginAction, signUpAction, switchDemoRole } from "@/app/actions/auth";
-import { Target, User, Shield, Crown, LogIn, Zap, Eye, EyeOff, Factory, ShieldCheck, Mail, Lock, Briefcase, Building2, ChevronRight } from "lucide-react";
+import { Target, User, Shield, Crown, LogIn, ChevronRight, Eye, EyeOff, Factory, ShieldCheck } from "lucide-react";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -32,23 +32,22 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col md:flex-row bg-[#f8f9fa] text-gray-900 font-sans selection:bg-[#fdb913] selection:text-black">
+    <main className="min-h-screen flex flex-col md:flex-row bg-[#050505] text-white font-sans selection:bg-[#fdb913] selection:text-black">
       
       {/* Left Side: Cinematic Brand Experience */}
-      <section className="relative hidden md:flex md:w-[45%] lg:w-[55%] bg-black items-center justify-center p-12 overflow-hidden">
+      <section className="relative hidden md:flex md:w-[45%] lg:w-[55%] bg-black items-center justify-center p-12 overflow-hidden border-r border-white/5">
         <div className="absolute inset-0 z-0">
-          {/* A high-end dark industrial background */}
           <img 
-            className="w-full h-full object-cover opacity-50 mix-blend-luminosity scale-105 hover:scale-100 transition-transform duration-[10s] ease-in-out" 
+            className="w-full h-full object-cover opacity-40 mix-blend-luminosity scale-105 hover:scale-100 transition-transform duration-[10s] ease-in-out" 
             alt="Atomberg Engineering Background" 
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-[#050505]"></div>
         </div>
         
         <div className="relative z-10 w-full max-w-xl text-white">
           <div className="mb-12 flex items-center gap-3">
-            <div className="w-12 h-12 bg-[#fdb913] rounded-xl flex items-center justify-center shadow-[0_0_30px_rgba(253,185,19,0.3)]">
+            <div className="w-12 h-12 bg-[#fdb913] rounded-xl flex items-center justify-center shadow-[0_0_30px_rgba(253,185,19,0.2)]">
               <Target className="text-black" size={26} strokeWidth={2.5} />
             </div>
             <span className="text-white font-bold text-2xl tracking-widest uppercase">AtomSync</span>
@@ -83,153 +82,164 @@ export default function LoginPage() {
       </section>
 
       {/* Right Side: Premium Auth Form */}
-      <section className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative overflow-y-auto">
+      <section className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative overflow-y-auto bg-[#050505]">
         
-        {/* Mobile Header */}
-        <div className="absolute top-6 left-6 md:hidden flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#fdb913] rounded-lg flex items-center justify-center">
-            <Target className="text-black" size={18} strokeWidth={2.5} />
-          </div>
-          <span className="font-bold text-lg text-black tracking-widest uppercase">AtomSync</span>
-        </div>
+        {/* Subtle background glow */}
+        <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#fdb913]/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-        <div className="w-full max-w-[440px] mt-12 md:mt-0">
+        <div className="w-full max-w-[420px] z-10">
           
-          <div className="mb-8">
-            <h2 className="text-3xl font-extrabold text-black mb-2 tracking-tight">
-              {isLogin ? "Welcome back" : "Create account"}
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">
+              {isLogin ? "Welcome Back" : "Initialize Profile"}
             </h2>
-            <p className="text-gray-500 font-medium">
-              {isLogin ? "Enter your credentials to access the portal." : "Join the AtomSync operational network."}
+            <p className="text-gray-400 text-sm font-medium">
+              {isLogin ? "Authenticate to access the operational network." : "Join the AtomSync data grid."}
             </p>
           </div>
 
           {/* Premium Tab Toggle */}
-          <div className="flex p-1 bg-gray-200/60 rounded-xl mb-8 shadow-inner">
+          <div className="flex p-1 bg-white/5 rounded-2xl mb-8 border border-white/10 backdrop-blur-sm">
             <button 
               type="button"
               onClick={() => { setIsLogin(true); setError(""); }}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${isLogin ? 'bg-white text-black shadow-sm scale-100' : 'text-gray-500 hover:text-black scale-95 hover:scale-100'}`}
+              className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${isLogin ? 'bg-white/10 text-white shadow-lg border border-white/10' : 'text-gray-500 hover:text-gray-300'}`}
             >
               Sign In
             </button>
             <button 
               type="button"
               onClick={() => { setIsLogin(false); setError(""); }}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${!isLogin ? 'bg-white text-black shadow-sm scale-100' : 'text-gray-500 hover:text-black scale-95 hover:scale-100'}`}
+              className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${!isLogin ? 'bg-white/10 text-white shadow-lg border border-white/10' : 'text-gray-500 hover:text-gray-300'}`}
             >
               Register
             </button>
           </div>
 
           {error && (
-            <div className="mb-6 p-4 rounded-xl text-sm font-semibold bg-red-50 text-red-600 border border-red-100 flex items-start gap-3 animate-slide-in-right">
-              <Lock size={18} className="mt-0.5 shrink-0" />
+            <div className="mb-6 p-4 rounded-xl text-sm font-medium bg-red-950/50 text-red-400 border border-red-900/50 flex items-center gap-3 backdrop-blur-md animate-fade-in">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
               <span>{error}</span>
             </div>
           )}
 
-          <form action={handleSubmit} className="space-y-5">
+          <form action={handleSubmit} className="space-y-4">
             {!isLogin && (
-              <div className="space-y-5 animate-fade-in">
+              <div className="space-y-4 animate-fade-in">
+                {/* Floating Label Input */}
                 <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#fdb913] transition-colors">
-                    <User size={18} />
-                  </div>
                   <input
                     id="full_name"
                     name="full_name"
                     type="text"
-                    placeholder="Full Name"
-                    className="w-full bg-white border-2 border-gray-200 pl-11 pr-4 py-3.5 rounded-xl text-black font-medium placeholder:text-gray-400 placeholder:font-normal focus:ring-0 focus:border-[#fdb913] outline-none transition-all shadow-sm"
+                    placeholder=" "
+                    className="block px-5 pb-3 pt-7 w-full text-sm text-white bg-white/5 rounded-xl border border-white/10 appearance-none focus:outline-none focus:ring-0 focus:border-[#fdb913] focus:bg-white/10 peer transition-all shadow-inner"
                     required={!isLogin}
                   />
+                  <label 
+                    htmlFor="full_name" 
+                    className="absolute text-xs text-gray-400 duration-300 transform -translate-y-2 scale-75 top-4 z-10 origin-[0] left-5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-sm peer-focus:scale-75 peer-focus:-translate-y-2 peer-focus:text-[#fdb913] uppercase tracking-wider font-semibold"
+                  >
+                    Full Name
+                  </label>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#fdb913] transition-colors">
-                      <Briefcase size={18} />
-                    </div>
                     <select 
                       id="role" 
                       name="role" 
-                      className="w-full bg-white border-2 border-gray-200 pl-11 pr-10 py-3.5 rounded-xl text-black font-medium focus:ring-0 focus:border-[#fdb913] outline-none transition-all shadow-sm appearance-none cursor-pointer" 
+                      className="block px-5 pb-3 pt-7 w-full text-sm text-white bg-white/5 rounded-xl border border-white/10 appearance-none focus:outline-none focus:ring-0 focus:border-[#fdb913] focus:bg-white/10 peer transition-all shadow-inner cursor-pointer" 
                       required={!isLogin}
                     >
-                      <option value="employee">Employee</option>
-                      <option value="manager">Manager</option>
+                      <option value="employee" className="bg-[#111] text-white">Employee</option>
+                      <option value="manager" className="bg-[#111] text-white">Manager</option>
                     </select>
+                    <label 
+                      htmlFor="role" 
+                      className="absolute text-xs text-[#fdb913] duration-300 transform -translate-y-2 scale-75 top-4 z-10 origin-[0] left-5 uppercase tracking-wider font-semibold"
+                    >
+                      Role
+                    </label>
                     <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
                     </div>
                   </div>
                   
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#fdb913] transition-colors">
-                      <Building2 size={18} />
-                    </div>
                     <input
                       id="department"
                       name="department"
                       type="text"
-                      placeholder="Department"
-                      className="w-full bg-white border-2 border-gray-200 pl-11 pr-4 py-3.5 rounded-xl text-black font-medium placeholder:text-gray-400 placeholder:font-normal focus:ring-0 focus:border-[#fdb913] outline-none transition-all shadow-sm"
+                      placeholder=" "
+                      className="block px-5 pb-3 pt-7 w-full text-sm text-white bg-white/5 rounded-xl border border-white/10 appearance-none focus:outline-none focus:ring-0 focus:border-[#fdb913] focus:bg-white/10 peer transition-all shadow-inner"
                       required={!isLogin}
                     />
+                    <label 
+                      htmlFor="department" 
+                      className="absolute text-xs text-gray-400 duration-300 transform -translate-y-2 scale-75 top-4 z-10 origin-[0] left-5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-sm peer-focus:scale-75 peer-focus:-translate-y-2 peer-focus:text-[#fdb913] uppercase tracking-wider font-semibold"
+                    >
+                      Department
+                    </label>
                   </div>
                 </div>
               </div>
             )}
 
             <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#fdb913] transition-colors">
-                <Mail size={18} />
-              </div>
               <input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="Corporate Email"
-                className="w-full bg-white border-2 border-gray-200 pl-11 pr-4 py-3.5 rounded-xl text-black font-medium placeholder:text-gray-400 placeholder:font-normal focus:ring-0 focus:border-[#fdb913] outline-none transition-all shadow-sm"
+                placeholder=" "
+                className="block px-5 pb-3 pt-7 w-full text-sm text-white bg-white/5 rounded-xl border border-white/10 appearance-none focus:outline-none focus:ring-0 focus:border-[#fdb913] focus:bg-white/10 peer transition-all shadow-inner"
                 required
               />
+              <label 
+                htmlFor="email" 
+                className="absolute text-xs text-gray-400 duration-300 transform -translate-y-2 scale-75 top-4 z-10 origin-[0] left-5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-sm peer-focus:scale-75 peer-focus:-translate-y-2 peer-focus:text-[#fdb913] uppercase tracking-wider font-semibold"
+              >
+                Corporate Email
+              </label>
             </div>
 
             <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#fdb913] transition-colors">
-                <Lock size={18} />
-              </div>
               <input
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className="w-full bg-white border-2 border-gray-200 pl-11 pr-12 py-3.5 rounded-xl text-black font-medium placeholder:text-gray-400 placeholder:font-normal focus:ring-0 focus:border-[#fdb913] outline-none transition-all shadow-sm"
+                placeholder=" "
+                className="block px-5 pb-3 pt-7 w-full text-sm text-white bg-white/5 rounded-xl border border-white/10 appearance-none focus:outline-none focus:ring-0 focus:border-[#fdb913] focus:bg-white/10 peer transition-all shadow-inner pr-12"
                 required
                 minLength={6}
               />
+              <label 
+                htmlFor="password" 
+                className="absolute text-xs text-gray-400 duration-300 transform -translate-y-2 scale-75 top-4 z-10 origin-[0] left-5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-sm peer-focus:scale-75 peer-focus:-translate-y-2 peer-focus:text-[#fdb913] uppercase tracking-wider font-semibold"
+              >
+                Password
+              </label>
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-700 transition-colors"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-white transition-colors"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
 
             {isLogin && (
-              <div className="flex justify-between items-center px-1">
+              <div className="flex justify-between items-center px-1 pt-2">
                 <label className="flex items-center gap-2 cursor-pointer group">
                   <div className="relative flex items-center justify-center">
-                    <input type="checkbox" className="peer appearance-none w-5 h-5 border-2 border-gray-300 rounded focus:ring-0 checked:bg-[#fdb913] checked:border-[#fdb913] transition-all cursor-pointer" />
-                    <svg className="absolute w-3 h-3 text-black opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 5L4.5 8.5L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <input type="checkbox" className="peer appearance-none w-4 h-4 border border-white/20 rounded bg-white/5 focus:ring-0 checked:bg-[#fdb913] checked:border-[#fdb913] transition-all cursor-pointer" />
+                    <svg className="absolute w-2.5 h-2.5 text-black opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 5L4.5 8.5L13 1" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-gray-600 group-hover:text-black transition-colors">Remember me</span>
+                  <span className="text-xs font-medium text-gray-400 group-hover:text-white transition-colors">Remember me</span>
                 </label>
-                <a className="text-sm font-bold text-gray-500 hover:text-black transition-colors cursor-pointer">
+                <a className="text-xs font-semibold text-[#fdb913] hover:text-[#ffca4d] transition-colors cursor-pointer">
                   Forgot password?
                 </a>
               </div>
@@ -237,7 +247,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="group w-full bg-[#fdb913] hover:bg-[#e5a60b] text-black font-extrabold py-4 rounded-xl shadow-[0_4px_14px_rgba(253,185,19,0.3)] hover:shadow-[0_6px_20px_rgba(253,185,19,0.4)] hover:-translate-y-0.5 active:scale-[0.98] transition-all flex justify-center items-center gap-2 mt-4 overflow-hidden relative"
+              className="group w-full bg-[#fdb913] hover:bg-[#ffca4d] text-black font-extrabold py-4 rounded-xl shadow-[0_0_20px_rgba(253,185,19,0.15)] hover:shadow-[0_0_25px_rgba(253,185,19,0.3)] hover:-translate-y-0.5 active:scale-[0.98] transition-all flex justify-center items-center gap-2 mt-6 overflow-hidden relative"
               disabled={loading}
             >
               {loading ? (
@@ -246,61 +256,61 @@ export default function LoginPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Authenticating...
+                  <span className="tracking-wide uppercase text-sm">Authenticating...</span>
                 </>
               ) : (
                 <>
-                  <span className="tracking-wide">{isLogin ? "Access Portal" : "Create Account"}</span>
+                  <span className="tracking-wide uppercase text-sm">{isLogin ? "Access Network" : "Initialize Profile"}</span>
                   <ChevronRight size={18} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
           </form>
 
-          {/* Quick Demo Access Header - Redesigned as Premium Tags */}
-          <div className="mt-10">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="h-px bg-gray-200 flex-1"></div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-white px-2">Demo Credentials</span>
-              <div className="h-px bg-gray-200 flex-1"></div>
+          {/* Cyberpunk/Premium Divider */}
+          <div className="mt-12 mb-8 relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/10"></div>
             </div>
+            <div className="relative flex justify-center">
+              <span className="bg-[#050505] px-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                Quick Demo Access
+              </span>
+            </div>
+          </div>
             
-            <div className="flex flex-wrap justify-center gap-3">
-              {[
-                { role: "employee" as const, label: "Employee", icon: User },
-                { role: "manager" as const, label: "Manager", icon: Shield },
-                { role: "admin" as const, label: "Admin", icon: Crown },
-              ].map(({ role, label, icon: Icon }) => (
-                <button
-                  key={role}
-                  type="button"
-                  onClick={() => handleDemoSwitch(role)}
-                  disabled={switchingRole !== null}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all border-2 ${
-                    switchingRole === role 
-                      ? 'border-black bg-black text-white shadow-md' 
-                      : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
-                >
-                  {switchingRole === role ? (
-                    <svg className="animate-spin h-3.5 w-3.5 text-white" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                  ) : (
-                    <Icon size={14} strokeWidth={2.5} />
-                  )}
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { role: "employee" as const, label: "Employee", icon: User },
+              { role: "manager" as const, label: "Manager", icon: Shield },
+              { role: "admin" as const, label: "Admin", icon: Crown },
+            ].map(({ role, label, icon: Icon }) => (
+              <button
+                key={role}
+                type="button"
+                onClick={() => handleDemoSwitch(role)}
+                disabled={switchingRole !== null}
+                className={`flex flex-col items-center justify-center gap-2 py-4 rounded-xl transition-all border ${
+                  switchingRole === role 
+                    ? 'border-[#fdb913] bg-[#fdb913]/10 text-[#fdb913] shadow-[0_0_15px_rgba(253,185,19,0.15)]' 
+                    : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/20 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {switchingRole === role ? (
+                  <svg className="animate-spin h-5 w-5 text-[#fdb913]" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                ) : (
+                  <Icon size={20} strokeWidth={1.5} />
+                )}
+                <span className="text-[10px] font-bold uppercase tracking-widest">
                   {label}
-                </button>
-              ))}
-            </div>
+                </span>
+              </button>
+            ))}
           </div>
 
-          <div className="mt-12 text-center">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-              © 2024 AtomSync Portal. Secure Access.
-            </p>
-          </div>
         </div>
       </section>
     </main>
