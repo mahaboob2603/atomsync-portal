@@ -99,9 +99,17 @@ export function AllGoalsClient({
 
           return (
             <div key={sheet.id} className="glass-card overflow-hidden animate-fade-in">
-              <button
+              <div
                 onClick={() => setExpandedSheet(isExpanded ? null : sheet.id)}
-                className="w-full p-5 flex items-center justify-between text-left"
+                className="w-full p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setExpandedSheet(isExpanded ? null : sheet.id);
+                  }
+                }}
               >
                 <div className="flex items-center gap-4">
                   <div
@@ -141,7 +149,7 @@ export function AllGoalsClient({
                   </span>
                   {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                 </div>
-              </button>
+              </div>
 
               {isExpanded && (
                 <div className="px-5 pb-5 animate-fade-in">
