@@ -1,50 +1,8 @@
 "use client";
 
-import { useState, useRef, MouseEvent, ReactNode } from "react";
+import { useState } from "react";
 import { loginAction, signUpAction, switchDemoRole } from "@/app/actions/auth";
-import { Target, User, Shield, Crown, ChevronRight, Eye, EyeOff } from "lucide-react";
-
-function TiltCard({ children, className }: { children: ReactNode; className?: string }) {
-  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateX = ((y - centerY) / centerY) * -15;
-    const rotateY = ((x - centerX) / centerX) * 15;
-    
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
-  }
-
-  function handleMouseLeave() {
-    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-  }
-
-  return (
-    <div 
-      ref={cardRef}
-      className={className}
-      style={{ 
-        transform, 
-        transition: transform.includes("rotateX(0deg)") ? "transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)" : "transform 0.1s linear", 
-        transformStyle: "preserve-3d" 
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="tilt-inner" style={{ transformStyle: "preserve-3d", transform: "translateZ(30px)" }}>
-        {children}
-      </div>
-    </div>
-  );
-}
+import { Target, User, Shield, Crown, ChevronRight, Eye, EyeOff, Activity } from "lucide-react";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -75,102 +33,42 @@ export default function LoginPage() {
 
   return (
     <main className="login-shell">
-      {/* Left Panel: Cinematic Brand */}
+      {/* Left Panel: Minimalist Fluid Design */}
       <section className="login-brand-panel">
-        <div className="login-brand-bg">
-          <img
-            className="login-brand-img"
-            alt="Atomberg Engineering"
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
-          />
-          <div className="login-brand-overlay"></div>
-          <div className="login-brand-grid"></div>
+        <div className="creative-bg">
+          <div className="orb orb-1"></div>
+          <div className="orb orb-2"></div>
+          <div className="orb orb-3"></div>
+          <div className="glass-overlay"></div>
         </div>
-        <div className="login-brand-content">
-          <div className="login-brand-logo">
-            <div className="login-logo-icon">
-              <Target color="#000" size={26} strokeWidth={2.5} />
+
+        <div className="login-brand-content creative-layout">
+          <div className="creative-logo">
+            <Target color="#fff" size={28} strokeWidth={2.5} className="target-spin" />
+            <span className="login-logo-text-clean">AtomSync</span>
+          </div>
+
+          <div className="creative-text-wrap">
+            <h1 className="creative-title">
+              <span className="line-1">Precision.</span>
+              <span className="line-2">Power.</span>
+              <span className="line-3">Perfection.</span>
+            </h1>
+            <p className="creative-desc">
+              The premier platform for high-performance appliance engineering and collaborative industrial intelligence. 
+            </p>
+          </div>
+
+          <div className="creative-vitals">
+            <div className="vital-pill">
+              <div className="vital-dot pulse"></div>
+              <span>Systems Online</span>
             </div>
-            <span className="login-logo-text">AtomSync</span>
+            <div className="vital-pill">
+              <Shield size={14} className="vital-icon text-blue-400" />
+              <span>Tier-4 Secured</span>
+            </div>
           </div>
-          <h1 className="login-brand-title">
-            Precision in every <br/>
-            <span className="login-gold">Synchronization</span>.
-          </h1>
-          <p className="login-brand-desc">
-            Welcome to the central portal for high-performance engineering data and collaborative industrial intelligence. Manage fleet diagnostics with atomic precision.
-          </p>
-          
-          {/* Institutional Command-Center Modules */}
-          <div className="command-modules-container">
-            {/* Reliability Module */}
-            <TiltCard className="command-module tilt-module">
-              <div className="command-module-header">
-                <div className="cmd-indicator cmd-indicator-active"></div>
-                <span className="cmd-label">SYSTEM RELIABILITY</span>
-                <span className="cmd-status">OPTIMAL</span>
-              </div>
-              <div className="command-module-body">
-                <div className="cmd-ring-container" style={{ transform: "translateZ(30px)" }}>
-                  <svg viewBox="0 0 36 36" className="cmd-ring">
-                    <path
-                      className="cmd-ring-bg"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                    <path
-                      className="cmd-ring-fill"
-                      strokeDasharray="99.9, 100"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                  </svg>
-                  <div className="cmd-ring-text">99.9<span className="cmd-ring-percent">%</span></div>
-                </div>
-                <div className="cmd-details">
-                  <div className="cmd-detail-row">
-                    <span className="cmd-detail-label">UPTIME</span>
-                    <span className="cmd-detail-value">99.998%</span>
-                  </div>
-                  <div className="cmd-detail-row">
-                    <span className="cmd-detail-label">LATENCY</span>
-                    <span className="cmd-detail-value">12ms</span>
-                  </div>
-                </div>
-              </div>
-            </TiltCard>
-
-            {/* Security Module */}
-            <TiltCard className="command-module tilt-module">
-              <div className="command-module-header">
-                <div className="cmd-indicator cmd-indicator-secure"></div>
-                <span className="cmd-label">PROTOCOL SECURITY</span>
-                <span className="cmd-status">SECURED</span>
-              </div>
-              <div className="command-module-body">
-                <div className="cmd-security-visual" style={{ transform: "translateZ(30px)" }}>
-                  <div className="cmd-stitch-bars flex items-end gap-1 h-12 w-full">
-                    <div className="w-full bg-[#fdb913]/40 h-[40%] rounded-t-sm animation-pulse-fast"></div>
-                    <div className="w-full bg-[#fdb913] h-[70%] rounded-t-sm"></div>
-                    <div className="w-full bg-[#fdb913]/20 h-[30%] rounded-t-sm animation-pulse-slow"></div>
-                    <div className="w-full bg-[#fdb913] h-[90%] rounded-t-sm shadow-[0_0_10px_rgba(253,185,19,0.3)] animate-pulse"></div>
-                    <div className="w-full bg-[#fdb913]/60 h-[50%] rounded-t-sm"></div>
-                    <div className="w-full bg-[#fdb913] h-[80%] rounded-t-sm animation-pulse-fast"></div>
-                    <div className="w-full bg-[#fdb913]/30 h-[20%] rounded-t-sm"></div>
-                  </div>
-                </div>
-                <div className="cmd-details">
-                  <div className="cmd-detail-row">
-                    <span className="cmd-detail-label">ENCRYPTION</span>
-                    <span className="cmd-detail-value cmd-gold">TIER-4</span>
-                  </div>
-                  <div className="cmd-detail-row">
-                    <span className="cmd-detail-label">INTEGRITY</span>
-                    <span className="cmd-detail-value">VERIFIED</span>
-                  </div>
-                </div>
-              </div>
-            </TiltCard>
-          </div>
-
         </div>
       </section>
 
@@ -371,263 +269,164 @@ export default function LoginPage() {
           font-family: 'Inter', system-ui, sans-serif;
         }
 
-        /* ======= LEFT BRAND PANEL ======= */
+        /* ======= LEFT BRAND PANEL (CREATIVE) ======= */
         .login-brand-panel {
           display: none;
           position: relative;
           width: 55%;
           align-items: center;
           justify-content: center;
-          padding: 3rem;
+          padding: 4rem;
           overflow: hidden;
-          border-right: 1px solid rgba(255,255,255,0.05);
+          background: #000;
         }
         @media (min-width: 768px) {
           .login-brand-panel { display: flex; }
         }
-        .login-brand-bg {
+        
+        .creative-bg {
           position: absolute;
           inset: 0;
-          z-index: 0;
-          background: #050505;
+          overflow: hidden;
         }
-        .login-brand-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          opacity: 0.15;
-          filter: grayscale(1) contrast(1.2);
-          mix-blend-mode: overlay;
+        
+        .orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(90px);
+          opacity: 0.7;
+          animation: float 25s infinite ease-in-out alternate;
         }
-        .login-brand-overlay {
+        .orb-1 {
+          width: 700px; height: 700px;
+          background: #fdb913; /* Signal Gold */
+          top: -200px; left: -250px;
+          animation-delay: 0s;
+        }
+        .orb-2 {
+          width: 600px; height: 600px;
+          background: #00677d; /* Deep Blue */
+          bottom: -200px; right: -150px;
+          animation-delay: -7s;
+        }
+        .orb-3 {
+          width: 500px; height: 500px;
+          background: rgba(255,255,255,0.1);
+          top: 30%; left: 30%;
+          animation-duration: 30s;
+        }
+        
+        .glass-overlay {
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle at center, transparent 0%, #0a0a0a 100%),
-                      linear-gradient(180deg, rgba(10,10,10,0.4) 0%, #0a0a0a 100%);
+          background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+          backdrop-filter: blur(40px);
+          -webkit-backdrop-filter: blur(40px);
+          z-index: 1;
         }
-        .login-brand-grid {
-          position: absolute;
-          inset: 0;
-          background-image: 
-            linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
-            linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
-            linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
-            linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
-            linear-gradient(60deg, #1f1f1f 25%, transparent 25.5%, transparent 75%, #1f1f1f 75%, #1f1f1f),
-            linear-gradient(60deg, #1f1f1f 25%, transparent 25.5%, transparent 75%, #1f1f1f 75%, #1f1f1f);
-          background-size: 80px 140px;
-          background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
-          opacity: 0.35;
-          mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
-          -webkit-mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
+        
+        @keyframes float {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(80px, -80px) scale(1.1); }
+          100% { transform: translate(-40px, 60px) scale(0.9); }
         }
-        .login-brand-content {
+
+        .login-brand-content.creative-layout {
           position: relative;
           z-index: 10;
-          max-width: 540px;
           width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
         }
-        .login-brand-logo {
+
+        .creative-logo {
           display: flex;
           align-items: center;
           gap: 0.85rem;
-          margin-bottom: 3rem;
         }
-        .login-logo-icon {
-          width: 52px;
-          height: 52px;
-          background: linear-gradient(135deg, #fdb913, #e5a300);
-          border-radius: 14px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 0 40px rgba(253,185,19,0.25), inset 0 2px 4px rgba(255,255,255,0.3);
-          border: 1px solid rgba(253,185,19,0.5);
+        .target-spin {
+          animation: slow-spin 12s linear infinite;
         }
-        .login-logo-text {
+        @keyframes slow-spin { 100% { transform: rotate(360deg); } }
+        
+        .login-logo-text-clean {
           font-weight: 800;
-          font-size: 1.75rem;
-          letter-spacing: 0.18em;
+          font-size: 1.4rem;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           color: #fff;
-          text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-        .login-brand-title {
-          font-size: clamp(2.5rem, 4.5vw, 3.8rem);
-          font-weight: 800;
-          line-height: 1.05;
-          margin-bottom: 1.5rem;
-          color: #fff;
-          letter-spacing: -0.03em;
-          text-shadow: 0 4px 20px rgba(0,0,0,0.8);
-        }
-        .login-gold { 
-          color: transparent;
-          background: linear-gradient(135deg, #fdb913 0%, #ffdf80 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-        }
-        .login-brand-desc {
-          font-size: 1.05rem;
-          color: #a0a0a0;
-          line-height: 1.7;
-          margin-bottom: 3.5rem;
-          max-width: 90%;
-          font-weight: 400;
         }
 
-        /* Institutional Command-Center Modules */
-        .command-modules-container {
+        .creative-text-wrap {
+          margin-top: auto;
+          margin-bottom: 5rem;
+        }
+
+        .creative-title {
           display: flex;
           flex-direction: column;
+          font-size: clamp(3rem, 6vw, 5.5rem);
+          font-weight: 800;
+          line-height: 1.1;
+          letter-spacing: -0.04em;
+          margin-bottom: 2rem;
+        }
+
+        .line-1 { color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .line-2 { color: #fdb913; text-shadow: 0 4px 30px rgba(253,185,19,0.4); }
+        .line-3 { 
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+        }
+
+        .creative-desc {
+          font-size: 1.15rem;
+          color: rgba(255,255,255,0.75);
+          line-height: 1.6;
+          max-width: 85%;
+          font-weight: 400;
+          letter-spacing: 0.01em;
+        }
+
+        .creative-vitals {
+          display: flex;
           gap: 1.25rem;
-          perspective: 1200px;
         }
-        .command-module {
-          background: rgba(255, 255, 255, 0.03);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
-          padding: 1.5rem;
-          box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.8), -5px -5px 20px rgba(253, 185, 19, 0.05), inset 0 1px 0 rgba(255,255,255,0.05);
-          position: relative;
-          overflow: hidden;
-          will-change: transform;
-        }
-        .tilt-inner {
-          width: 100%;
-          height: 100%;
-          position: relative;
-        }
-        .command-module::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; width: 100%; height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-        }
-        .command-module-header {
+
+        .vital-pill {
           display: flex;
           align-items: center;
-          margin-bottom: 1.25rem;
-          padding-bottom: 0.75rem;
-          border-bottom: 1px solid rgba(255,255,255,0.05);
+          gap: 0.6rem;
+          padding: 0.6rem 1.25rem;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 100px;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #e0e0e0;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-        .cmd-indicator {
-          width: 8px; height: 8px;
+
+        .vital-dot {
+          width: 6px; height: 6px;
           border-radius: 50%;
-          margin-right: 0.75rem;
-          box-shadow: 0 0 10px currentColor;
+          background: #10b981;
         }
-        .cmd-indicator-active {
-          background: #10b981; color: #10b981;
+        .vital-dot.pulse {
+          box-shadow: 0 0 12px #10b981;
           animation: pulse-glow 2s infinite;
         }
-        .cmd-indicator-secure {
-          background: #3b82f6; color: #3b82f6;
-        }
-        .cmd-label {
-          flex: 1;
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 0.15em;
-          color: #888;
-        }
-        .cmd-status {
-          font-size: 0.65rem;
-          font-weight: 800;
-          letter-spacing: 0.1em;
-          color: #fff;
-          background: rgba(255,255,255,0.1);
-          padding: 0.2rem 0.5rem;
-          border-radius: 4px;
-        }
-        .command-module-body {
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-        }
         
-        /* Ring Visualization */
-        .cmd-ring-container {
-          position: relative;
-          width: 64px; height: 64px;
-          flex-shrink: 0;
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.4; transform: scale(0.85); }
         }
-        .cmd-ring {
-          transform: rotate(-90deg);
-          width: 100%; height: 100%;
-        }
-        .cmd-ring-bg {
-          fill: none;
-          stroke: rgba(255,255,255,0.05);
-          stroke-width: 2.5;
-        }
-        .cmd-ring-fill {
-          fill: none;
-          stroke: #fdb913;
-          stroke-width: 2.5;
-          stroke-linecap: round;
-          filter: drop-shadow(0 0 4px rgba(253,185,19,0.5));
-          animation: draw-ring 1.5s ease-out forwards;
-        }
-        .cmd-ring-text {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.9rem;
-          font-weight: 700;
-          color: #fff;
-        }
-        .cmd-ring-percent { font-size: 0.6rem; color: #888; margin-left: 1px; }
-
-        /* Security Visualization */
-        .cmd-security-visual {
-          width: 80px; height: 48px;
-          position: relative;
-          display: flex;
-          align-items: flex-end;
-          flex-shrink: 0;
-          background: rgba(0,0,0,0.3);
-          border-radius: 6px;
-          padding: 6px;
-          border: 1px solid rgba(253,185,19,0.1);
-        }
-        .animation-pulse-fast { animation: pulse 1s infinite alternate; }
-        .animation-pulse-slow { animation: pulse 3s infinite alternate; }
-
-        /* Detail Rows */
-        .cmd-details {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-        .cmd-detail-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .cmd-detail-label {
-          font-size: 0.65rem;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          color: #666;
-        }
-        .cmd-detail-value {
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: #ccc;
-          font-family: 'JetBrains Mono', monospace, sans-serif;
-        }
-        .cmd-gold { color: #fdb913; text-shadow: 0 0 10px rgba(253,185,19,0.3); }
-
-        @keyframes draw-ring { from { stroke-dasharray: 0, 100; } }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-        @keyframes eq-bars { 0% { transform: scaleY(0.7); } 100% { transform: scaleY(1); } }
-        @keyframes pulse-glow { 0%, 100% { opacity: 1; box-shadow: 0 0 10px currentColor; } 50% { opacity: 0.5; box-shadow: 0 0 2px currentColor; } }
 
         /* ======= RIGHT FORM PANEL ======= */
         .login-form-panel {
