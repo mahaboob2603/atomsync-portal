@@ -22,7 +22,8 @@ export async function toggleCycleActive(cycleId: string, isActive: boolean) {
 
   // If activating, deactivate all others first
   if (isActive) {
-    await supabase.from("cycles").update({ is_active: false }).neq("id", cycleId);
+    const { error: err1 } = await supabase.from("cycles").update({ is_active: false }).neq("id", cycleId);
+    if (err1) console.error("Error deactivating other cycles:", err1);
   }
 
   const { error } = await supabase
@@ -30,7 +31,10 @@ export async function toggleCycleActive(cycleId: string, isActive: boolean) {
     .update({ is_active: isActive })
     .eq("id", cycleId);
 
-  if (error) return { error: error.message };
+  if (error) {
+    console.error("Error toggling cycle:", error);
+    return { error: error.message };
+  }
   revalidatePath("/dashboard/cycles");
   return { success: true };
 }

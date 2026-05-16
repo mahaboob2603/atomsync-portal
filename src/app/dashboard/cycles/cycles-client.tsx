@@ -46,7 +46,10 @@ export function CyclesClient({ cycles }: CyclesClientProps) {
 
   async function handleToggle(id: string, isActive: boolean) {
     setLoading(true);
-    await toggleCycleActive(id, !isActive);
+    const res = await toggleCycleActive(id, !isActive);
+    if (res?.error) {
+      alert("Failed to toggle cycle: " + res.error);
+    }
     setLoading(false);
     router.refresh();
   }
