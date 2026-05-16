@@ -1,8 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, MouseEvent, ReactNode } from "react";
 import { loginAction, signUpAction, switchDemoRole } from "@/app/actions/auth";
 import { Target, User, Shield, Crown, ChevronRight, Eye, EyeOff } from "lucide-react";
+
+function TiltCard({ children, className }: { children: ReactNode; className?: string }) {
+  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -15;
+    const rotateY = ((x - centerX) / centerX) * 15;
+    
+    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
+  }
+
+  function handleMouseLeave() {
+    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
+  }
+
+  return (
+    <div 
+      ref={cardRef}
+      className={className}
+      style={{ 
+        transform, 
+        transition: transform.includes("rotateX(0deg)") ? "transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)" : "transform 0.1s linear", 
+        transformStyle: "preserve-3d" 
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="tilt-inner" style={{ transformStyle: "preserve-3d", transform: "translateZ(30px)" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -62,14 +104,14 @@ export default function LoginPage() {
           {/* Institutional Command-Center Modules */}
           <div className="command-modules-container">
             {/* Reliability Module */}
-            <div className="command-module">
+            <TiltCard className="command-module tilt-module">
               <div className="command-module-header">
                 <div className="cmd-indicator cmd-indicator-active"></div>
                 <span className="cmd-label">SYSTEM RELIABILITY</span>
                 <span className="cmd-status">OPTIMAL</span>
               </div>
               <div className="command-module-body">
-                <div className="cmd-ring-container">
+                <div className="cmd-ring-container" style={{ transform: "translateZ(30px)" }}>
                   <svg viewBox="0 0 36 36" className="cmd-ring">
                     <path
                       className="cmd-ring-bg"
@@ -94,17 +136,17 @@ export default function LoginPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </TiltCard>
 
             {/* Security Module */}
-            <div className="command-module">
+            <TiltCard className="command-module tilt-module">
               <div className="command-module-header">
                 <div className="cmd-indicator cmd-indicator-secure"></div>
                 <span className="cmd-label">PROTOCOL SECURITY</span>
                 <span className="cmd-status">SECURED</span>
               </div>
               <div className="command-module-body">
-                <div className="cmd-security-visual">
+                <div className="cmd-security-visual" style={{ transform: "translateZ(30px)" }}>
                   <div className="cmd-scan-line"></div>
                   <div className="cmd-tech-bars">
                     {[...Array(12)].map((_, i) => (
@@ -123,7 +165,7 @@ export default function LoginPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </TiltCard>
           </div>
 
         </div>
@@ -430,6 +472,7 @@ export default function LoginPage() {
           display: flex;
           flex-direction: column;
           gap: 1.25rem;
+          perspective: 1200px;
         }
         .command-module {
           background: rgba(15, 15, 15, 0.6);
@@ -441,6 +484,12 @@ export default function LoginPage() {
           box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
           position: relative;
           overflow: hidden;
+          will-change: transform;
+        }
+        .tilt-inner {
+          width: 100%;
+          height: 100%;
+          position: relative;
         }
         .command-module::before {
           content: '';
