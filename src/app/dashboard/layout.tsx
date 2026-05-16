@@ -24,6 +24,7 @@ export default async function DashboardLayout({
     .single();
 
   if (!profile) {
+    await supabase.auth.signOut();
     redirect("/login");
   }
 
