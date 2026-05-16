@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { loginAction, signUpAction, switchDemoRole } from "@/app/actions/auth";
-import { Target, User, Shield, Crown, LogIn, ChevronRight, Eye, EyeOff, Factory, ShieldCheck, Mail, Lock, Briefcase, Building2 } from "lucide-react";
+import { Target, User, Shield, Crown, ChevronRight, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,25 +10,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [switchingRole, setSwitchingRole] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-
-  // Apply autofill fix dynamically
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      input:-webkit-autofill,
-      input:-webkit-autofill:hover, 
-      input:-webkit-autofill:focus, 
-      input:-webkit-autofill:active{
-          -webkit-box-shadow: 0 0 0 30px #111 inset !important;
-          -webkit-text-fill-color: white !important;
-          transition: background-color 5000s ease-in-out 0s;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
@@ -51,204 +32,157 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col md:flex-row bg-[#050505] text-white font-sans selection:bg-[#fdb913] selection:text-black">
-      
-      {/* Left Side: Cinematic Brand Experience */}
-      <section className="relative hidden md:flex md:w-[45%] lg:w-[55%] bg-black items-center justify-center p-12 overflow-hidden border-r border-white/5">
-        <div className="absolute inset-0 z-0">
-          <img 
-            className="w-full h-full object-cover opacity-40 mix-blend-luminosity scale-105 hover:scale-100 transition-transform duration-[10s] ease-in-out" 
-            alt="Atomberg Engineering Background" 
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
+    <main className="login-shell">
+      {/* Left Panel: Cinematic Brand */}
+      <section className="login-brand-panel">
+        <div className="login-brand-bg">
+          <img
+            className="login-brand-img"
+            alt="Atomberg Engineering"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjr_cbxinEExfAg1n4vQgj7Vy0Jt3muIUfMHWrfZ16C5p8mVuBIv9WJKAu28YPScTNp_fWPT9914S5WBWD-N2IZ0IwXrxSJcySnbVezDvMRGqnmZ3Nb4crPR9PENZtnQlXfE3Jan5FuGopBh13CJDJAQynwhd3CF8Q_Q4AmtUvDAKOl5O16fqwCA4AoAc1-_3aexcAxnohstv1HkZKmEjBpacW0FuIpN8jL_Pmv9OAqjUxxe7uJ-vgjEPcLPxyaZgGm3HXCpzOTfYZ"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-[#050505]"></div>
+          <div className="login-brand-overlay"></div>
         </div>
-        
-        <div className="relative z-10 w-full max-w-xl text-white">
-          <div className="mb-12 flex items-center gap-3">
-            <div className="w-12 h-12 bg-[#fdb913] rounded-xl flex items-center justify-center shadow-[0_0_30px_rgba(253,185,19,0.2)]">
-              <Target className="text-black" size={26} strokeWidth={2.5} />
+        <div className="login-brand-content">
+          <div className="login-brand-logo">
+            <div className="login-logo-icon">
+              <Target color="#000" size={26} strokeWidth={2.5} />
             </div>
-            <span className="text-white font-bold text-2xl tracking-widest uppercase">AtomSync</span>
+            <span className="login-logo-text">AtomSync</span>
           </div>
-          
-          <h1 className="text-5xl lg:text-6xl font-extrabold mb-6 text-white leading-[1.1] tracking-tight">
-            Engineering<br />
-            <span className="text-[#fdb913]">Synchronization.</span>
+          <h1 className="login-brand-title">
+            Precision in every <span className="login-gold">Synchronization</span>.
           </h1>
-          <p className="text-lg text-gray-400 leading-relaxed mb-12 max-w-md font-light">
-            The central nervous system for your operational dashboard. Manage fleet diagnostics and team OKRs with atomic precision.
+          <p className="login-brand-desc">
+            Welcome to the central portal for high-performance engineering data and collaborative industrial intelligence. Manage fleet diagnostics with atomic precision.
           </p>
-          
-          <div className="flex gap-8 border-t border-white/10 pt-8">
-            <div>
-              <div className="flex items-center gap-2 mb-2 text-[#fdb913]">
-                <Factory size={20} />
-                <span className="font-bold uppercase tracking-wider text-xs">Uptime</span>
-              </div>
-              <p className="text-2xl font-light">99.99%</p>
+          <div className="login-stats-row">
+            <div className="login-stat-card">
+              <span className="login-stat-icon">⚙️</span>
+              <h3 className="login-stat-label">RELIABILITY</h3>
+              <p className="login-stat-value">99.9% Uptime</p>
             </div>
-            <div className="w-px bg-white/10"></div>
-            <div>
-              <div className="flex items-center gap-2 mb-2 text-[#fdb913]">
-                <ShieldCheck size={20} />
-                <span className="font-bold uppercase tracking-wider text-xs">Security</span>
-              </div>
-              <p className="text-2xl font-light">Tier-4</p>
+            <div className="login-stat-card">
+              <span className="login-stat-icon">🔐</span>
+              <h3 className="login-stat-label">SECURITY</h3>
+              <p className="login-stat-value">Tier-4 Encrypted</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Right Side: Premium Auth Form */}
-      <section className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative overflow-y-auto bg-[#050505]">
-        
-        {/* Subtle background glow */}
-        <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#fdb913]/5 blur-[120px] rounded-full pointer-events-none"></div>
-
-        <div className="w-full max-w-[420px] z-10">
-          
-          <div className="mb-8 text-center md:text-left">
-            <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">
-              {isLogin ? "Welcome Back" : "Initialize Profile"}
-            </h2>
-            <p className="text-gray-400 text-sm font-medium">
-              {isLogin ? "Authenticate to access the operational network." : "Join the AtomSync data grid."}
-            </p>
-          </div>
-
-          {/* Premium Tab Toggle */}
-          <div className="flex p-1 bg-white/5 rounded-xl mb-8 border border-white/10">
-            <button 
+      {/* Right Panel: Clean Auth Form */}
+      <section className="login-form-panel">
+        <div className="login-form-wrapper">
+          {/* Tab Toggle */}
+          <div className="login-tab-bar">
+            <button
               type="button"
               onClick={() => { setIsLogin(true); setError(""); }}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${isLogin ? 'bg-[#1a1a1a] text-white shadow-lg border border-white/10' : 'text-gray-500 hover:text-gray-300'}`}
+              className={`login-tab ${isLogin ? "login-tab-active" : ""}`}
             >
               Sign In
             </button>
-            <button 
+            <button
               type="button"
               onClick={() => { setIsLogin(false); setError(""); }}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${!isLogin ? 'bg-[#1a1a1a] text-white shadow-lg border border-white/10' : 'text-gray-500 hover:text-gray-300'}`}
+              className={`login-tab ${!isLogin ? "login-tab-active" : ""}`}
             >
               Register
             </button>
           </div>
 
+          {/* Header */}
+          <div className="login-form-header">
+            <h2 className="login-form-title">
+              {isLogin ? "Portal Access" : "Initialize Profile"}
+            </h2>
+            <p className="login-form-subtitle">
+              {isLogin
+                ? "Enter your enterprise credentials to continue."
+                : "Join the AtomSync data grid."}
+            </p>
+          </div>
+
           {error && (
-            <div className="mb-6 p-4 rounded-xl text-sm font-medium bg-red-950/30 text-red-400 border border-red-900/50 flex items-center gap-3 animate-fade-in">
-              <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
+            <div className="login-error">
+              <div className="login-error-dot"></div>
               <span>{error}</span>
             </div>
           )}
 
-          <form action={handleSubmit} className="space-y-5">
+          <form action={handleSubmit} className="login-form">
             {!isLogin && (
-              <div className="space-y-5 animate-fade-in">
-                
-                {/* Full Name */}
-                <div className="space-y-2">
-                  <label htmlFor="full_name" className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">Full Name</label>
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#fdb913] transition-colors">
-                      <User size={18} />
-                    </div>
+              <div className="login-reg-fields">
+                <div className="login-field">
+                  <label htmlFor="full_name" className="login-label">Full Name</label>
+                  <input
+                    id="full_name"
+                    name="full_name"
+                    type="text"
+                    placeholder="John Doe"
+                    className="login-input"
+                    required={!isLogin}
+                  />
+                </div>
+                <div className="login-field-row">
+                  <div className="login-field">
+                    <label htmlFor="role" className="login-label">Role</label>
+                    <select id="role" name="role" className="login-input login-select" required={!isLogin}>
+                      <option value="employee">Employee</option>
+                      <option value="manager">Manager</option>
+                    </select>
+                  </div>
+                  <div className="login-field">
+                    <label htmlFor="department" className="login-label">Department</label>
                     <input
-                      id="full_name"
-                      name="full_name"
+                      id="department"
+                      name="department"
                       type="text"
-                      placeholder="John Doe"
-                      className="block w-full pl-11 pr-4 py-3.5 text-sm text-white bg-[#111] rounded-xl border border-white/10 focus:outline-none focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913] transition-all shadow-inner placeholder:text-gray-600"
+                      placeholder="Engineering"
+                      className="login-input"
                       required={!isLogin}
                     />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  {/* Role */}
-                  <div className="space-y-2">
-                    <label htmlFor="role" className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">Role</label>
-                    <div className="relative group">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#fdb913] transition-colors">
-                        <Briefcase size={18} />
-                      </div>
-                      <select 
-                        id="role" 
-                        name="role" 
-                        className="block w-full pl-11 pr-10 py-3.5 text-sm text-white bg-[#111] rounded-xl border border-white/10 focus:outline-none focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913] transition-all shadow-inner appearance-none cursor-pointer" 
-                        required={!isLogin}
-                      >
-                        <option value="employee" className="bg-[#111] text-white">Employee</option>
-                        <option value="manager" className="bg-[#111] text-white">Manager</option>
-                      </select>
-                      <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-500">
-                        <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Department */}
-                  <div className="space-y-2">
-                    <label htmlFor="department" className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">Department</label>
-                    <div className="relative group">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#fdb913] transition-colors">
-                        <Building2 size={18} />
-                      </div>
-                      <input
-                        id="department"
-                        name="department"
-                        type="text"
-                        placeholder="Engineering"
-                        className="block w-full pl-11 pr-4 py-3.5 text-sm text-white bg-[#111] rounded-xl border border-white/10 focus:outline-none focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913] transition-all shadow-inner placeholder:text-gray-600"
-                        required={!isLogin}
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
             )}
 
             {/* Email */}
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">Corporate Email</label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#fdb913] transition-colors">
-                  <Mail size={18} />
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="name@atomsync.com"
-                  className="block w-full pl-11 pr-4 py-3.5 text-sm text-white bg-[#111] rounded-xl border border-white/10 focus:outline-none focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913] transition-all shadow-inner placeholder:text-gray-600"
-                  required
-                />
-              </div>
+            <div className="login-field">
+              <label htmlFor="email" className="login-label">Corporate Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="name@atomsync.com"
+                className="login-input"
+                required
+              />
             </div>
 
             {/* Password */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label htmlFor="password" className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">Password</label>
-                {isLogin && <a className="text-xs font-medium text-[#fdb913] hover:text-[#ffca4d] transition-colors cursor-pointer">Forgot password?</a>}
+            <div className="login-field">
+              <div className="login-label-row">
+                <label htmlFor="password" className="login-label">Password</label>
+                {isLogin && (
+                  <a className="login-forgot" href="#">Forgot?</a>
+                )}
               </div>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#fdb913] transition-colors">
-                  <Lock size={18} />
-                </div>
+              <div className="login-password-wrap">
                 <input
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="block w-full pl-11 pr-12 py-3.5 text-sm text-white bg-[#111] rounded-xl border border-white/10 focus:outline-none focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913] transition-all shadow-inner placeholder:text-gray-600"
+                  className="login-input"
                   required
                   minLength={6}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-white transition-colors focus:outline-none"
+                  className="login-eye-btn"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -256,92 +190,509 @@ export default function LoginPage() {
             </div>
 
             {isLogin && (
-              <div className="pt-2">
-                <label className="flex items-center gap-3 cursor-pointer group w-fit">
-                  <div className="relative flex items-center justify-center">
-                    <input type="checkbox" className="peer appearance-none w-4 h-4 border border-white/20 rounded bg-white/5 focus:ring-0 checked:bg-[#fdb913] checked:border-[#fdb913] transition-all cursor-pointer" />
-                    <svg className="absolute w-2.5 h-2.5 text-black opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 5L4.5 8.5L13 1" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <span className="text-sm font-medium text-gray-400 group-hover:text-white transition-colors">Remember my device</span>
-                </label>
+              <div className="login-remember">
+                <input type="checkbox" id="remember" className="login-checkbox" />
+                <label htmlFor="remember" className="login-remember-text">Remember this workstation</label>
               </div>
             )}
 
-            <button
-              type="submit"
-              className="group w-full bg-[#fdb913] hover:bg-[#ffca4d] text-black font-bold py-3.5 rounded-xl shadow-[0_0_15px_rgba(253,185,19,0.15)] hover:shadow-[0_0_20px_rgba(253,185,19,0.25)] active:scale-[0.98] transition-all flex justify-center items-center gap-2 mt-6 overflow-hidden relative"
-              disabled={loading}
-            >
+            <button type="submit" className="login-submit" disabled={loading}>
               {loading ? (
                 <>
-                  <svg className="animate-spin h-5 w-5 text-black" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  <svg className="login-spinner" viewBox="0 0 24 24">
+                    <circle className="login-spinner-bg" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="login-spinner-fg" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  <span className="tracking-wide text-sm">Authenticating...</span>
+                  <span>Authenticating...</span>
                 </>
               ) : (
                 <>
-                  <span className="tracking-wide text-sm">{isLogin ? "Access Network" : "Initialize Profile"}</span>
-                  <ChevronRight size={18} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
+                  <span>{isLogin ? "Sign In" : "Initialize Profile"}</span>
+                  <ChevronRight size={18} strokeWidth={2.5} />
                 </>
               )}
             </button>
           </form>
 
-          {/* Premium Divider */}
-          <div className="mt-10 mb-6 relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/10"></div>
-            </div>
-            <div className="relative flex justify-center">
-              <span className="bg-[#050505] px-4 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500">
-                Quick Demo Login
-              </span>
-            </div>
+          {/* Demo Divider */}
+          <div className="login-divider">
+            <div className="login-divider-line"></div>
+            <span className="login-divider-text">Quick Demo Login</span>
           </div>
-            
-          <div className="grid grid-cols-3 gap-3">
-            {[
+
+          <div className="login-demo-grid">
+            {([
               { role: "employee" as const, label: "Employee", icon: User },
               { role: "manager" as const, label: "Manager", icon: Shield },
               { role: "admin" as const, label: "Admin", icon: Crown },
-            ].map(({ role, label, icon: Icon }) => (
+            ]).map(({ role, label, icon: Icon }) => (
               <button
                 key={role}
                 type="button"
                 onClick={() => handleDemoSwitch(role)}
                 disabled={switchingRole !== null}
-                className={`flex flex-col items-center justify-center gap-2 py-3.5 rounded-xl transition-all border ${
-                  switchingRole === role 
-                    ? 'border-[#fdb913] bg-[#fdb913]/10 text-[#fdb913] shadow-[0_0_15px_rgba(253,185,19,0.15)]' 
-                    : 'border-white/10 bg-[#111] text-gray-400 hover:border-white/20 hover:bg-white/5 hover:text-white'
-                }`}
+                className={`login-demo-btn ${switchingRole === role ? "login-demo-active" : ""}`}
               >
                 {switchingRole === role ? (
-                  <svg className="animate-spin h-5 w-5 text-[#fdb913]" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  <svg className="login-spinner" viewBox="0 0 24 24">
+                    <circle className="login-spinner-bg" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="login-spinner-fg" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
                 ) : (
                   <Icon size={18} strokeWidth={1.5} />
                 )}
-                <span className="text-[10px] font-bold uppercase tracking-wider">
-                  {label}
-                </span>
+                <span className="login-demo-label">{label}</span>
               </button>
             ))}
           </div>
 
-          <div className="mt-10 text-center">
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-              © 2024 AtomSync Portal. Secure Access.
-            </p>
+          <div className="login-footer">
+            <p>Engineering Precision © 2024 AtomSync Portal.</p>
+            <p>Authorized access only. Subject to monitoring.</p>
           </div>
         </div>
       </section>
+
+      {/* Ambient Glows */}
+      <div className="login-glow login-glow-gold"></div>
+      <div className="login-glow login-glow-teal"></div>
+
+      <style jsx>{`
+        /* ======= SHELL ======= */
+        .login-shell {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: row;
+          background: #0a0a0a;
+          color: #fff;
+          font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        /* ======= LEFT BRAND PANEL ======= */
+        .login-brand-panel {
+          display: none;
+          position: relative;
+          width: 55%;
+          align-items: center;
+          justify-content: center;
+          padding: 3rem;
+          overflow: hidden;
+        }
+        @media (min-width: 768px) {
+          .login-brand-panel { display: flex; }
+        }
+        .login-brand-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+        }
+        .login-brand-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.5;
+          filter: grayscale(0.3);
+        }
+        .login-brand-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(10,10,10,1) 100%);
+        }
+        .login-brand-content {
+          position: relative;
+          z-index: 10;
+          max-width: 520px;
+        }
+        .login-brand-logo {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 2.5rem;
+        }
+        .login-logo-icon {
+          width: 48px;
+          height: 48px;
+          background: #fdb913;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 30px rgba(253,185,19,0.2);
+        }
+        .login-logo-text {
+          font-weight: 800;
+          font-size: 1.5rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #fff;
+        }
+        .login-brand-title {
+          font-size: clamp(2.2rem, 4vw, 3.2rem);
+          font-weight: 800;
+          line-height: 1.1;
+          margin-bottom: 1.5rem;
+          color: #fff;
+          letter-spacing: -0.02em;
+        }
+        .login-gold { color: #fdb913; }
+        .login-brand-desc {
+          font-size: 1rem;
+          color: #999;
+          line-height: 1.7;
+          margin-bottom: 2.5rem;
+        }
+        .login-stats-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+        .login-stat-card {
+          padding: 1.25rem;
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 12px;
+        }
+        .login-stat-icon { font-size: 1.2rem; display: block; margin-bottom: 0.5rem; }
+        .login-stat-label {
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          color: #fdb913;
+          margin-bottom: 0.25rem;
+        }
+        .login-stat-value { font-size: 0.85rem; color: #ccc; }
+
+        /* ======= RIGHT FORM PANEL ======= */
+        .login-form-panel {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+          background: #0a0a0a;
+          position: relative;
+          overflow-y: auto;
+        }
+        .login-form-wrapper {
+          width: 100%;
+          max-width: 440px;
+          z-index: 10;
+        }
+
+        /* Tab Bar */
+        .login-tab-bar {
+          display: flex;
+          padding: 4px;
+          background: rgba(255,255,255,0.05);
+          border-radius: 12px;
+          margin-bottom: 2rem;
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .login-tab {
+          flex: 1;
+          padding: 0.65rem 1rem;
+          border-radius: 10px;
+          font-size: 0.8rem;
+          font-weight: 700;
+          letter-spacing: 0.03em;
+          color: #666;
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        .login-tab:hover { color: #aaa; }
+        .login-tab-active {
+          background: #1a1a1a;
+          color: #fff;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* Form Header */
+        .login-form-header { margin-bottom: 1.75rem; }
+        .login-form-title {
+          font-size: 1.75rem;
+          font-weight: 800;
+          color: #fff;
+          margin: 0 0 0.5rem 0;
+          letter-spacing: -0.02em;
+        }
+        .login-form-subtitle {
+          font-size: 0.9rem;
+          color: #777;
+          margin: 0;
+        }
+
+        /* Error */
+        .login-error {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.85rem 1rem;
+          margin-bottom: 1.25rem;
+          border-radius: 12px;
+          background: rgba(220,38,38,0.08);
+          border: 1px solid rgba(220,38,38,0.2);
+          color: #f87171;
+          font-size: 0.85rem;
+          font-weight: 500;
+        }
+        .login-error-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: #ef4444;
+          animation: pulse 2s infinite;
+          flex-shrink: 0;
+        }
+
+        /* Form Fields */
+        .login-form { display: flex; flex-direction: column; gap: 1.25rem; }
+        .login-reg-fields { display: flex; flex-direction: column; gap: 1.25rem; }
+        .login-field { display: flex; flex-direction: column; gap: 0.5rem; }
+        .login-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .login-label {
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #888;
+          display: block;
+        }
+        .login-label-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .login-forgot {
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.03em;
+          color: #fdb913;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .login-forgot:hover { color: #ffca4d; }
+
+        /* Clean Inputs - NO icons inside */
+        .login-input {
+          width: 100%;
+          padding: 0.85rem 1rem;
+          font-size: 0.9rem;
+          color: #fff;
+          background: #111;
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 10px;
+          outline: none;
+          transition: all 0.25s ease;
+          font-family: inherit;
+          box-sizing: border-box;
+        }
+        .login-input::placeholder { color: #444; }
+        .login-input:focus {
+          border-color: #fdb913;
+          box-shadow: 0 0 0 3px rgba(253,185,19,0.1);
+        }
+        .login-input:-webkit-autofill,
+        .login-input:-webkit-autofill:hover,
+        .login-input:-webkit-autofill:focus {
+          -webkit-box-shadow: 0 0 0 30px #111 inset !important;
+          -webkit-text-fill-color: #fff !important;
+          transition: background-color 5000s ease-in-out 0s;
+          border-color: rgba(255,255,255,0.1);
+        }
+        .login-select {
+          appearance: none;
+          cursor: pointer;
+          background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 1rem center;
+          padding-right: 2.5rem;
+        }
+        .login-select option { background: #111; color: #fff; }
+
+        /* Password wrapper */
+        .login-password-wrap { position: relative; }
+        .login-password-wrap .login-input { padding-right: 3rem; }
+        .login-eye-btn {
+          position: absolute;
+          top: 50%;
+          right: 0.85rem;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: #555;
+          cursor: pointer;
+          padding: 4px;
+          transition: color 0.2s;
+          display: flex;
+          align-items: center;
+        }
+        .login-eye-btn:hover { color: #fff; }
+
+        /* Remember */
+        .login-remember {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+        }
+        .login-checkbox {
+          width: 16px; height: 16px;
+          border-radius: 4px;
+          border: 1px solid rgba(255,255,255,0.2);
+          background: rgba(255,255,255,0.04);
+          accent-color: #fdb913;
+          cursor: pointer;
+        }
+        .login-remember-text {
+          font-size: 0.85rem;
+          color: #888;
+          cursor: pointer;
+        }
+
+        /* Submit */
+        .login-submit {
+          width: 100%;
+          padding: 0.9rem 1.5rem;
+          margin-top: 0.5rem;
+          font-size: 0.9rem;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          color: #000;
+          background: #fdb913;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          transition: all 0.25s;
+          box-shadow: 0 0 20px rgba(253,185,19,0.12);
+        }
+        .login-submit:hover {
+          background: #ffca4d;
+          box-shadow: 0 0 30px rgba(253,185,19,0.2);
+        }
+        .login-submit:active { transform: scale(0.98); }
+        .login-submit:disabled { opacity: 0.7; cursor: wait; }
+
+        /* Divider */
+        .login-divider {
+          position: relative;
+          margin: 2rem 0 1.5rem;
+          text-align: center;
+        }
+        .login-divider-line {
+          position: absolute;
+          top: 50%;
+          left: 0; right: 0;
+          height: 1px;
+          background: rgba(255,255,255,0.08);
+        }
+        .login-divider-text {
+          position: relative;
+          background: #0a0a0a;
+          padding: 0 1rem;
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #555;
+        }
+
+        /* Demo Buttons */
+        .login-demo-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.75rem;
+        }
+        .login-demo-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.85rem 0.5rem;
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: #111;
+          color: #777;
+          cursor: pointer;
+          transition: all 0.25s;
+          font-family: inherit;
+        }
+        .login-demo-btn:hover {
+          border-color: rgba(255,255,255,0.15);
+          background: rgba(255,255,255,0.04);
+          color: #fff;
+        }
+        .login-demo-active {
+          border-color: #fdb913 !important;
+          background: rgba(253,185,19,0.08) !important;
+          color: #fdb913 !important;
+          box-shadow: 0 0 15px rgba(253,185,19,0.1);
+        }
+        .login-demo-label {
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        /* Footer */
+        .login-footer {
+          margin-top: 2rem;
+          text-align: center;
+        }
+        .login-footer p {
+          font-size: 0.6rem;
+          color: #444;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin: 0;
+          line-height: 1.8;
+        }
+
+        /* Ambient Glows */
+        .login-glow {
+          position: fixed;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 0;
+        }
+        .login-glow-gold {
+          top: -200px; right: -200px;
+          width: 500px; height: 500px;
+          background: rgba(253,185,19,0.06);
+          filter: blur(120px);
+        }
+        .login-glow-teal {
+          bottom: -200px; left: -200px;
+          width: 400px; height: 400px;
+          background: rgba(0,180,220,0.04);
+          filter: blur(100px);
+        }
+
+        /* Spinner */
+        .login-spinner {
+          width: 20px; height: 20px;
+          animation: spin 1s linear infinite;
+        }
+        .login-spinner-bg { opacity: 0.25; }
+        .login-spinner-fg { opacity: 0.75; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+          .login-form-panel { padding: 1.5rem; }
+          .login-field-row { grid-template-columns: 1fr; }
+        }
+      `}</style>
     </main>
   );
 }
