@@ -169,115 +169,87 @@ export default function LoginPage() {
 
         {/* ═══════════════════════════════ */}
         {/* LEFT — BRAND PANEL             */}
-        {/* ═══════════════════════════════ */}
         <section
-          className="isometric-bg"
           style={{
             display:"none",
             position:"relative",
             width:"60%",
             flexDirection:"column",
-            justifyContent:"space-between",
-            padding:"40px 48px",
+            justifyContent:"center",
+            padding:"60px 80px",
             overflow:"hidden",
-            borderRight:"1px solid rgba(255,255,255,0.05)",
+            background:"#0a0a0a",
           }}
         >
-          <style>{`@media(min-width:768px){.brand-section{display:flex!important;}}`}</style>
-          <div className="brand-section" style={{ display:"none", position:"absolute", inset:0, flexDirection:"column", justifyContent:"space-between", padding:"40px 48px" }}>
-          {/* Circuit board image overlay */}
-          <div style={{ position:"absolute", inset:0, overflow:"hidden", zIndex:0 }}>
+          <style>{`@media(min-width:768px){section[style*="width:\\"60%\\""]{display:flex!important;}}`}</style>
+          
+          {/* Background Image */}
+          <div style={{ position:"absolute", inset:0, zIndex:0 }}>
             <img
-              src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=60&w=1400"
+              src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400"
               alt=""
-              style={{ width:"100%", height:"100%", objectFit:"cover", opacity:0.25, mixBlendMode:"overlay" }}
+              style={{ width:"100%", height:"100%", objectFit:"cover", opacity:0.15 }}
             />
+            <div style={{ position:"absolute", inset:0, background:"linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%)" }} />
           </div>
 
-          {/* Gradient overlays */}
-          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, rgba(5,5,5,0.6) 0%, transparent 40%, rgba(5,5,5,0.8) 100%)", zIndex:1 }} />
-          <div style={{ position:"absolute", bottom:0, left:0, right:0, height:128, background:"linear-gradient(to top, rgba(253,185,19,0.1) 0%, transparent 100%)", pointerEvents:"none", zIndex:0 }} />
-
-          {/* Logo */}
-          <div style={{ position:"relative", zIndex:10, display:"flex", alignItems:"center", gap:14 }}>
-            <div style={{
-              width:48, height:48,
-              background:"linear-gradient(135deg, #fdb913, #f5a500)",
-              borderRadius:14,
-              display:"flex", alignItems:"center", justifyContent:"center",
-              boxShadow:"0 8px 24px rgba(253,185,19,0.3)",
-              fontSize:22,
-            }}>
-              ◎
+          <div style={{ position:"relative", zIndex:10, display:"flex", flexDirection:"column", gap:32, maxWidth:580 }}>
+            {/* Logo */}
+            <div style={{ display:"flex", alignItems:"center", gap:16 }}>
+              <div style={{
+                width:48, height:48,
+                background:"#fdb913",
+                borderRadius:12,
+                display:"flex", alignItems:"center", justifyContent:"center",
+              }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+              </div>
+              <span style={{ fontSize:22, fontWeight:900, letterSpacing:"0.1em", color:"#fff", textTransform:"uppercase" }}>ATOMSYNC</span>
             </div>
-            <span style={{ fontSize:18, fontWeight:900, letterSpacing:"0.12em", color:"#fff", textTransform:"uppercase" }}>AtomSync</span>
-          </div>
 
-          {/* Hero text */}
-          <div style={{ position:"relative", zIndex:10, maxWidth:540 }}>
-            <h1 style={{ fontSize:60, fontWeight:900, lineHeight:1.1, color:"#fff", marginBottom:20, letterSpacing:"-0.03em" }}>
-              Precision in every{" "}
-              <span style={{ color:"#fdb913" }}>Synchronization</span>.
-            </h1>
-            <p style={{ fontSize:15, color:"rgba(255,255,255,0.45)", lineHeight:1.7, marginBottom:40, maxWidth:460 }}>
-              Welcome to the central portal for high-performance engineering data and collaborative industrial intelligence. Manage fleet diagnostics with atomic precision.
-            </p>
+            {/* Hero text */}
+            <div style={{ display:"flex", flexDirection:"column", gap:16, marginTop:16 }}>
+              <h1 style={{ fontSize:56, fontWeight:800, lineHeight:1.1, color:"#fff", letterSpacing:"-0.02em" }}>
+                Precision in every<br/>
+                <span style={{ color:"#fdb913" }}>Synchronization.</span>
+              </h1>
+              <p style={{ fontSize:16, color:"rgba(255,255,255,0.6)", lineHeight:1.6, maxWidth:500 }}>
+                Welcome to the central portal for high-performance engineering data and collaborative industrial intelligence. Manage fleet diagnostics with atomic precision.
+              </p>
+            </div>
 
             {/* Status cards */}
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
-              {/* Card 1 — Reliability */}
-              <div className="glass-card" style={{ padding:"20px 24px" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
-                  <Settings size={16} color="#fdb913" strokeWidth={1.5} />
-                  <span style={{ fontSize:11, fontWeight:800, letterSpacing:"0.15em", color:"#fdb913", textTransform:"uppercase" }}>Reliability</span>
-                </div>
-                <div style={{ display:"flex", alignItems:"center", gap:16 }}>
-                  {/* Ring chart */}
-                  <div style={{ position:"relative", width:60, height:60, flexShrink:0 }}>
-                    <svg viewBox="0 0 60 60" style={{ width:"100%", height:"100%", transform:"rotate(-90deg)" }}>
-                      <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="5" />
-                      <circle cx="30" cy="30" r="24" fill="none" stroke="#fdb913" strokeWidth="5"
-                        strokeDasharray="150.8" strokeDashoffset="1.5" strokeLinecap="round" />
-                    </svg>
-                    <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:800, color:"#fff" }}>99.9%</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize:17, fontWeight:800, color:"#fff", marginBottom:2 }}>99.9% Uptime</div>
-                    <div style={{ fontSize:11, color:"rgba(255,255,255,0.35)" }}>Global Node Status</div>
-                  </div>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginTop:24 }}>
+              {/* Card 1 */}
+              <div style={{ background:"rgba(20,20,20,0.8)", border:"1px solid rgba(255,255,255,0.05)", borderRadius:12, padding:"20px", display:"flex", flexDirection:"column", gap:12 }}>
+                <Settings size={20} color="#d8b4fe" strokeWidth={2} />
+                <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                  <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.1em", color:"#fdb913", textTransform:"uppercase" }}>Reliability</span>
+                  <span style={{ fontSize:15, color:"#fff" }}>99.9% Uptime</span>
                 </div>
               </div>
 
-              {/* Card 2 — Security */}
-              <div className="glass-card" style={{ padding:"20px 24px", position:"relative", overflow:"hidden" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
-                  <Lock size={16} color="#fdb913" strokeWidth={1.5} />
-                  <span style={{ fontSize:11, fontWeight:800, letterSpacing:"0.15em", color:"#fdb913", textTransform:"uppercase" }}>Security</span>
+              {/* Card 2 */}
+              <div style={{ background:"rgba(20,20,20,0.8)", border:"1px solid rgba(255,255,255,0.05)", borderRadius:12, padding:"20px", display:"flex", flexDirection:"column", gap:12 }}>
+                <div style={{ position:"relative", width:20, height:20 }}>
+                  <Lock size={20} color="#fbbf24" strokeWidth={2} />
+                  <div style={{ position:"absolute", inset:0, top:8, left:6, width:8, height:8, background:"#d8b4fe", borderRadius:2, zIndex:-1, opacity:0.5 }} />
                 </div>
-                <div style={{ fontSize:17, fontWeight:800, color:"#fff", marginBottom:10 }}>Tier-4 Encrypted</div>
-                <div style={{ position:"relative", background:"rgba(255,255,255,0.05)", borderRadius:8, height:36, overflow:"hidden", display:"flex", alignItems:"center", paddingLeft:10 }}>
-                  <div className="scan-line" />
-                  <div style={{ display:"flex", gap:3, alignItems:"flex-end", height:20, position:"relative", zIndex:1 }}>
-                    {[12,20,8,24,16,10,22,14].map((h, i) => (
-                      <div key={i} style={{ width:4, height:h, background:"rgba(253,185,19,0.6)", borderRadius:2 }} />
-                    ))}
-                  </div>
-                  <span style={{ marginLeft:"auto", marginRight:10, fontSize:9, fontWeight:800, color:"#fdb913", letterSpacing:"0.15em", position:"relative", zIndex:1 }}>ACTIVE</span>
+                <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                  <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.1em", color:"#fdb913", textTransform:"uppercase" }}>Security</span>
+                  <span style={{ fontSize:15, color:"#fff" }}>Tier-4 Encrypted</span>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Footer */}
-          <div style={{ position:"relative", zIndex:10, fontSize:10, color:"rgba(255,255,255,0.2)", fontWeight:600, letterSpacing:"0.1em" }}>
-            © 2024 AtomSync Industrial Systems · v4.2.0-Alpha · Security Clearance Required
-          </div>
           </div>
         </section>
 
         {/* ═══════════════════════════════ */}
         {/* RIGHT — AUTH PANEL             */}
-        {/* ═══════════════════════════════ */}
         <section style={{
           flex:1,
           background:"#0a0a0a",
@@ -288,7 +260,6 @@ export default function LoginPage() {
           padding:"32px 24px",
           position:"relative",
           overflowY:"auto",
-          borderLeft:"1px solid rgba(253,185,19,0.2)",
         }}>
           {/* Subtle gold glow */}
           <div style={{ position:"absolute", top:"5%", right:"-5%", width:350, height:350, background:"radial-gradient(circle, rgba(253,185,19,0.04) 0%, transparent 70%)", pointerEvents:"none" }} />
