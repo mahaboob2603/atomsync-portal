@@ -137,17 +137,61 @@ body {
    Glass Card — Atomberg Industrial Glass
    ========================================== */
 .glass-card {
-  background: rgba(17, 17, 17, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(13, 13, 13, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
 .glass-card:hover {
-  border-color: rgba(253, 185, 19, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-color: rgba(253, 185, 19, 0.3);
+  background: rgba(20, 20, 20, 0.8);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), 0 0 20px rgba(253, 185, 19, 0.05);
+  transform: translateY(-2px);
+}
+
+.glass-card-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* ==========================================
+   Specialized Glowing Elements
+   ========================================== */
+.btn-submit-glow {
+  background: linear-gradient(135deg, #00ff41, #008f23);
+  color: #000;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+  border: 1px solid rgba(0, 255, 65, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit-glow:hover:not(:disabled) {
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+  transform: scale(1.02) translateY(-2px);
+  background: linear-gradient(135deg, #00ff41, #00ff41);
+}
+
+.progress-fill-success {
+  background: linear-gradient(90deg, #00ff41, #008f23);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+}
+
+.institutional-label {
+  font-family: 'Geist', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  opacity: 0.8;
 }
 
 /* ==========================================

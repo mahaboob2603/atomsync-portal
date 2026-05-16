@@ -56,8 +56,12 @@ export default async function AuditPage() {
               <tbody>
                 {logs.map((log) => (
                   <tr key={log.id} className="animate-fade-in">
-                    <td className="text-xs whitespace-nowrap">
-                      {new Date(log.created_at).toLocaleString()}
+                    <td className="text-xs whitespace-nowrap font-mono">
+                      {new Intl.DateTimeFormat('en-IN', {
+                        dateStyle: 'short',
+                        timeStyle: 'medium',
+                        timeZone: 'Asia/Kolkata'
+                      }).format(new Date(log.created_at))}
                     </td>
                     <td>
                       <div className="text-sm font-medium">

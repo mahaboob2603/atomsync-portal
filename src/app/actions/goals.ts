@@ -255,11 +255,14 @@ export async function submitGoalSheet(goalSheetId: string) {
       .single();
 
     if (manager?.email) {
+      console.log(`[Email Attempt] Sending submission notification to manager: ${manager.email}`);
       await sendNotificationEmail(
         manager.email,
         "Goal Sheet Submitted for Approval",
         emailTemplates.goalSubmitted(profile.full_name)
       );
+    } else {
+      console.warn(`[Email Warning] No manager email found for manager_id: ${profile.manager_id}`);
     }
     
     // Teams Integration Bonus
@@ -309,11 +312,14 @@ export async function approveGoalSheet(goalSheetId: string) {
   if (sheet?.employee_id && managerProfile) {
     const { data: employee } = await supabase.from("profiles").select("email").eq("id", sheet.employee_id).single();
     if (employee?.email) {
+      console.log(`[Email Attempt] Sending approval notification to employee: ${employee.email}`);
       await sendNotificationEmail(
         employee.email,
         "Goal Sheet Approved",
         emailTemplates.goalApproved(managerProfile.full_name)
       );
+    } else {
+      console.warn(`[Email Warning] No employee email found for employee_id: ${sheet.employee_id}`);
     }
 
     // Teams Integration Bonus

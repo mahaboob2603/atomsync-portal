@@ -56,11 +56,26 @@ export function CyclesClient({ cycles }: CyclesClientProps) {
 
   return (
     <div>
-      <div className="page-header">
-        <h1 className="text-2xl font-bold">Cycle Management</h1>
-        <button onClick={() => setShowForm(true)} className="btn btn-primary">
+      <div className="page-header relative border-b border-[#fdb913]/10">
+        <div className="absolute left-0 top-0 h-full w-1 bg-[#fdb913]"></div>
+        <div className="pl-4">
+          <div className="flex items-center gap-3 mb-1">
+            <span className="institutional-label">
+              Temporal Management
+            </span>
+            <div className="h-1 w-8 bg-[#fdb913]/20 rounded-full"></div>
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white">Cycle Control Center</h1>
+          <p className="text-sm mt-1 font-mono uppercase tracking-widest text-[#fdb913]/60">
+            Configure system-wide goal setting and check-in windows
+          </p>
+        </div>
+        <button 
+          onClick={() => setShowForm(true)} 
+          className="btn btn-primary shadow-[0_0_15px_rgba(253,185,19,0.3)] hover:shadow-[0_0_25px_rgba(253,185,19,0.5)] transition-all"
+        >
           <Plus size={16} />
-          Add Cycle
+          Initialize New Cycle
         </button>
       </div>
 
@@ -144,14 +159,9 @@ export function CyclesClient({ cycles }: CyclesClientProps) {
           {cycles.map((cycle) => (
             <div
               key={cycle.id}
-              className={`glass-card p-5 flex items-center justify-between animate-fade-in ${
-                cycle.is_active ? "animate-pulse-glow" : ""
+            className={`glass-card p-5 flex items-center justify-between animate-fade-in transition-all duration-500 ${
+                cycle.is_active ? "glass-card-active border-l-4 border-l-[#fdb913]" : "opacity-80 hover:opacity-100"
               }`}
-              style={
-                cycle.is_active
-                  ? { borderColor: "var(--accent)", boxShadow: "0 0 20px var(--accent-glow)" }
-                  : {}
-              }
             >
               <div className="flex items-center gap-4">
                 <div
@@ -170,20 +180,25 @@ export function CyclesClient({ cycles }: CyclesClientProps) {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 {cycle.is_active && (
-                  <span className="badge badge-approved">Active</span>
+                  <span className="badge badge-approved animate-pulse">ACTIVE WINDOW</span>
                 )}
                 <button
                   onClick={() => handleToggle(cycle.id, cycle.is_active)}
-                  className="btn btn-ghost btn-icon"
+                  className={`btn btn-sm ${cycle.is_active ? 'btn-danger' : 'btn-primary'}`}
                   disabled={loading}
-                  title={cycle.is_active ? "Deactivate" : "Activate"}
                 >
                   {cycle.is_active ? (
-                    <ToggleRight size={24} style={{ color: "var(--success)" }} />
+                    <>
+                      <ToggleRight size={16} />
+                      Deactivate
+                    </>
                   ) : (
-                    <ToggleLeft size={24} style={{ color: "var(--muted)" }} />
+                    <>
+                      <ToggleLeft size={16} />
+                      Activate
+                    </>
                   )}
                 </button>
               </div>

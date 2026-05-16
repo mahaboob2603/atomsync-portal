@@ -303,7 +303,11 @@ export default async function DashboardPage() {
                       {log.field_name && ` (${log.field_name})`}
                     </p>
                     <p style={{ fontSize: 12, color: "#888" }}>
-                      {new Date(log.created_at).toLocaleString()}
+                      {new Intl.DateTimeFormat('en-IN', {
+                        dateStyle: 'short',
+                        timeStyle: 'medium',
+                        timeZone: 'Asia/Kolkata'
+                      }).format(new Date(log.created_at))}
                     </p>
                   </div>
                 </div>

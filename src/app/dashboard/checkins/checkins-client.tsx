@@ -343,7 +343,7 @@ export function CheckinsClient({
                         {/* Past check-ins for this sheet */}
                         {checkIns.filter(
                           (ci) =>
-                            ci.quarter === selectedQuarter
+                            ci.quarter === selectedQuarter && (ci as any).employee_id === sheet.employee_id
                         ).length > 0 && (
                           <div className="mt-4">
                             <h4 className="text-sm font-semibold mb-2">
@@ -351,7 +351,7 @@ export function CheckinsClient({
                             </h4>
                             <div className="space-y-2">
                               {checkIns
-                                .filter((ci) => ci.quarter === selectedQuarter)
+                                .filter((ci) => ci.quarter === selectedQuarter && (ci as any).employee_id === sheet.employee_id)
                                 .map((ci) => (
                                   <div
                                     key={ci.id}
@@ -361,7 +361,11 @@ export function CheckinsClient({
                                     <p>{ci.comment}</p>
                                     <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
                                       {ci.manager?.full_name && `By ${ci.manager.full_name} • `}
-                                      {new Date(ci.created_at).toLocaleString()}
+                                      {new Intl.DateTimeFormat('en-IN', {
+                                        dateStyle: 'short',
+                                        timeStyle: 'medium',
+                                        timeZone: 'Asia/Kolkata'
+                                      }).format(new Date(ci.created_at))}
                                     </p>
                                   </div>
                                 ))}

@@ -111,17 +111,18 @@ export function GoalsClient({
 
   return (
     <div>
-      <div className="page-header relative">
-        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#fdb913] to-transparent"></div>
+      <div className="page-header relative border-b border-[#fdb913]/10">
+        <div className="absolute left-0 top-0 h-full w-1 bg-[#fdb913]"></div>
         <div className="pl-4">
           <div className="flex items-center gap-3 mb-1">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#fdb913] uppercase">
-              INSTITUTIONAL GRADE
+            <span className="institutional-label">
+              Institutional Intelligence
             </span>
+            <div className="h-1 w-8 bg-[#fdb913]/20 rounded-full"></div>
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Personal Blueprint</h1>
-          <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
-            {activeCycle.name} • Weightage: {totalWeightage}/100%
+          <h1 className="text-3xl font-extrabold tracking-tight text-white">Personal Blueprint</h1>
+          <p className="text-sm mt-1 font-mono uppercase tracking-widest text-[#fdb913]/60">
+            {activeCycle.name} • Total Weightage: {totalWeightage}/100%
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -131,10 +132,10 @@ export function GoalsClient({
                 goalSheet.status === "pending_approval"
                   ? "pending"
                   : goalSheet.status
-              }`}
+              } font-mono`}
             >
               {goalSheet.locked && <Lock size={12} />}
-              {formatStatus(goalSheet.status)}
+              {formatStatus(goalSheet.status).toUpperCase()}
             </span>
           )}
         </div>
@@ -197,15 +198,13 @@ export function GoalsClient({
                 {totalWeightage}%
               </span>
             </div>
-            <div className="progress-bar">
+            <div className="progress-bar bg-white/5 h-2">
               <div
-                className="progress-fill"
+                className={`progress-fill ${totalWeightage === 100 ? 'progress-fill-success' : ''}`}
                 style={{
                   width: `${Math.min(totalWeightage, 100)}%`,
                   background:
-                    totalWeightage === 100
-                      ? "linear-gradient(90deg, var(--success), #4ade80)"
-                      : totalWeightage > 100
+                    totalWeightage > 100
                       ? "linear-gradient(90deg, var(--danger), #f87171)"
                       : undefined,
                 }}
@@ -334,18 +333,18 @@ export function GoalsClient({
 
         {/* Submit Button */}
         {canEdit && totalWeightage === 100 && goals.length > 0 && (
-          <div className="flex justify-end animate-fade-in">
+          <div className="flex justify-end pt-6 animate-fade-in">
             <button
               onClick={handleSubmit}
-              className="btn btn-success btn-lg animate-pulse-glow"
+              className="btn btn-submit-glow btn-lg"
               disabled={submitting}
             >
               {submitting ? (
-                "Submitting..."
+                "Processing Deployment..."
               ) : (
                 <>
                   <Send size={18} />
-                  Submit Goal Sheet for Approval
+                  Deploy Blueprint for Approval
                 </>
               )}
             </button>
