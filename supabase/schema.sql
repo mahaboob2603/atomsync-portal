@@ -167,6 +167,9 @@ CREATE POLICY "goal_sheets_select" ON goal_sheets FOR SELECT USING (
 );
 CREATE POLICY "goal_sheets_insert" ON goal_sheets FOR INSERT WITH CHECK (
   employee_id = auth.uid()
+  OR EXISTS (
+    SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('manager', 'admin')
+  )
 );
 CREATE POLICY "goal_sheets_update" ON goal_sheets FOR UPDATE USING (
   employee_id = auth.uid()
