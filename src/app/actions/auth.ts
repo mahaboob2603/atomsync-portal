@@ -21,6 +21,41 @@ export async function loginAction(formData: FormData) {
   redirect("/dashboard");
 }
 
+export async function signUpAction(formData: FormData) {
+  const supabase = await createClient();
+
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const fullName = formData.get("full_name") as string;
+  const role = formData.get("role") as string;
+  const department = formData.get("department") as string;
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  if (data.user) {
+    const { error: profileError } = await supabase.from("profiles").insert({
+      id: data.user.id,
+      email: data.user.email,
+      full_name: fullName,
+      role: role || "employee",
+      department: department || "Engineering",
+    });
+
+    if (profileError) {
+      return { error: profileError.message };
+    }
+  }
+
+  redirect("/dashboard");
+}
+
 export async function logoutAction() {
   const supabase = await createClient();
   await supabase.auth.signOut();
