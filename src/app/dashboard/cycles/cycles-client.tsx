@@ -46,36 +46,32 @@ export function CyclesClient({ cycles }: CyclesClientProps) {
 
   async function handleToggle(id: string, isActive: boolean) {
     setLoading(true);
-    const res = await toggleCycleActive(id, !isActive);
-    if (res?.error) {
-      alert("Failed to toggle cycle: " + res.error);
+    try {
+      const res = await toggleCycleActive(id, !isActive);
+      if (res?.error) {
+        alert("Failed to toggle cycle: " + res.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An unexpected error occurred while toggling the cycle.");
+    } finally {
+      setLoading(false);
+      router.refresh();
     }
-    setLoading(false);
-    router.refresh();
   }
 
   return (
     <div>
-      <div className="page-header relative border-b border-[#fdb913]/10">
-        <div className="absolute left-0 top-0 h-full w-1 bg-[#fdb913]"></div>
-        <div className="pl-4">
-          <div className="flex items-center gap-3 mb-1">
-            <span className="institutional-label">
-              Temporal Management
-            </span>
-            <div className="h-1 w-8 bg-[#fdb913]/20 rounded-full"></div>
-          </div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Cycle Control Center</h1>
-          <p className="text-sm mt-1 font-mono uppercase tracking-widest text-[#fdb913]/60">
-            Configure system-wide goal setting and check-in windows
+      <div className="page-header">
+        <div>
+          <h1 className="text-2xl font-bold">Cycle Management</h1>
+          <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
+            Configure goal setting and check-in windows
           </p>
         </div>
-        <button 
-          onClick={() => setShowForm(true)} 
-          className="btn btn-primary shadow-[0_0_15px_rgba(253,185,19,0.3)] hover:shadow-[0_0_25px_rgba(253,185,19,0.5)] transition-all"
-        >
+        <button onClick={() => setShowForm(true)} className="btn btn-primary">
           <Plus size={16} />
-          Initialize New Cycle
+          Add Cycle
         </button>
       </div>
 
@@ -159,16 +155,16 @@ export function CyclesClient({ cycles }: CyclesClientProps) {
           {cycles.map((cycle) => (
             <div
               key={cycle.id}
-            className={`glass-card p-5 flex items-center justify-between animate-fade-in transition-all duration-500 ${
-                cycle.is_active ? "glass-card-active border-l-4 border-l-[#fdb913]" : "opacity-80 hover:opacity-100"
+              className={`glass-card p-4 flex items-center justify-between animate-fade-in ${
+                cycle.is_active ? "border-l-2 border-[#fdb913]" : ""
               }`}
             >
               <div className="flex items-center gap-4">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
                   style={{
-                    background: cycle.is_active ? "var(--accent-glow)" : "var(--card)",
-                    color: cycle.is_active ? "var(--accent-light)" : "var(--muted)",
+                    background: cycle.is_active ? "rgba(253,185,19,0.1)" : "var(--card)",
+                    color: cycle.is_active ? "#fdb913" : "var(--muted)",
                   }}
                 >
                   <Calendar size={18} />
@@ -182,23 +178,18 @@ export function CyclesClient({ cycles }: CyclesClientProps) {
               </div>
               <div className="flex items-center gap-4">
                 {cycle.is_active && (
-                  <span className="badge badge-approved animate-pulse">ACTIVE WINDOW</span>
+                  <span className="badge badge-approved">Active</span>
                 )}
                 <button
                   onClick={() => handleToggle(cycle.id, cycle.is_active)}
-                  className={`btn btn-sm ${cycle.is_active ? 'btn-danger' : 'btn-primary'}`}
+                  className="btn btn-sm btn-ghost"
                   disabled={loading}
+                  title={cycle.is_active ? "Deactivate" : "Activate"}
                 >
                   {cycle.is_active ? (
-                    <>
-                      <ToggleRight size={16} />
-                      Deactivate
-                    </>
+                    <ToggleRight size={24} color="#fdb913" />
                   ) : (
-                    <>
-                      <ToggleLeft size={16} />
-                      Activate
-                    </>
+                    <ToggleLeft size={24} style={{ color: "var(--muted)" }} />
                   )}
                 </button>
               </div>
