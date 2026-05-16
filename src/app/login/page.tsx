@@ -165,250 +165,175 @@ export default function LoginPage() {
         }
       `}</style>
 
-      <main style={{ minHeight:"100vh", display:"flex", flexDirection:"row", overflow:"hidden", fontFamily:"'Inter', sans-serif", borderTop:"2px solid #fdb913" }}>
+      <main style={{ minHeight:"100vh", display:"flex", justifyContent:"center", alignItems:"center", overflow:"hidden", fontFamily:"'Inter', sans-serif", borderTop:"2px solid #fdb913", position:"relative" }}>
+        
+        {/* Background */}
+        <div style={{ position:"absolute", inset:0, zIndex:0 }}>
+          <img
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400"
+            alt=""
+            style={{ width:"100%", height:"100%", objectFit:"cover", opacity:0.15 }}
+          />
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(5,5,5,0.95) 100%)" }} />
+          <div className="isometric-bg" style={{ position:"absolute", inset:0, opacity:0.4, mixBlendMode:"overlay" }} />
+        </div>
 
-        {/* ═══════════════════════════════ */}
-        {/* LEFT — BRAND PANEL             */}
-        <section
-          style={{
-            display:"none",
-            position:"relative",
-            width:"60%",
-            flexDirection:"column",
-            justifyContent:"center",
-            padding:"60px 80px",
-            overflow:"hidden",
-            background:"#0a0a0a",
-          }}
-        >
-          <style>{`@media(min-width:768px){section[style*="width:\\"60%\\""]{display:flex!important;}}`}</style>
-          
-          {/* Background Image */}
-          <div style={{ position:"absolute", inset:0, zIndex:0 }}>
-            <img
-              src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400"
-              alt=""
-              style={{ width:"100%", height:"100%", objectFit:"cover", opacity:0.15 }}
-            />
-            <div style={{ position:"absolute", inset:0, background:"linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%)" }} />
-          </div>
+        {/* Subtle gold glow behind card */}
+        <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%, -50%)", width:600, height:600, background:"radial-gradient(circle, rgba(253,185,19,0.06) 0%, transparent 60%)", pointerEvents:"none", zIndex:1 }} />
 
-          <div style={{ position:"relative", zIndex:10, display:"flex", flexDirection:"column", gap:32, maxWidth:580 }}>
-            {/* Logo */}
-            <div style={{ display:"flex", alignItems:"center", gap:16 }}>
-              <div style={{
-                width:48, height:48,
-                background:"#fdb913",
-                borderRadius:12,
-                display:"flex", alignItems:"center", justifyContent:"center",
-              }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <circle cx="12" cy="12" r="6"/>
-                  <circle cx="12" cy="12" r="2"/>
-                </svg>
-              </div>
-              <span style={{ fontSize:22, fontWeight:900, letterSpacing:"0.1em", color:"#fff", textTransform:"uppercase" }}>ATOMSYNC</span>
-            </div>
-
-            {/* Hero text */}
-            <div style={{ display:"flex", flexDirection:"column", gap:16, marginTop:16 }}>
-              <h1 style={{ fontSize:56, fontWeight:800, lineHeight:1.1, color:"#fff", letterSpacing:"-0.02em" }}>
-                Precision in every<br/>
-                <span style={{ color:"#fdb913" }}>Synchronization.</span>
-              </h1>
-              <p style={{ fontSize:16, color:"rgba(255,255,255,0.6)", lineHeight:1.6, maxWidth:500 }}>
-                Welcome to the central portal for high-performance engineering data and collaborative industrial intelligence. Manage fleet diagnostics with atomic precision.
-              </p>
-            </div>
-
-            {/* Status cards */}
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginTop:24 }}>
-              {/* Card 1 */}
-              <div style={{ background:"rgba(20,20,20,0.8)", border:"1px solid rgba(255,255,255,0.05)", borderRadius:12, padding:"20px", display:"flex", flexDirection:"column", gap:12 }}>
-                <Settings size={20} color="#d8b4fe" strokeWidth={2} />
-                <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                  <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.1em", color:"#fdb913", textTransform:"uppercase" }}>Reliability</span>
-                  <span style={{ fontSize:15, color:"#fff" }}>99.9% Uptime</span>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div style={{ background:"rgba(20,20,20,0.8)", border:"1px solid rgba(255,255,255,0.05)", borderRadius:12, padding:"20px", display:"flex", flexDirection:"column", gap:12 }}>
-                <div style={{ position:"relative", width:20, height:20 }}>
-                  <Lock size={20} color="#fbbf24" strokeWidth={2} />
-                  <div style={{ position:"absolute", inset:0, top:8, left:6, width:8, height:8, background:"#d8b4fe", borderRadius:2, zIndex:-1, opacity:0.5 }} />
-                </div>
-                <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                  <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.1em", color:"#fdb913", textTransform:"uppercase" }}>Security</span>
-                  <span style={{ fontSize:15, color:"#fff" }}>Tier-4 Encrypted</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════ */}
-        {/* RIGHT — AUTH PANEL             */}
-        <section style={{
-          flex:1,
-          background:"#0a0a0a",
+        {/* Center Card */}
+        <section className="glass-card" style={{
+          width:"100%",
+          maxWidth:440,
           display:"flex",
           flexDirection:"column",
-          justifyContent:"center",
-          alignItems:"center",
-          padding:"32px 24px",
+          gap:24,
+          padding:"40px",
           position:"relative",
-          overflowY:"auto",
+          zIndex:10,
+          margin: "20px"
         }}>
-          {/* Subtle gold glow */}
-          <div style={{ position:"absolute", top:"5%", right:"-5%", width:350, height:350, background:"radial-gradient(circle, rgba(253,185,19,0.04) 0%, transparent 70%)", pointerEvents:"none" }} />
-
-          <div style={{ width:"100%", maxWidth:400, display:"flex", flexDirection:"column", gap:24 }}>
-
-            {/* Mobile logo */}
-            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-              <div style={{ width:40, height:40, background:"linear-gradient(135deg,#fdb913,#f5a500)", borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>◎</div>
-              <span style={{ fontSize:18, fontWeight:900, color:"#fff", letterSpacing:"0.08em" }}>AtomSync</span>
+          {/* Logo and Branding */}
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:16, marginBottom: 8 }}>
+            <div style={{
+              width:56, height:56,
+              background:"#fdb913",
+              borderRadius:16,
+              display:"flex", alignItems:"center", justifyContent:"center",
+              boxShadow:"0 0 20px rgba(253,185,19,0.3)"
+            }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
             </div>
-
-            {/* Tab switcher */}
-            <div style={{ display:"flex", gap:4, background:"rgba(255,255,255,0.04)", padding:4, borderRadius:12, border:"1px solid rgba(255,255,255,0.06)" }}>
-              <button
-                className="tab-btn"
-                onClick={() => { setIsLogin(true); setError(""); }}
-                style={{ background: isLogin ? "#fdb913" : "transparent", color: isLogin ? "#000" : "rgba(255,255,255,0.4)" }}
-              >
-                Sign In
-              </button>
-              <button
-                className="tab-btn"
-                onClick={() => { setIsLogin(false); setError(""); }}
-                style={{ background: !isLogin ? "#fdb913" : "transparent", color: !isLogin ? "#000" : "rgba(255,255,255,0.4)" }}
-              >
-                Register
-              </button>
-            </div>
-
-            {/* Heading */}
-            <div>
-              <h2 style={{ fontSize:28, fontWeight:800, color:"#fff", letterSpacing:"-0.02em", marginBottom:6 }}>
-                {isLogin ? "Portal Access" : "Initialize Profile"}
-              </h2>
-              <p style={{ fontSize:13, color:"rgba(255,255,255,0.35)" }}>
-                {isLogin ? "Enter your industrial credentials to continue." : "Join the AtomSync data grid."}
-              </p>
-            </div>
-
-            {/* Error */}
-            {error && (
-              <div style={{ padding:"12px 16px", background:"rgba(239,68,68,0.08)", border:"1px solid rgba(239,68,68,0.2)", borderRadius:12, display:"flex", alignItems:"center", gap:10 }}>
-                <div style={{ width:6, height:6, borderRadius:"50%", background:"#ef4444", flexShrink:0 }} />
-                <span style={{ fontSize:13, color:"#f87171" }}>{error}</span>
-              </div>
-            )}
-
-            {/* Form */}
-            <form action={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:16 }}>
-              {!isLogin && (
-                <>
-                  <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Full Name</label>
-                    <input name="full_name" className="auth-inp" placeholder="John Doe" required={!isLogin} />
-                  </div>
-                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Role</label>
-                      <select name="role" className="auth-inp" style={{ appearance:"none", backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24' stroke='%23888' stroke-width='2'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`, backgroundRepeat:"no-repeat", backgroundPosition:"right 12px center" }}>
-                        <option value="employee">Employee</option>
-                        <option value="manager">Manager</option>
-                      </select>
-                    </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Dept</label>
-                      <input name="department" className="auth-inp" placeholder="Engineering" required={!isLogin} />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Corporate Email</label>
-                <input name="email" type="email" className="auth-inp" placeholder="name@atomsync.industrial" required />
-              </div>
-
-              <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                  <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Password</label>
-                  {isLogin && <a href="#" style={{ fontSize:11, fontWeight:700, color:"#fdb913", textDecoration:"none" }}>Forgot?</a>}
-                </div>
-                <div style={{ position:"relative" }}>
-                  <input name="password" type={showPassword ? "text" : "password"} className="auth-inp" placeholder="••••••••" required minLength={6} style={{ paddingRight:46 }} />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"rgba(255,255,255,0.3)", display:"flex", alignItems:"center" }}>
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
-                </div>
-              </div>
-
-              {isLogin && (
-                <label style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer" }}>
-                  <input type="checkbox" id="remember" style={{ width:15, height:15, accentColor:"#fdb913" }} />
-                  <span style={{ fontSize:12, color:"rgba(255,255,255,0.35)" }}>Stay authenticated for 24 hours</span>
-                </label>
-              )}
-
-              <button type="submit" className="cta-btn" disabled={loading}>
-                {loading
-                  ? <div className="spinner" />
-                  : <><LogIn size={16} strokeWidth={2.5} /><span>{isLogin ? "Sign In" : "Initialize Profile"}</span></>
-                }
-              </button>
-            </form>
-
-            {/* Divider */}
-            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-              <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
-              <span style={{ fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.2)", letterSpacing:"0.18em", textTransform:"uppercase" }}>Quick Demo Login</span>
-              <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
-            </div>
-
-            {/* Demo buttons */}
-            <div style={{ display:"flex", gap:10 }}>
-              {([
-                { role:"employee" as const, label:"Employee", Icon: User },
-                { role:"manager"  as const, label:"Manager",  Icon: Shield },
-                { role:"admin"    as const, label:"Admin",    Icon: Crown },
-              ]).map(({ role, label, Icon }) => (
-                <button key={role} className="demo-btn" onClick={() => handleDemoSwitch(role)} disabled={switchingRole !== null}>
-                  {switchingRole === role
-                    ? <div style={{ width:18, height:18, border:"2px solid rgba(253,185,19,0.2)", borderTopColor:"#fdb913", borderRadius:"50%", animation:"spin 0.6s linear infinite" }} />
-                    : <Icon size={18} strokeWidth={1.5} />
-                  }
-                  <span style={{ fontSize:10, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase" }}>{label}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Footer links */}
-            <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
-              {["Security Policy", "API Documentation", "Support", "System Status"].map(l => (
-                <a key={l} href="#" style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.2)", textDecoration:"none", transition:"color .2s" }}
-                  onMouseEnter={e => (e.currentTarget.style.color="#fdb913")}
-                  onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.2)")}
-                >
-                  {l}
-                </a>
-              ))}
+            <div style={{ textAlign:"center" }}>
+              <h1 style={{ fontSize:24, fontWeight:900, color:"#fff", letterSpacing:"0.1em", textTransform:"uppercase" }}>AtomSync</h1>
+              <p style={{ fontSize:13, color:"rgba(255,255,255,0.5)", marginTop:4 }}>Precision Synchronization</p>
             </div>
           </div>
-        </section>
 
-        {/* Responsive: show brand panel on md+ */}
-        <style>{`
-          @media (min-width: 768px) {
-            .brand-section { display: flex !important; }
-          }
-        `}</style>
+          {/* Tab switcher */}
+          <div style={{ display:"flex", gap:4, background:"rgba(255,255,255,0.04)", padding:4, borderRadius:12, border:"1px solid rgba(255,255,255,0.06)" }}>
+            <button
+              className="tab-btn"
+              onClick={() => { setIsLogin(true); setError(""); }}
+              style={{ background: isLogin ? "#fdb913" : "transparent", color: isLogin ? "#000" : "rgba(255,255,255,0.4)" }}
+            >
+              Sign In
+            </button>
+            <button
+              className="tab-btn"
+              onClick={() => { setIsLogin(false); setError(""); }}
+              style={{ background: !isLogin ? "#fdb913" : "transparent", color: !isLogin ? "#000" : "rgba(255,255,255,0.4)" }}
+            >
+              Register
+            </button>
+          </div>
+
+          {/* Error */}
+          {error && (
+            <div style={{ padding:"12px 16px", background:"rgba(239,68,68,0.08)", border:"1px solid rgba(239,68,68,0.2)", borderRadius:12, display:"flex", alignItems:"center", gap:10 }}>
+              <div style={{ width:6, height:6, borderRadius:"50%", background:"#ef4444", flexShrink:0 }} />
+              <span style={{ fontSize:13, color:"#f87171" }}>{error}</span>
+            </div>
+          )}
+
+          {/* Form */}
+          <form action={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:16 }}>
+            {!isLogin && (
+              <>
+                <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                  <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Full Name</label>
+                  <input name="full_name" className="auth-inp" placeholder="John Doe" required={!isLogin} />
+                </div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+                  <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Role</label>
+                    <select name="role" className="auth-inp" style={{ appearance:"none", backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24' stroke='%23888' stroke-width='2'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`, backgroundRepeat:"no-repeat", backgroundPosition:"right 12px center" }}>
+                      <option value="employee">Employee</option>
+                      <option value="manager">Manager</option>
+                    </select>
+                  </div>
+                  <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                    <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Dept</label>
+                    <input name="department" className="auth-inp" placeholder="Engineering" required={!isLogin} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+              <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Corporate Email</label>
+              <input name="email" type="email" className="auth-inp" placeholder="name@atomsync.industrial" required />
+            </div>
+
+            <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                <label style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>Password</label>
+                {isLogin && <a href="#" style={{ fontSize:11, fontWeight:700, color:"#fdb913", textDecoration:"none" }}>Forgot?</a>}
+              </div>
+              <div style={{ position:"relative" }}>
+                <input name="password" type={showPassword ? "text" : "password"} className="auth-inp" placeholder="••••••••" required minLength={6} style={{ paddingRight:46 }} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"rgba(255,255,255,0.3)", display:"flex", alignItems:"center" }}>
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            </div>
+
+            {isLogin && (
+              <label style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer" }}>
+                <input type="checkbox" id="remember" style={{ width:15, height:15, accentColor:"#fdb913" }} />
+                <span style={{ fontSize:12, color:"rgba(255,255,255,0.35)" }}>Stay authenticated for 24 hours</span>
+              </label>
+            )}
+
+            <button type="submit" className="cta-btn" disabled={loading} style={{ marginTop: 8 }}>
+              {loading
+                ? <div className="spinner" />
+                : <><LogIn size={16} strokeWidth={2.5} /><span>{isLogin ? "Sign In" : "Initialize Profile"}</span></>
+              }
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div style={{ display:"flex", alignItems:"center", gap:12, marginTop: 8 }}>
+            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
+            <span style={{ fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.2)", letterSpacing:"0.18em", textTransform:"uppercase" }}>Quick Demo Login</span>
+            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
+          </div>
+
+          {/* Demo buttons */}
+          <div style={{ display:"flex", gap:10 }}>
+            {([
+              { role:"employee" as const, label:"Employee", Icon: User },
+              { role:"manager"  as const, label:"Manager",  Icon: Shield },
+              { role:"admin"    as const, label:"Admin",    Icon: Crown },
+            ]).map(({ role, label, Icon }) => (
+              <button key={role} className="demo-btn" onClick={() => handleDemoSwitch(role)} disabled={switchingRole !== null}>
+                {switchingRole === role
+                  ? <div style={{ width:18, height:18, border:"2px solid rgba(253,185,19,0.2)", borderTopColor:"#fdb913", borderRadius:"50%", animation:"spin 0.6s linear infinite" }} />
+                  : <Icon size={18} strokeWidth={1.5} />
+                }
+                <span style={{ fontSize:10, fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", marginTop: 4 }}>{label}</span>
+              </button>
+            ))}
+          </div>
+          
+          {/* Footer links */}
+          <div style={{ display:"flex", justifyContent:"center", gap:16, flexWrap:"wrap", marginTop: 8 }}>
+            {["Security", "API", "Support"].map(l => (
+              <a key={l} href="#" style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.2)", textDecoration:"none", transition:"color .2s" }}
+                onMouseEnter={e => (e.currentTarget.style.color="#fdb913")}
+                onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.2)")}
+              >
+                {l}
+              </a>
+            ))}
+          </div>
+
+        </section>
       </main>
     </>
   );
