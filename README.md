@@ -1,169 +1,204 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/target.svg" alt="AtomSync Logo" width="80" height="80">
-  <h1 align="center">AtomSync Portal</h1>
-  <p align="center"><strong>Institutional Grade Goal Setting & Analytics Platform</strong></p>
-  <p align="center"><em>Engineered for AtomQuest Hackathon 1.0 by Atomberg Technologies</em></p>
 
-  <p align="center">
-    <a href="https://atomsync-portal.vercel.app/" target="_blank">
-      <img src="https://img.shields.io/badge/Live_Deployment-Vercel-000000?style=for-the-badge&logo=vercel" alt="Live Deployment">
-    </a>
-  </p>
+# ⚡ AtomSync Portal
 
-  <p align="center">
-    <a href="#-live-demo--accounts">Live Demo</a> •
-    <a href="#-the-technological-noir-experience">UI/UX</a> •
-    <a href="#-comprehensive-feature-breakdown">Features</a> •
-    <a href="#-uom-scoring-engine">Scoring</a> •
-    <a href="#-local-setup--deployment">Setup</a>
-  </p>
+### Institutional-Grade Goal Setting & Performance Analytics Platform
+
+*Built for AtomQuest Hackathon 1.0 — Atomberg Technologies*
+
+<br/>
+
+[![Live on Vercel](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://atomsync-portal.vercel.app/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
+<br/>
+
+[Live Demo](#-live-demo) · [Features](#-features) · [Architecture](#-architecture) · [Scoring Engine](#-scoring-engine) · [Setup](#-local-setup)
+
 </div>
 
 ---
 
-## 🌍 Live Demo & Accounts
+## 📌 Overview
 
-Experience the AtomSync Portal live: **[https://atomsync-portal.vercel.app/](https://atomsync-portal.vercel.app/)**
+**AtomSync Portal** is a full-stack, enterprise-grade OKR (Objectives & Key Results) platform engineered to bring institutional-level goal management to modern organizations. It provides a unified environment for employees to define quarterly blueprints, managers to steer team trajectories, and administrators to enforce organizational cadence — all backed by a robust audit trail and real-time analytics.
 
-To explore the full Role-Based Access Control (RBAC) capabilities, use the following demo credentials:
-
-| Designation | Authentication ID | Passkey | Capabilities |
-|-------------|-------------------|---------|--------------|
-| **System Admin**| `admin@atomberg.com` | `demo123` | Cycle Management, Audit Trails, Shared Goals, Analytics |
-| **Manager** | `manager@atomberg.com` | `demo123` | Goal Approvals, Team Analytics, Quarterly Check-ins |
-| **Operative** | `employee@atomberg.com` | `demo123` | Goal Creation, Achievement Logging, Performance Tracking |
+Built on the **"Technological Noir"** design philosophy, AtomSync delivers a command-center aesthetic rather than generic HR software — with deep glassmorphism, kinetic micro-interactions, and a data-legible monospaced type system.
 
 ---
 
-## 🕶️ The "Technological Noir" Experience
+## 🌐 Live Demo
 
-AtomSync is designed to feel less like standard HR software and more like an **Institutional Command Center**. 
+**[https://atomsync-portal.vercel.app/](https://atomsync-portal.vercel.app/)**
 
-*   **Color Palette:** Built on a foundation of deep charcoal (`#0a0a0a`) backgrounds with vibrant **Signal Gold** (`#fdb913`) accents to direct focus.
-*   **Advanced Glassmorphism:** Modules float above the background utilizing deep blur effects (`backdrop-filter: blur(20px)`), subtle gradient borders, and state-reactive hover glows.
-*   **Institutional Typography:** Structured using `Geist` and `JetBrains Mono` for maximum data legibility, giving numerical data a precise, monospaced layout.
-*   **Kinetic Micro-Interactions:** Subtle animations, such as glowing deploy buttons and pulsing active cycle badges, provide immediate tactile feedback.
+Use the following demo accounts to explore the full Role-Based Access Control (RBAC) system:
+
+| Role | Email | Password | Access Level |
+|------|-------|----------|--------------|
+| **Admin** | `admin@atomberg.com` | `demo123` | Cycle management, audit trails, shared goals, analytics |
+| **Manager** | `manager@atomberg.com` | `demo123` | Goal approvals, team analytics, quarterly check-ins |
+| **Employee** | `employee@atomberg.com` | `demo123` | Goal creation, achievement logging, performance tracking |
 
 ---
 
-## ✨ Comprehensive Feature Breakdown
+## ✨ Features
 
-### 🎯 1. Personal Blueprint (Goal Management)
+### 🎯 Goal Management (Personal Blueprint)
 The core engine for employees to define and execute their quarterly or annual objectives.
-*   **Smart Creation:** Define goals across specific *Thrust Areas* (e.g., Innovation, Operational Excellence).
-*   **Granular Metrics:** Support for 6 distinct Units of Measurement (UoM), from pure numeric targets to boolean (Zero Tolerance) metrics.
-*   **Weightage Validation:** Built-in safeguards ensure that the total weightage of a goal sheet equals exactly 100% before submission.
-*   **State Locking:** Once a blueprint is approved by a manager, it is cryptographically "locked." Edits require a formal, auditable unlock sequence.
 
-### 👥 2. Managerial Command Workflow
-Managers have a dedicated interface to review and steer their team's trajectory.
-*   **Approval Pipeline:** Review submitted blueprints. Managers can either **Approve** (locking the goals) or **Return for Rework** with attached comments.
-*   **Quarterly Check-ins:** A dedicated module to log structured, quarter-specific feedback for individual operatives, tracking the narrative behind the numbers.
+- **Structured Creation** — Define goals across configurable *Thrust Areas* (e.g., Innovation, Operational Excellence, Customer Focus).
+- **Granular Measurement** — Support for 6 distinct Units of Measurement (UoM), from numeric targets to boolean zero-tolerance metrics.
+- **Weightage Validation** — Built-in enforcement ensures a goal sheet totals exactly 100% before submission.
+- **State Locking** — Approved blueprints are locked. Any modification requires a formal, auditable unlock sequence.
 
-### 📈 3. Analytics Intelligence
-A highly sophisticated dashboard translating raw data into strategic insights.
-*   **Thrust Area Momentum (Kinetic Fan):** A custom SVG fan chart representing the distribution of goals across the company's strategic pillars. Longer blades indicate heavier resource loading.
-*   **Enterprise Topology Heatmap:** A visual matrix showing Quarter-over-Quarter (QoQ) completion rates for every operative, color-coded for instant performance readouts.
-*   **Velocity Index:** Area charts tracking organizational momentum and average achievement scores across time.
-*   **Leadership Impact Score:** A horizontal bar chart tracking manager effectiveness based on their frequency and quality of employee check-ins.
+### 👥 Manager Workflow
+A dedicated interface for managers to review and steer their team's performance.
 
-### 🛡️ 4. Institutional Control (Admin)
-Superuser tools for maintaining organizational cadence and compliance.
-*   **Cycle Control Center:** Activate and deactivate performance cycles (e.g., *FY 26-27 Q1 Check-in*). The system strictly enforces date-windows, preventing unauthorized submissions outside of active periods.
-*   **Immutable Audit Trail:** A tamper-proof, system-wide log tracking every action—who updated what goal, when a sheet was approved, and when a check-in was logged. All timestamps are localized to IST (`Asia/Kolkata`).
-*   **Shared Goals Deployment:** Push unified, non-editable KPIs from the Admin tier down to multiple operatives simultaneously to ensure organizational alignment.
+- **Approval Pipeline** — Review submitted blueprints and either **Approve** (locking goals) or **Return for Rework** with structured comments.
+- **Quarterly Check-ins** — Log structured, quarter-specific feedback for individual team members, capturing the narrative behind the numbers.
 
-### ⚡ 5. Automation & Infrastructure
-*   **Resend Pipeline:** Transactional emails are automatically dispatched when goals are submitted, approved, or returned, keeping all parties instantly informed.
-*   **Escalation Rules:** Configurable auto-reminders for overdue actions (e.g., alerting managers to pending approvals).
+### 📊 Analytics Intelligence
+A sophisticated dashboard that translates raw performance data into strategic insights.
 
----
+- **Thrust Area Momentum (Kinetic Fan)** — A custom SVG fan chart mapping goal distribution across the company's strategic pillars.
+- **Enterprise Topology Heatmap** — A visual matrix displaying Quarter-over-Quarter (QoQ) completion rates for every operative, color-coded for instant readouts.
+- **Velocity Index** — Area charts tracking organizational momentum and average achievement scores over time.
+- **Leadership Impact Score** — A horizontal bar chart quantifying manager effectiveness based on the frequency and quality of employee check-ins.
 
-## 📊 UoM Scoring Engine
+### 🛡️ Admin Control Center
+Superuser tooling to maintain organizational cadence and compliance.
 
-Performance isn't linear. AtomSync calculates achievement scores dynamically based on the selected Unit of Measurement:
+- **Cycle Management** — Activate and deactivate performance cycles (e.g., *FY 26-27 Q1*). The system enforces date windows, preventing unauthorized submissions outside active periods.
+- **Immutable Audit Trail** — A tamper-proof, system-wide log tracking every action: goal updates, sheet approvals, check-in submissions. All timestamps are localized to IST (`Asia/Kolkata`).
+- **Shared Goals Deployment** — Push unified, non-editable KPIs from the Admin tier to multiple operatives simultaneously, ensuring organizational alignment.
 
-| UoM Type | Computation Logic | Real-World Example |
-|----------|-------------------|--------------------|
-| **Numeric Min** | `(actual / target) × 100` | Revenue: Target ₹10L, Actual ₹8L → **80% Score** |
-| **Numeric Max** | `(target / actual) × 100` | Defects: Target 5, Actual 3 → **100% Score** (Lower is better) |
-| **Percentage Min** | Direct Comparison | Satisfaction: Target 90%, Actual 85% → **94% Score** |
-| **Percentage Max** | Inverse Comparison | Attrition: Target 5%, Actual 3% → **100% Score** |
-| **Timeline** | `(planned_days / actual_days) × 100` | Shipping: Planned 30d, Actual 25d → **100% Score** |
-| **Zero Tolerance** | `actual === 0 ? 100 : 0` | Safety Incidents: Target 0, Actual 0 → **100% Score** |
+### ⚡ Automation & Notifications
+- **Transactional Email (Resend)** — Automated email notifications are dispatched when goals are submitted, approved, or returned for rework.
+- **Escalation Rules** — Configurable auto-reminders for overdue actions (e.g., alerting managers to pending approvals past SLA).
 
 ---
 
-## 🏗️ Technical Architecture
+## 📐 Scoring Engine
 
-*   **Core Framework:** [Next.js 16](https://nextjs.org/) (App Router, React 19)
-*   **Database & Auth:** [Supabase](https://supabase.com/) (PostgreSQL, Row Level Security, Supabase Auth)
-*   **Styling:** Custom Vanilla CSS Design System (Glassmorphism, CSS Variables)
-*   **Data Visualization:** [Recharts](https://recharts.org/) + Custom SVG Elements
-*   **Form Management:** React Hook Form + Zod v4 (Strict type safety)
-*   **Communications:** [Resend API](https://resend.com/)
+Performance is not linear. AtomSync calculates achievement scores dynamically based on the selected Unit of Measurement (UoM):
 
----
-
-## 🗃️ Database Schema
-
-The backend is powered by a fully relational PostgreSQL database consisting of 10 core tables:
-
-1.  `profiles`: RBAC mapping (Admin, Manager, Employee).
-2.  `cycles`: Temporal management for goal-setting windows.
-3.  `thrust_areas`: Strategic organizational pillars.
-4.  `goal_sheets`: The container for an employee's seasonal goals.
-5.  `goals`: Individual objectives with targets and weightages.
-6.  `achievements`: Quarterly tracking against specific goals.
-7.  `check_ins`: Managerial feedback logs.
-8.  `audit_log`: The immutable history of all system state changes.
-9.  `escalation_rules`: Triggers for overdue notifications.
-10. `escalation_log`: History of fired escalations.
-
-*(See `supabase/schema.sql` for the complete DDL and Row Level Security policies).*
+| UoM Type | Computation Logic | Example |
+|----------|-------------------|---------|
+| **Numeric Min** | `(actual ÷ target) × 100` | Revenue: Target ₹10L, Actual ₹8L → **80%** |
+| **Numeric Max** | `(target ÷ actual) × 100` | Defects: Target 5, Actual 3 → **100%** *(lower is better)* |
+| **Percentage Min** | Direct comparison | Satisfaction: Target 90%, Actual 85% → **94%** |
+| **Percentage Max** | Inverse comparison | Attrition: Target 5%, Actual 3% → **100%** |
+| **Timeline** | `(planned_days ÷ actual_days) × 100` | Delivery: Planned 30d, Actual 25d → **100%** |
+| **Zero Tolerance** | `actual === 0 ? 100 : 0` | Safety Incidents: Target 0, Actual 0 → **100%** |
 
 ---
 
-## 💻 Local Setup & Deployment
+## 🏗️ Architecture
+
+### Technology Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Framework** | [Next.js 16](https://nextjs.org/) (App Router, React 19) |
+| **Language** | TypeScript 5 |
+| **Database & Auth** | [Supabase](https://supabase.com/) — PostgreSQL + Row Level Security + Supabase Auth |
+| **Styling** | Vanilla CSS Design System — Glassmorphism, CSS Custom Properties |
+| **Data Visualization** | [Recharts](https://recharts.org/) + Custom SVG Elements |
+| **Form Handling** | React Hook Form + Zod v4 |
+| **Email** | [Resend API](https://resend.com/) |
+| **Deployment** | [Vercel](https://vercel.com/) |
+
+### Database Schema
+
+The backend is powered by a fully relational PostgreSQL database with 10 core tables and comprehensive Row Level Security policies:
+
+| Table | Purpose |
+|-------|---------|
+| `profiles` | RBAC role mapping (Admin, Manager, Employee) |
+| `cycles` | Temporal management for goal-setting windows |
+| `thrust_areas` | Strategic organizational pillars |
+| `goal_sheets` | Container for an employee's seasonal goals |
+| `goals` | Individual objectives with targets and weightages |
+| `achievements` | Quarterly tracking of actual performance against goals |
+| `check_ins` | Structured managerial feedback logs |
+| `audit_log` | Immutable, append-only history of all system state changes |
+| `escalation_rules` | Trigger configuration for overdue notifications |
+| `escalation_log` | Historical record of all fired escalation events |
+
+> See [`supabase/schema.sql`](./supabase/schema.sql) for the complete DDL, seed data, and RLS policy definitions.
+
+---
+
+## 💻 Local Setup
 
 ### Prerequisites
-*   Node.js 18+
-*   A [Supabase](https://supabase.com/) Account (Free tier works perfectly)
-*   A [Resend](https://resend.com/) Account (For email notifications)
 
-### 1. Repository Setup
+- **Node.js** v18 or higher
+- A **[Supabase](https://supabase.com/)** project (free tier is sufficient)
+- A **[Resend](https://resend.com/)** API key (for email notifications)
+
+### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/mahaboob2603/atomsync-portal.git
 cd atomsync-portal
 npm install
 ```
 
-### 2. Environment Configuration
-Create a `.env.local` file in the root directory:
+### 2. Configure Environment Variables
+
+Copy the example environment file and populate it with your credentials:
+
 ```bash
 cp .env.example .env.local
 ```
-Populate it with your keys:
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL="your_supabase_project_url"
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="your_supabase_anon_key"
 RESEND_API_KEY="your_resend_api_key"
 ```
 
-### 3. Database Bootstrapping
-1. Log into your Supabase Dashboard.
-2. Navigate to the **SQL Editor**.
-3. Copy the entire contents of `supabase/schema.sql`.
-4. Run the script. This will instantly build all tables, insert the initial demo data, and establish the RLS security policies.
+### 3. Bootstrap the Database
 
-### 4. Ignition
+1. Open your **Supabase Dashboard** and navigate to the **SQL Editor**.
+2. Copy the full contents of [`supabase/schema.sql`](./supabase/schema.sql).
+3. Execute the script. This will create all tables, insert the initial demo data, and configure all RLS security policies automatically.
+
+### 4. Run the Development Server
+
 ```bash
 npm run dev
 ```
-Navigate to `http://localhost:3000` to access the portal.
+
+Navigate to [http://localhost:3000](http://localhost:3000) to access the portal.
+
+---
+
+## 🎨 Design System
+
+AtomSync is built on the **"Technological Noir"** aesthetic — engineered to feel like an institutional command center rather than conventional HR software.
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| **Background** | `#0a0a0a` | Deep charcoal base |
+| **Accent** | `#fdb913` | Signal Gold — directs user focus |
+| **Glass Effect** | `backdrop-filter: blur(20px)` | Floating module surfaces |
+| **Body Font** | `Geist` | UI text and labels |
+| **Mono Font** | `JetBrains Mono` | Numeric data and KPIs |
+
+Key interaction patterns include: state-reactive hover glows on data modules, pulsing badges for active cycles, and animated deploy confirmations — all designed to provide immediate tactile feedback and reinforce the premium, data-driven feel of the platform.
+
+---
+
+## 📄 License
+
+Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
 
 ---
 
 <div align="center">
-  <p><strong>MIT License</strong> — <em>Engineered for performance. Designed for impact.</em></p>
+  <sub>Engineered for performance. Designed for impact.</sub>
 </div>
