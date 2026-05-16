@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AtomSync Portal - Login &amp; Registration</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#27d6ff",
+                      "on-surface-variant": "#504533",
+                      "on-tertiary-container": "#00596d",
+                      "primary-fixed": "#ffdea6",
+                      "on-surface": "#201b11",
+                      "text-muted": "#495057",
+                      "secondary-container": "#e2e2e2",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#b3ebff",
+                      "background": "#fff8f3",
+                      "error": "#ba1a1a",
+                      "tertiary": "#00677d",
+                      "surface-tint": "#7c5800",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "on-primary-fixed": "#271900",
+                      "inverse-surface": "#362f25",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#f3e6d6",
+                      "secondary-fixed": "#e2e2e2",
+                      "surface-dim": "#e4d8c8",
+                      "on-tertiary-fixed": "#001f27",
+                      "primary-container": "#fdb913",
+                      "tertiary-fixed-dim": "#37d7ff",
+                      "secondary": "#5e5e5e",
+                      "on-primary-container": "#6b4c00",
+                      "primary": "#7c5800",
+                      "outline-variant": "#d5c4ac",
+                      "on-tertiary": "#ffffff",
+                      "border-subtle": "#e9ecef",
+                      "on-tertiary-fixed-variant": "#004e5f",
+                      "surface-container": "#f9ecdc",
+                      "primary-fixed-dim": "#ffbb16",
+                      "on-secondary-fixed-variant": "#474747",
+                      "on-secondary-container": "#646464",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-container-low": "#fff2e1",
+                      "on-primary-fixed-variant": "#5e4200",
+                      "surface-gray": "#f8f9fa",
+                      "outline": "#837560",
+                      "inverse-primary": "#ffbb16",
+                      "surface": "#fff8f3",
+                      "surface-variant": "#ede1d1",
+                      "on-background": "#201b11",
+                      "surface-bright": "#fff8f3",
+                      "surface-container-highest": "#ede1d1",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#fcefdf"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-desktop": "32px",
+                      "container-max": "1280px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "display": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "caption": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 252, 248, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- App Shell (Navigation suppressed for focused Login experience) -->
+<main class="min-h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- Left Side: Brand Imagery & Welcome -->
+<section class="relative hidden md:flex md:w-1/2 lg:w-3/5 bg-on-surface items-center justify-center p-12">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60 grayscale mix-blend-overlay" data-alt="A high-end macro photograph of a precision-engineered metallic engine component with golden glowing circuits integrated into the surface. The lighting is cinematic and dramatic, casting sharp shadows and highlighting industrial textures. The overall aesthetic is tech-forward and professional, using a palette of deep charcoal blacks and vibrant brand gold. It symbolizes engineering precision and modern digital synchronization." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjr_cbxinEExfAg1n4vQgj7Vy0Jt3muIUfMHWrfZ16C5p8mVuBIv9WJKAu28YPScTNp_fWPT9914S5WBWD-N2IZ0IwXrxSJcySnbVezDvMRGqnmZ3Nb4crPR9PENZtnQlXfE3Jan5FuGopBh13CJDJAQynwhd3CF8Q_Q4AmtUvDAKOl5O16fqwCA4AoAc1-_3aexcAxnohstv1HkZKmEjBpacW0FuIpN8jL_Pmv9OAqjUxxe7uJ-vgjEPcLPxyaZgGm3HXCpzOTfYZ"/>
+</div>
+<div class="relative z-10 max-w-xl">
+<div class="mb-8">
+<span class="text-primary-container font-headline-md text-headline-md tracking-widest uppercase">AtomSync</span>
+</div>
+<h1 class="font-display text-display text-surface mb-6">Precision in every <span class="text-primary-container">Synchronization</span>.</h1>
+<p class="font-body-lg text-body-lg text-surface-variant leading-relaxed mb-8">
+                    Welcome to the central portal for high-performance engineering data and collaborative industrial intelligence. Securely access your operational dashboard and manage fleet diagnostics with atomic precision.
+                </p>
+<div class="grid grid-cols-2 gap-gutter">
+<div class="p-6 bg-surface/5 backdrop-blur-md border border-surface/10 rounded-lg">
+<span class="material-symbols-outlined text-primary-container mb-2">precision_manufacturing</span>
+<h3 class="font-label-md text-label-md text-surface uppercase mb-1">Reliability</h3>
+<p class="font-caption text-caption text-surface-variant">99.9% Portal Uptime</p>
+</div>
+<div class="p-6 bg-surface/5 backdrop-blur-md border border-surface/10 rounded-lg">
+<span class="material-symbols-outlined text-primary-container mb-2">encrypted</span>
+<h3 class="font-label-md text-label-md text-surface uppercase mb-1">Security</h3>
+<p class="font-caption text-caption text-surface-variant">Tier-4 Encrypted</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Side: Form Content -->
+<section class="flex-1 flex items-center justify-center p-6 md:p-12 bg-surface-container-low relative">
+<!-- Mobile Brand Logo -->
+<div class="absolute top-8 left-6 md:hidden">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">AtomSync</span>
+</div>
+<!-- Glassmorphic Auth Card -->
+<div class="glass-card w-full max-w-[480px] p-8 md:p-10 rounded-lg shadow-sm">
+<!-- Tab Toggle -->
+<div class="flex items-center p-1 bg-surface-container-high rounded-lg mb-10">
+<button class="flex-1 py-2 px-4 rounded-lg font-label-md text-label-md bg-white shadow-sm text-on-surface">
+                        Sign In
+                    </button>
+<button class="flex-1 py-2 px-4 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface transition-colors">
+                        Register
+                    </button>
+</div>
+<!-- Sign In Form (Visible by Default) -->
+<div id="login-form">
+<div class="mb-8">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Portal Access</h2>
+<p class="font-body-md text-body-md text-secondary">Enter your enterprise credentials to continue.</p>
+</div>
+<form action="#" class="space-y-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant block uppercase" for="login-email">Corporate Email</label>
+<input class="w-full bg-white border border-outline-variant px-4 py-3 rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all font-body-md" id="login-email" placeholder="name@atomsync.com" type="email"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface-variant block uppercase" for="login-password">Password</label>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<input class="w-full bg-white border border-outline-variant px-4 py-3 rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all font-body-md" id="login-password" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex items-center gap-3">
+<input class="w-5 h-5 rounded border-outline-variant text-primary-container focus:ring-primary-container" id="remember" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface-variant" for="remember">Remember this workstation</label>
+</div>
+<button class="w-full bg-primary-container text-on-primary-fixed font-bold py-4 rounded-lg shadow-md hover:opacity-90 active:scale-95 transition-all text-center flex justify-center items-center gap-2" type="submit">
+                            Sign In
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</form>
+</div>
+<!-- Footer Links -->
+<div class="mt-10 pt-8 border-t border-outline-variant text-center">
+<p class="font-caption text-caption text-secondary">
+                        Engineering Precision © 2024 AtomSync Portal.<br/>
+                        Authorized access only. Subject to monitoring.
+                    </p>
+</div>
+</div>
+</section>
+</main>
+<!-- Visual Accents for Background -->
+<div class="fixed top-0 right-0 -z-10 w-[500px] h-[500px] bg-primary-container/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-tertiary-container/10 blur-[100px] rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+</body></html>

@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0b0f;
-  --foreground: #e8eaed;
-  --card: #12141a;
-  --card-hover: #1a1d26;
-  --border: #1f2233;
-  --border-hover: #2a2d44;
-  --muted: #8b8fa3;
-  --muted-foreground: #6b7085;
-  --accent: #6366f1;
-  --accent-light: #818cf8;
-  --accent-glow: rgba(99, 102, 241, 0.15);
+  --background: #fff8f3;
+  --foreground: #201b11;
+  --card: #ffffff;
+  --card-hover: #f9ecdc;
+  --border: #e9ecef;
+  --border-hover: #d5c4ac;
+  --muted: #646464;
+  --muted-foreground: #495057;
+  --accent: #fdb913;
+  --accent-light: #ffdea6;
+  --accent-glow: rgba(253, 185, 19, 0.15);
   --success: #22c55e;
   --success-bg: rgba(34, 197, 94, 0.1);
   --warning: #f59e0b;
   --warning-bg: rgba(245, 158, 11, 0.1);
-  --danger: #ef4444;
-  --danger-bg: rgba(239, 68, 68, 0.1);
-  --info: #3b82f6;
-  --info-bg: rgba(59, 130, 246, 0.1);
+  --danger: #ba1a1a;
+  --danger-bg: rgba(186, 26, 26, 0.1);
+  --info: #00677d;
+  --info-bg: rgba(0, 103, 125, 0.1);
   --sidebar-width: 260px;
   --header-height: 64px;
 }
@@ -130,16 +130,17 @@ body {
    Glass Card
    ========================================== */
 .glass-card {
-  background: linear-gradient(135deg, rgba(18, 20, 26, 0.9), rgba(26, 29, 38, 0.7));
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
+  background: rgba(255, 252, 248, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 16px;
   transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
 /* ==========================================
