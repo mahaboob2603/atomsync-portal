@@ -1,24 +1,92 @@
-export async function sendTeamsNotification(webhookUrl: string, title: string, message: string, url?: string) {
+const PORTAL_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://atomsync-portal.vercel.app";
+
+export function getDeepLink(path: string): string {
+  return `${PORTAL_BASE_URL}${path}`;
+}
+
+export async function sendTeamsNotification(
+  webhookUrl: string,
+  title: string,
+  message: string,
+  deepLinkUrl?: string
+) {
   if (!webhookUrl) return;
 
+  // Adaptive Card payload (modern Teams format)
   const payload = {
-    "@type": "MessageCard",
-    "@context": "http://schema.org/extensions",
-    "themeColor": "4F46E5",
-    "summary": title,
-    "sections": [{
-      "activityTitle": title,
-      "activitySubtitle": "AtomSync Portal Notification",
-      "text": message,
-      "markdown": true
-    }],
-    ...(url && {
-      "potentialAction": [{
-        "@type": "OpenUri",
-        "name": "View in Portal",
-        "targets": [{ "os": "default", "uri": url }]
-      }]
-    })
+    type: "message",
+    attachments: [
+      {
+        contentType: "application/vnd.microsoft.card.adaptive",
+        contentUrl: null,
+        content: {
+          $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
+          type: "AdaptiveCard",
+          version: "1.4",
+          body: [
+            {
+              type: "ColumnSet",
+              columns: [
+                {
+                  type: "Column",
+                  width: "auto",
+                  items: [
+                    {
+                      type: "Image",
+                      url: "https://img.icons8.com/fluency/48/goal.png",
+                      size: "Small",
+                      style: "Person",
+                    },
+                  ],
+                },
+                {
+                  type: "Column",
+                  width: "stretch",
+                  items: [
+                    {
+                      type: "TextBlock",
+                      text: "AtomQuest Portal",
+                      weight: "Bolder",
+                      size: "Small",
+                      color: "Accent",
+                    },
+                    {
+                      type: "TextBlock",
+                      text: title,
+                      weight: "Bolder",
+                      size: "Medium",
+                      wrap: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: "TextBlock",
+              text: message,
+              wrap: true,
+              spacing: "Medium",
+            },
+            {
+              type: "TextBlock",
+              text: `📅 ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`,
+              size: "Small",
+              color: "Light",
+              spacing: "Small",
+            },
+          ],
+          ...(deepLinkUrl && {
+            actions: [
+              {
+                type: "Action.OpenUrl",
+                title: "🔗 Open in Portal",
+                url: deepLinkUrl,
+              },
+            ],
+          }),
+        },
+      },
+    ],
   };
 
   try {

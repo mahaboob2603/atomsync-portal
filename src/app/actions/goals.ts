@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import type { GoalFormValues } from "@/lib/validations";
 import { sendNotificationEmail, emailTemplates } from "@/lib/email";
-import { sendTeamsNotification } from "@/lib/teams";
+import { sendTeamsNotification, getDeepLink } from "@/lib/teams";
 
 // Helper: check if current date is within the cycle's active window
 async function validateCycleWindow(supabase: Awaited<ReturnType<typeof createClient>>, cycleId: string) {
@@ -267,7 +267,8 @@ export async function submitGoalSheet(goalSheetId: string) {
       await sendTeamsNotification(
         process.env.TEAMS_WEBHOOK_URL,
         "Goal Sheet Submitted",
-        `**${profile.full_name}** has submitted their goal sheet for approval.`
+        `**${profile.full_name}** has submitted their goal sheet for approval.`,
+        getDeepLink("/dashboard/team-goals")
       );
     }
   }
@@ -320,7 +321,8 @@ export async function approveGoalSheet(goalSheetId: string) {
       await sendTeamsNotification(
         process.env.TEAMS_WEBHOOK_URL,
         "Goal Sheet Approved",
-        `**${managerProfile.full_name}** has approved the goal sheet for the team.`
+        `**${managerProfile.full_name}** has approved the goal sheet for the team.`,
+        getDeepLink("/dashboard/goals")
       );
     }
   }
@@ -372,7 +374,8 @@ export async function returnGoalSheet(goalSheetId: string, reason: string) {
       await sendTeamsNotification(
         process.env.TEAMS_WEBHOOK_URL,
         "Goal Sheet Returned",
-        `**${managerProfile.full_name}** has returned a goal sheet for rework. Reason: ${reason}`
+        `**${managerProfile.full_name}** has returned a goal sheet for rework. Reason: ${reason}`,
+        getDeepLink("/dashboard/goals")
       );
     }
   }

@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { computeScore } from "@/lib/scoring";
 import type { UoMType, Quarter } from "@/lib/types";
-import { sendTeamsNotification } from "@/lib/teams";
+import { sendTeamsNotification, getDeepLink } from "@/lib/teams";
 
 // Map quarter to cycle phase
 const quarterToPhase: Record<Quarter, string> = {
@@ -183,7 +183,8 @@ export async function addCheckIn(
     await sendTeamsNotification(
       process.env.TEAMS_WEBHOOK_URL,
       `${quarter} Check-in Completed`,
-      `**${manager?.full_name || "Manager"}** has completed the ${quarter} check-in for a team member.`
+      `**${manager?.full_name || "Manager"}** has completed the ${quarter} check-in for a team member.`,
+      getDeepLink("/dashboard/checkins")
     );
   }
 
