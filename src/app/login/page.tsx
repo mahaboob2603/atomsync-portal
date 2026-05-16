@@ -154,13 +154,13 @@ export default function LoginPage() {
 
           <div className="flex gap-2 bg-white/5 p-1 rounded-lg border border-white/10">
             <button
-              className={\`flex-1 py-2 text-sm font-semibold rounded-md transition-all \${isLogin ? 'bg-[#fdb913] text-black' : 'text-gray-400 hover:text-white'}\`}
+              className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${isLogin ? 'bg-[#fdb913] text-black' : 'text-gray-400 hover:text-white'}`}
               onClick={() => { setIsLogin(true); setError(""); }}
             >
               Sign In
             </button>
             <button
-              className={\`flex-1 py-2 text-sm font-semibold rounded-md transition-all \${!isLogin ? 'bg-[#fdb913] text-black' : 'text-gray-400 hover:text-white'}\`}
+              className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${!isLogin ? 'bg-[#fdb913] text-black' : 'text-gray-400 hover:text-white'}`}
               onClick={() => { setIsLogin(false); setError(""); }}
             >
               Register
@@ -184,7 +184,7 @@ export default function LoginPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex flex-col gap-2">
                     <label className="text-xs font-semibold tracking-wide text-gray-400 uppercase">Role</label>
-                    <select name="role" className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913] transition-all outline-none appearance-none" style={{ backgroundImage:\`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24' stroke='%23888' stroke-width='2'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")\`, backgroundRepeat:"no-repeat", backgroundPosition:"right 16px center" }}>
+                    <select name="role" className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#fdb913] focus:ring-1 focus:ring-[#fdb913] transition-all outline-none appearance-none" style={{ backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24' stroke='%23888' stroke-width='2'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`, backgroundRepeat:"no-repeat", backgroundPosition:"right 16px center" }}>
                       <option value="employee">Employee</option>
                       <option value="manager">Manager</option>
                     </select>
