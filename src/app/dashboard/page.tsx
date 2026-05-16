@@ -9,6 +9,9 @@ import {
   Users,
   FileCheck,
   ArrowRight,
+  Zap,
+  Award,
+  BarChart3,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -113,19 +116,30 @@ export default async function DashboardPage() {
 
   const greeting = getGreeting();
 
+  // Atomberg brand pillars mapped to goal system
+  const pillars = [
+    { icon: Target, label: "Precision", desc: "Set & track goals", color: "#fdb913" },
+    { icon: Zap, label: "Momentum", desc: "Regular check-ins", color: "#38bdf8" },
+    { icon: BarChart3, label: "Efficiency", desc: "Measure impact", color: "#22c55e" },
+  ];
+
   return (
     <div>
       {/* Page Header */}
       <div className="page-header">
         <div>
-          <h1 className="text-2xl font-bold">{greeting}, {profile.full_name?.split(" ")[0]}</h1>
-          <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
+          <h1 style={{ fontSize: 24, fontWeight: 800, color: "#fff", letterSpacing: "-0.02em" }}>
+            {greeting}, {profile.full_name?.split(" ")[0]}
+          </h1>
+          <p style={{ fontSize: 13, marginTop: 4, color: "#888" }}>
             {activeCycle
               ? `Active cycle: ${activeCycle.name}`
               : "No active cycle configured"}
+            {" · "}
+            <span style={{ color: "#fdb913", fontWeight: 600 }}>More Performance, Less Friction</span>
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span className={`badge badge-${profile.role}`}>
             {profile.role.charAt(0).toUpperCase() + profile.role.slice(1)}
           </span>
@@ -133,14 +147,61 @@ export default async function DashboardPage() {
       </div>
 
       {/* Page Body */}
-      <div className="page-body space-y-8">
+      <div className="page-body" style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+
+        {/* Atomberg Pillars Banner */}
+        <div
+          className="animate-fade-in"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 16,
+          }}
+        >
+          {pillars.map((p, i) => {
+            const Icon = p.icon;
+            return (
+              <div
+                key={i}
+                style={{
+                  padding: "20px 24px",
+                  borderRadius: 12,
+                  background: `${p.color}08`,
+                  border: `1px solid ${p.color}15`,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 16,
+                }}
+              >
+                <div
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 10,
+                    background: `${p.color}15`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Icon size={20} color={p.color} />
+                </div>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>{p.label}</p>
+                  <p style={{ fontSize: 12, color: "#888" }}>{p.desc}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
           <div className="stat-card animate-fade-in stagger-1">
-            <div className="stat-icon" style={{ background: "var(--accent-glow)" }}>
-              <Target size={20} style={{ color: "var(--accent-light)" }} />
+            <div className="stat-icon" style={{ background: "rgba(253,185,19,0.12)" }}>
+              <Target size={20} color="#fdb913" />
             </div>
-            <div className="stat-value">{stats.totalGoals}</div>
+            <div className="stat-value" style={{ color: "#fff" }}>{stats.totalGoals}</div>
             <div className="stat-label">Total Goals</div>
           </div>
 
@@ -148,17 +209,15 @@ export default async function DashboardPage() {
             <div className="stat-icon" style={{ background: "var(--success-bg)" }}>
               <CheckCircle2 size={20} style={{ color: "var(--success)" }} />
             </div>
-            <div className="stat-value">{stats.approvedGoals}</div>
-            <div className="stat-label">
-              {profile.role === "employee" ? "Approved Sheets" : "Approved Sheets"}
-            </div>
+            <div className="stat-value" style={{ color: "#fff" }}>{stats.approvedGoals}</div>
+            <div className="stat-label">Approved Sheets</div>
           </div>
 
           <div className="stat-card animate-fade-in stagger-3">
             <div className="stat-icon" style={{ background: "var(--warning-bg)" }}>
               <Clock size={20} style={{ color: "var(--warning)" }} />
             </div>
-            <div className="stat-value">{stats.pendingApproval}</div>
+            <div className="stat-value" style={{ color: "#fff" }}>{stats.pendingApproval}</div>
             <div className="stat-label">Pending Approval</div>
           </div>
 
@@ -170,7 +229,7 @@ export default async function DashboardPage() {
                 <Users size={20} style={{ color: "var(--info)" }} />
               )}
             </div>
-            <div className="stat-value">
+            <div className="stat-value" style={{ color: "#fff" }}>
               {profile.role === "employee" ? stats.checkInsCompleted : stats.teamMembers}
             </div>
             <div className="stat-label">
@@ -180,147 +239,27 @@ export default async function DashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="glass-card p-6 animate-fade-in">
-          <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="glass-card animate-fade-in" style={{ padding: 24 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 16, color: "#fff" }}>Quick Actions</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
             {profile.role === "employee" && (
               <>
-                <Link
-                  href="/dashboard/goals"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <Target size={20} style={{ color: "var(--accent-light)" }} />
-                    <span className="font-medium text-sm">Create / View Goals</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
-                <Link
-                  href="/dashboard/checkins"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 size={20} style={{ color: "var(--success)" }} />
-                    <span className="font-medium text-sm">Log Achievement</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
+                <ActionCard href="/dashboard/goals" icon={Target} iconColor="#fdb913" label="Create / View Goals" />
+                <ActionCard href="/dashboard/checkins" icon={CheckCircle2} iconColor="#22c55e" label="Log Achievement" />
               </>
             )}
             {profile.role === "manager" && (
               <>
-                <Link
-                  href="/dashboard/team-goals"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <Users size={20} style={{ color: "var(--warning)" }} />
-                    <span className="font-medium text-sm">Review Team Goals</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
-                <Link
-                  href="/dashboard/checkins"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 size={20} style={{ color: "var(--success)" }} />
-                    <span className="font-medium text-sm">Conduct Check-ins</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
-                <Link
-                  href="/dashboard/analytics"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <TrendingUp size={20} style={{ color: "var(--info)" }} />
-                    <span className="font-medium text-sm">View Analytics</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
+                <ActionCard href="/dashboard/team-goals" icon={Users} iconColor="#fdb913" label="Review Team Goals" />
+                <ActionCard href="/dashboard/checkins" icon={CheckCircle2} iconColor="#22c55e" label="Conduct Check-ins" />
+                <ActionCard href="/dashboard/analytics" icon={TrendingUp} iconColor="#38bdf8" label="View Analytics" />
               </>
             )}
             {profile.role === "admin" && (
               <>
-                <Link
-                  href="/dashboard/all-goals"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <Target size={20} style={{ color: "var(--accent-light)" }} />
-                    <span className="font-medium text-sm">All Goals</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
-                <Link
-                  href="/dashboard/cycles"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <Clock size={20} style={{ color: "var(--warning)" }} />
-                    <span className="font-medium text-sm">Manage Cycles</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
-                <Link
-                  href="/dashboard/audit"
-                  className="flex items-center justify-between p-4 rounded-xl transition-all hover:scale-[1.01]"
-                  style={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    textDecoration: "none",
-                    color: "var(--foreground)",
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <AlertCircle size={20} style={{ color: "var(--danger)" }} />
-                    <span className="font-medium text-sm">Audit Trail</span>
-                  </div>
-                  <ArrowRight size={16} style={{ color: "var(--muted)" }} />
-                </Link>
+                <ActionCard href="/dashboard/all-goals" icon={Target} iconColor="#fdb913" label="All Goals" />
+                <ActionCard href="/dashboard/cycles" icon={Clock} iconColor="#f59e0b" label="Manage Cycles" />
+                <ActionCard href="/dashboard/audit" icon={AlertCircle} iconColor="#ef4444" label="Audit Trail" />
               </>
             )}
           </div>
@@ -328,27 +267,42 @@ export default async function DashboardPage() {
 
         {/* Recent Activity (manager/admin) */}
         {recentActivity.length > 0 && (
-          <div className="glass-card p-6 animate-fade-in">
-            <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
-            <div className="space-y-3">
+          <div className="glass-card animate-fade-in" style={{ padding: 24 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 16, color: "#fff" }}>Recent Activity</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {recentActivity.map((log) => (
                 <div
                   key={log.id}
-                  className="flex items-center gap-4 p-3 rounded-lg"
-                  style={{ background: "var(--card)" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                    padding: 12,
+                    borderRadius: 10,
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.04)",
+                  }}
                 >
                   <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center"
-                    style={{ background: "var(--accent-glow)" }}
+                    style={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: 8,
+                      background: "rgba(253,185,19,0.1)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
                   >
-                    <FileCheck size={14} style={{ color: "var(--accent-light)" }} />
+                    <FileCheck size={14} color="#fdb913" />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: 14, fontWeight: 500, color: "#fff" }}>
                       {log.action} on {log.table_name}
                       {log.field_name && ` (${log.field_name})`}
                     </p>
-                    <p className="text-xs" style={{ color: "var(--muted)" }}>
+                    <p style={{ fontSize: 12, color: "#888" }}>
                       {new Date(log.created_at).toLocaleString()}
                     </p>
                   </div>
@@ -357,8 +311,52 @@ export default async function DashboardPage() {
             </div>
           </div>
         )}
+
+        {/* Atomberg Footer */}
+        <div style={{ textAlign: "center", padding: "16px 0" }}>
+          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#444" }}>
+            Powered by AtomSync · Built with Engineering Excellence
+          </p>
+        </div>
       </div>
     </div>
+  );
+}
+
+// Reusable action card component
+function ActionCard({
+  href,
+  icon: Icon,
+  iconColor,
+  label,
+}: {
+  href: string;
+  icon: React.ComponentType<{ size?: number; color?: string }>;
+  iconColor: string;
+  label: string;
+}) {
+  return (
+    <Link
+      href={href}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: 16,
+        borderRadius: 12,
+        background: "#111",
+        border: "1px solid rgba(255,255,255,0.06)",
+        textDecoration: "none",
+        color: "#fff",
+        transition: "all 0.25s",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <Icon size={20} color={iconColor} />
+        <span style={{ fontSize: 14, fontWeight: 600 }}>{label}</span>
+      </div>
+      <ArrowRight size={16} color="#888" />
+    </Link>
   );
 }
 

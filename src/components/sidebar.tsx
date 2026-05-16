@@ -17,9 +17,9 @@ import {
   User,
   Crown,
   ChevronDown,
-  Bell,
   AlertTriangle,
   Users,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -42,81 +42,24 @@ export function Sidebar({ profile }: SidebarProps) {
   const RoleIcon = roleIcon[profile.role];
 
   const roleColor = {
-    employee: "var(--info)",
-    manager: "var(--warning)",
-    admin: "#a855f7",
+    employee: "#38bdf8",
+    manager: "#fdb913",
+    admin: "#c084fc",
   };
 
-  // Navigation items based on role
   const navItems = [
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-      icon: LayoutDashboard,
-      roles: ["employee", "manager", "admin"],
-    },
-    {
-      label: "My Goals",
-      href: "/dashboard/goals",
-      icon: Goal,
-      roles: ["employee"],
-    },
-    {
-      label: "Team Goals",
-      href: "/dashboard/team-goals",
-      icon: Users,
-      roles: ["manager"],
-    },
-    {
-      label: "All Goals",
-      href: "/dashboard/all-goals",
-      icon: Goal,
-      roles: ["admin"],
-    },
-    {
-      label: "Check-ins",
-      href: "/dashboard/checkins",
-      icon: CheckSquare,
-      roles: ["employee", "manager"],
-    },
-    {
-      section: "Reports",
-      roles: ["manager", "admin"],
-    },
-    {
-      label: "Analytics",
-      href: "/dashboard/analytics",
-      icon: BarChart3,
-      roles: ["manager", "admin"],
-    },
-    {
-      label: "Reports",
-      href: "/dashboard/reports",
-      icon: FileText,
-      roles: ["manager", "admin"],
-    },
-    {
-      label: "Audit Trail",
-      href: "/dashboard/audit",
-      icon: Shield,
-      roles: ["admin"],
-    },
-    {
-      section: "Admin",
-      roles: ["admin"],
-    },
-    {
-      label: "Cycles",
-      href: "/dashboard/cycles",
-      icon: Settings,
-      roles: ["admin"],
-    },
-    {
-      label: "Escalation",
-      href: "/dashboard/escalation",
-      icon: AlertTriangle,
-      roles: ["admin"],
-    },
+    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard, roles: ["employee", "manager", "admin"] },
+    { label: "My Goals", href: "/dashboard/goals", icon: Goal, roles: ["employee"] },
+    { label: "Team Goals", href: "/dashboard/team-goals", icon: Users, roles: ["manager"] },
+    { label: "All Goals", href: "/dashboard/all-goals", icon: Goal, roles: ["admin"] },
+    { label: "Check-ins", href: "/dashboard/checkins", icon: CheckSquare, roles: ["employee", "manager"] },
+    { section: "Reports", roles: ["manager", "admin"] },
+    { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3, roles: ["manager", "admin"] },
+    { label: "Reports", href: "/dashboard/reports", icon: FileText, roles: ["manager", "admin"] },
+    { label: "Audit Trail", href: "/dashboard/audit", icon: Shield, roles: ["admin"] },
+    { section: "Admin", roles: ["admin"] },
+    { label: "Cycles", href: "/dashboard/cycles", icon: Settings, roles: ["admin"] },
+    { label: "Escalation", href: "/dashboard/escalation", icon: AlertTriangle, roles: ["admin"] },
   ];
 
   async function handleSwitch(role: "employee" | "manager" | "admin") {
@@ -126,23 +69,29 @@ export function Sidebar({ profile }: SidebarProps) {
 
   return (
     <aside className="sidebar">
-      {/* Logo */}
+      {/* Brand Logo — Atomberg Identity */}
       <div className="sidebar-logo">
-        <Link href="/dashboard" className="flex items-center gap-3 text-decoration-none">
+        <Link href="/dashboard" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "12px" }}>
           <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center"
             style={{
-              background: "linear-gradient(135deg, var(--accent), #8b5cf6)",
+              width: 38,
+              height: 38,
+              borderRadius: 10,
+              background: "#fdb913",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 0 20px rgba(253,185,19,0.15)",
             }}
           >
-            <Target size={20} color="white" />
+            <Target size={20} color="#000" strokeWidth={2.5} />
           </div>
           <div>
-            <h1 className="text-base font-bold tracking-tight" style={{ color: "var(--foreground)" }}>
-              AtomQuest
+            <h1 style={{ fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: "-0.01em", lineHeight: 1.2 }}>
+              AtomSync
             </h1>
-            <p className="text-[10px] font-medium" style={{ color: "var(--muted-foreground)" }}>
-              Goal Tracker
+            <p style={{ fontSize: 10, fontWeight: 600, color: "#fdb913", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>
+              Why Not?
             </p>
           </div>
         </Link>
@@ -177,27 +126,56 @@ export function Sidebar({ profile }: SidebarProps) {
         })}
       </nav>
 
-      {/* Footer - Profile & Role Switcher */}
+      {/* Footer — Profile & Role Switcher */}
       <div className="sidebar-footer">
+        {/* Atomberg Pillar Badge */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "8px 12px",
+            marginBottom: 12,
+            borderRadius: 8,
+            background: "rgba(253,185,19,0.06)",
+            border: "1px solid rgba(253,185,19,0.1)",
+          }}
+        >
+          <Zap size={14} color="#fdb913" />
+          <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#fdb913" }}>
+            Engineering Excellence
+          </span>
+        </div>
+
         {/* Demo Role Switcher */}
-        <div className="mb-3">
+        <div style={{ marginBottom: 12 }}>
           <button
             onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
-            className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all"
             style={{
-              background: "var(--card)",
-              border: "1px solid var(--border)",
-              color: "var(--muted)",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "8px 12px",
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 600,
+              background: "#111",
+              border: "1px solid rgba(255,255,255,0.08)",
+              color: "#888",
+              cursor: "pointer",
+              fontFamily: "inherit",
+              transition: "all 0.2s",
             }}
           >
             <span>Switch Demo Role</span>
             <ChevronDown
               size={14}
-              className={`transition-transform ${showRoleSwitcher ? "rotate-180" : ""}`}
+              style={{ transition: "transform 0.2s", transform: showRoleSwitcher ? "rotate(180deg)" : "none" }}
             />
           </button>
           {showRoleSwitcher && (
-            <div className="mt-2 grid grid-cols-3 gap-2 animate-fade-in">
+            <div style={{ marginTop: 8, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }} className="animate-fade-in">
               {(["employee", "manager", "admin"] as const).map((role) => {
                 const Icon = roleIcon[role];
                 return (
@@ -205,12 +183,24 @@ export function Sidebar({ profile }: SidebarProps) {
                     key={role}
                     onClick={() => handleSwitch(role)}
                     disabled={switching !== null}
-                    className="flex flex-col items-center gap-1 p-2 rounded-lg text-[11px] font-medium transition-all"
                     style={{
-                      background: profile.role === role ? `${roleColor[role]}15` : "transparent",
-                      border: `1px solid ${profile.role === role ? roleColor[role] : "var(--border)"}`,
-                      color: profile.role === role ? roleColor[role] : "var(--muted)",
+                      display: "flex",
+                      flexDirection: "column" as const,
+                      alignItems: "center",
+                      gap: 4,
+                      padding: 8,
+                      borderRadius: 8,
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: "uppercase" as const,
+                      letterSpacing: "0.05em",
+                      background: profile.role === role ? `${roleColor[role]}12` : "transparent",
+                      border: `1px solid ${profile.role === role ? roleColor[role] : "rgba(255,255,255,0.08)"}`,
+                      color: profile.role === role ? roleColor[role] : "#888",
                       opacity: switching !== null && switching !== role ? 0.5 : 1,
+                      cursor: "pointer",
+                      fontFamily: "inherit",
+                      transition: "all 0.2s",
                     }}
                   >
                     <Icon size={14} />
@@ -223,24 +213,37 @@ export function Sidebar({ profile }: SidebarProps) {
         </div>
 
         {/* User Profile */}
-        <div className="flex items-center gap-3 px-3 py-2">
+        <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 4px" }}>
           <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold"
-            style={{ background: `${roleColor[profile.role]}20`, color: roleColor[profile.role] }}
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: 8,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 14,
+              fontWeight: 700,
+              background: `${roleColor[profile.role]}15`,
+              color: roleColor[profile.role],
+            }}
           >
             {profile.full_name?.charAt(0) || "?"}
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">{profile.full_name}</p>
-            <p className="text-[11px] capitalize" style={{ color: "var(--muted)" }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ fontSize: 14, fontWeight: 600, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>
+              {profile.full_name}
+            </p>
+            <p style={{ fontSize: 11, color: "#888", textTransform: "capitalize" as const }}>
               {profile.role}
             </p>
           </div>
           <form action={logoutAction}>
             <button
               type="submit"
-              className="btn-icon btn-ghost p-1.5 rounded-lg"
+              className="btn-icon btn-ghost"
               title="Sign out"
+              style={{ padding: 6, borderRadius: 8, background: "none", border: "none", color: "#666", cursor: "pointer" }}
             >
               <LogOut size={16} />
             </button>
