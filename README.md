@@ -1,147 +1,134 @@
-# AtomSync Portal — Goal Setting & Tracking Platform
+<div align="center">
+  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/target.svg" alt="AtomSync Logo" width="80" height="80">
+  <h1 align="center">AtomSync Portal</h1>
+  <p align="center"><strong>Institutional Grade Goal Setting & Analytics Platform</strong></p>
+  <p align="center"><em>Built for AtomQuest Hackathon 1.0 by Atomberg Technologies</em></p>
 
-> Built for **AtomQuest Hackathon 1.0** by Atomberg Technologies
-
-AtomSync is a comprehensive **Goal Setting, Tracking, and Performance Management Portal** designed for organizations that follow a quarterly OKR / MBO framework. It supports full lifecycle goal management — from drafting through manager approval, quarterly achievement tracking, scoring via multiple UoM types, and organizational reporting.
-
----
-
-## 🏗️ Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Framework** | Next.js 16 (App Router, React 19) |
-| **Database** | Supabase (PostgreSQL + Auth + RLS) |
-| **Styling** | Custom CSS Design System (glassmorphism, dark mode) |
-| **Charts** | Recharts |
-| **Forms** | React Hook Form + Zod v4 |
-| **Email** | Resend (transactional notifications) |
-| **Deployment** | Vercel |
+  <p align="center">
+    <a href="#-the-technological-noir-experience">UI/UX</a> •
+    <a href="#-core-architecture">Architecture</a> •
+    <a href="#-feature-matrix">Features</a> •
+    <a href="#-uom-scoring-engine">Scoring</a> •
+    <a href="#-deployment--setup">Setup</a>
+  </p>
+</div>
 
 ---
 
-## ✨ Features
+## 🕶️ The "Technological Noir" Experience
 
-### Core Modules
-- **Role-Based Access** — Employee, Manager, Admin with per-role dashboards
-- **Goal Smart Form** — Thrust Area, Title, UoM (6 types), Target, Weightage with cross-goal validation
-- **Manager Approval Workflow** — Submit → Review → Approve/Return with comments
-- **Quarterly Achievement Tracking** — Planned vs Actual with UoM-based scoring
-- **Manager Check-ins** — Structured feedback per quarter per employee
+AtomSync isn't just a dashboard; it's a **Command Center**. Redesigned with a premium "Technological Noir" aesthetic, the portal utilizes deep charcoal backgrounds (`#0a0a0a`), vibrant *Signal Gold* accents (`#fdb913`), and advanced glassmorphism.
 
-### Admin & Reporting
-- **Cycle Management** — Create/activate performance cycles
-- **Shared Goals** — Push KPIs from Admin to multiple employees
-- **Audit Trail** — Complete change log for compliance
-- **Reports** — CSV export, completion heatmaps
-- **Analytics Dashboard** — QoQ trends, thrust area distribution, manager effectiveness
-
-### Bonus
-- **Escalation Rules** — Configurable auto-reminders for overdue actions
-- **Email Notifications** — Auto-emails on submit/approve/return via Resend
-- **Lock Enforcement** — Goals locked after approval; edits require unlock
+*   **Institutional Typography:** Powered by `Geist` and `JetBrains Mono` for maximum data legibility.
+*   **Dynamic Glass Modules:** Frosted glass panels with subtle gradient borders that respond to user interaction.
+*   **Data Density:** High-contrast visualizations, including the custom "Thrust Area Momentum" kinetic fan chart.
 
 ---
 
-## 📊 UoM Scoring System
+## 🏗️ Core Architecture
 
-| UoM Type | Formula | Example |
-|----------|---------|---------|
-| Numeric Min | `(target / actual) × 100` | Revenue target: ₹10L, actual: ₹8L → 80% |
-| Numeric Max | `(actual / target) × 100` (inverted) | Defects target: 5, actual: 3 → 100% |
-| Percentage Min | Direct comparison | Satisfaction: 90% target, 85% actual → 94% |
-| Percentage Max | Inverse comparison | Attrition: 5% target, 3% actual → 100% |
-| Timeline | `(planned_days / actual_days) × 100` | 30 days planned, 25 actual → 100% |
-| Zero | `actual === 0 ? 100 : 0` | Safety incidents: target 0, actual 0 → 100% |
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Core Framework** | Next.js 16 (App Router) | Server Components & Routing |
+| **Database & Auth** | Supabase (PostgreSQL) | RLS, Authentication, Realtime |
+| **Styling Engine** | Custom CSS | Glassmorphism, CSS Variables, Keyframes |
+| **Data Visualization**| Recharts | Interactive Area, Bar, and custom SVG charts |
+| **Form Management** | React Hook Form + Zod | Strict validation & type safety |
+| **Comms pipeline** | Resend API | Transactional email notifications |
 
 ---
 
-## 🚀 Getting Started
+## ✨ Feature Matrix
+
+### 🎯 Personal Blueprint (Goal Management)
+*   **Smart Goal Creation:** Define goals by Thrust Area, Title, UoM (6 distinct types), Target, and Weightage.
+*   **Total Validation:** Cross-goal validation ensures weightages always equal precisely 100%.
+*   **Manager Workflow:** Submit blueprint → Review → Approve or Return with annotated feedback.
+
+### 📈 Analytics Intelligence
+*   **Thrust Area Momentum:** A custom kinetic fan visualization showing the distribution of strategic goals across organizational pillars.
+*   **Enterprise Topology Heatmap:** A visual matrix showing QoQ completion rates for every operative.
+*   **Velocity Index:** Area charts tracking Quarter-over-Quarter average achievement scores.
+
+### 🛡️ Institutional Control (Admin & Managers)
+*   **Cycle Control Center:** Activate and deactivate performance cycles (Q1, Q2, Annual) with strict date-window enforcement.
+*   **Manager Check-ins:** Log structured quarterly feedback for direct reports.
+*   **Immutable Audit Trail:** A complete, tamper-proof log (tracked in IST) of every goal change, approval, and system action.
+*   **Shared Goals:** Administrators can push unified KPIs to multiple operatives simultaneously.
+
+### ⚡ Automation & Infrastructure
+*   **Notification Engine:** Automated emails via Resend when goals are submitted, approved, or returned.
+*   **State Locking:** Goal sheets are strictly locked post-approval; edits require an explicit administrative unlock.
+*   **Escalation Rules:** Configurable auto-reminders for overdue actions.
+
+---
+
+## 📊 UoM Scoring Engine
+
+The portal calculates performance scores dynamically based on the selected Unit of Measurement:
+
+| UoM Type | Computation Logic | Real-World Example |
+|----------|-------------------|--------------------|
+| **Numeric Min** | `(actual / target) × 100` | Revenue: Target ₹10L, Actual ₹8L → **80%** |
+| **Numeric Max** | `(target / actual) × 100` | Defects: Target 5, Actual 3 → **100%** |
+| **Percentage Min** | Direct Comparison | Satisfaction: Target 90%, Actual 85% → **94%** |
+| **Percentage Max** | Inverse Comparison | Attrition: Target 5%, Actual 3% → **100%** |
+| **Timeline** | `(planned_days / actual_days) × 100` | Shipping: Planned 30d, Actual 25d → **100%** |
+| **Zero Tolerance** | `actual === 0 ? 100 : 0` | Safety Incidents: Target 0, Actual 0 → **100%** |
+
+---
+
+## 🚀 Deployment & Setup
 
 ### Prerequisites
-- Node.js 18+
-- Supabase account
+*   Node.js 18+
+*   Supabase Account
+*   Resend Account (for email pipelines)
 
-### Setup
+### Local Initialization
 
 ```bash
-# Clone
+# 1. Clone the repository
 git clone https://github.com/mahaboob2603/atomsync-portal.git
 cd atomsync-portal
 
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Create .env.local with your Supabase credentials
+# 3. Configure environment
 cp .env.example .env.local
+```
 
-# Run the database schema
-# Copy supabase/schema.sql into your Supabase SQL editor and execute
+### Environment Configuration (`.env.local`)
+```env
+NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="your_supabase_anon_key"
+RESEND_API_KEY="your_resend_api_key"
+```
 
-# Start dev server
+### Database Bootstrapping
+1. Open your Supabase SQL Editor.
+2. Copy the entire contents of `supabase/schema.sql`.
+3. Execute the script to build the 10 relational tables, RLS policies, and core triggers.
+
+### Ignition
+```bash
 npm run dev
 ```
-
-### Environment Variables
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
-RESEND_API_KEY=your_resend_api_key (optional)
-```
+Navigate to `http://localhost:3000` to access the portal.
 
 ---
 
-## 📁 Project Structure
+## 👥 Demo Access Protocols
 
-```
-src/
-├── app/
-│   ├── actions/          # Server Actions (goals, achievements, admin, auth)
-│   ├── dashboard/        # Role-based dashboard pages
-│   │   ├── goals/        # Employee goal management
-│   │   ├── team-goals/   # Manager approval workflow
-│   │   ├── checkins/     # Quarterly check-ins
-│   │   ├── all-goals/    # Admin global view
-│   │   ├── analytics/    # Performance analytics
-│   │   ├── reports/      # CSV export & heatmaps
-│   │   ├── cycles/       # Cycle management
-│   │   ├── escalation/   # Escalation rules
-│   │   └── audit/        # Audit trail
-│   ├── login/            # Authentication
-│   └── page.tsx          # Landing page
-├── components/           # Reusable UI components
-├── lib/
-│   ├── supabase/         # Client/server/middleware helpers
-│   ├── validations.ts    # Zod schemas
-│   ├── scoring.ts        # UoM computation engine
-│   ├── email.ts          # Resend email templates
-│   ├── types.ts          # TypeScript interfaces
-│   └── utils.ts          # Helper utilities
-└── middleware.ts         # Auth session refresh
-```
+| Designation | Authentication ID | Passkey |
+|-------------|-------------------|---------|
+| **Operative** | `employee@atomberg.com` | `demo123` |
+| **Manager** | `manager@atomberg.com` | `demo123` |
+| **System Admin**| `admin@atomberg.com` | `demo123` |
 
 ---
 
-## 🗃️ Database Schema
-
-10 tables with full relational integrity:
-`profiles` · `cycles` · `thrust_areas` · `goal_sheets` · `goals` · `achievements` · `check_ins` · `audit_log` · `escalation_rules` · `escalation_log`
-
-See [`supabase/schema.sql`](./supabase/schema.sql) for the complete DDL.
-
----
-
-## 👥 Demo Accounts
-
-| Role | Email | Password |
-|------|-------|----------|
-| Employee | employee@atomberg.com | demo123 |
-| Manager | manager@atomberg.com | demo123 |
-| Admin | admin@atomberg.com | demo123 |
-
----
-
-## 📄 License
-
-MIT — Built with ❤️ for AtomQuest Hackathon 1.0
+<div align="center">
+  <p><strong>MIT License</strong> — <em>Engineered for performance. Designed for impact.</em></p>
+</div>
