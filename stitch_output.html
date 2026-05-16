@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-error": "#ffffff",
+                "secondary-fixed": "#e2e2e2",
+                "border-subtle": "#e9ecef",
+                "primary-container": "#fdb913",
+                "on-tertiary-container": "#00596d",
+                "tertiary-container": "#27d6ff",
+                "surface-tint": "#7c5800",
+                "tertiary": "#00677d",
+                "primary-fixed": "#ffdea6",
+                "on-surface-variant": "#504533",
+                "inverse-surface": "#362f25",
+                "surface-gray": "#f8f9fa",
+                "inverse-primary": "#ffbb16",
+                "surface-variant": "#ede1d1",
+                "surface-container": "#f9ecdc",
+                "on-secondary-fixed-variant": "#474747",
+                "on-primary-fixed-variant": "#5e4200",
+                "surface-bright": "#fff8f3",
+                "on-primary-fixed": "#271900",
+                "on-tertiary": "#ffffff",
+                "tertiary-fixed": "#b3ebff",
+                "surface-container-highest": "#ede1d1",
+                "on-secondary-fixed": "#1b1b1b",
+                "surface-container-high": "#f3e6d6",
+                "on-tertiary-fixed": "#001f27",
+                "surface-container-lowest": "#ffffff",
+                "error": "#ba1a1a",
+                "on-surface": "#201b11",
+                "surface-container-low": "#fff2e1",
+                "surface-dim": "#e4d8c8",
+                "on-secondary": "#ffffff",
+                "primary-fixed-dim": "#ffbb16",
+                "outline": "#837560",
+                "on-primary": "#ffffff",
+                "text-muted": "#495057",
+                "on-tertiary-fixed-variant": "#004e5f",
+                "on-background": "#201b11",
+                "on-secondary-container": "#646464",
+                "on-primary-container": "#6b4c00",
+                "secondary-fixed-dim": "#c6c6c6",
+                "secondary-container": "#e2e2e2",
+                "surface": "#fff8f3",
+                "secondary": "#5e5e5e",
+                "tertiary-fixed-dim": "#37d7ff",
+                "primary": "#7c5800",
+                "error-container": "#ffdad6",
+                "on-error-container": "#93000a",
+                "background": "#fff8f3",
+                "inverse-on-surface": "#fcefdf",
+                "outline-variant": "#d5c4ac"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "margin-desktop": "32px",
+                "container-max": "1280px",
+                "gutter": "24px",
+                "unit": "4px",
+                "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                "display": ["Inter"],
+                "headline-lg-mobile": ["Inter"],
+                "headline-lg": ["Inter"],
+                "headline-md": ["Inter"],
+                "body-md": ["Inter"],
+                "label-md": ["Inter"],
+                "caption": ["Inter"],
+                "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .isometric-grid {
+            background-image: linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(60deg, #1f1f1f 25%, transparent 25.5%, transparent 75%, #1f1f1f 75%, #1f1f1f),
+            linear-gradient(60deg, #1f1f1f 25%, transparent 25.5%, transparent 75%, #1f1f1f 75%, #1f1f1f);
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+        }
+        .z-depth-card {
+            transform: perspective(1000px) rotateX(10deg) rotateY(-5deg);
+            box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.8), -5px -5px 20px rgba(253, 185, 19, 0.05);
+        }
+        .glass-module {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .status-ring {
+            background: conic-gradient(from 0deg, #fdb913 0%, #fdb913 99.9%, transparent 99.9%);
+            mask: radial-gradient(transparent 58%, black 60%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#0a0a0a] min-h-screen font-body-md text-on-surface overflow-x-hidden">
+<!-- Hero Content (Left-hand side adapted for mobile login background) -->
+<div class="relative min-h-screen w-full flex flex-col justify-between overflow-hidden">
+<!-- Isometric Background Overlay -->
+<div class="absolute inset-0 isometric-grid opacity-30 pointer-events-none"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/20 via-transparent to-[#0a0a0a] pointer-events-none"></div>
+<!-- Top Section: Brand & Heading -->
+<header class="relative z-10 px-margin-mobile pt-12">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(253,185,19,0.4)]">
+<span class="material-symbols-outlined text-[#000000] text-3xl" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<span class="font-display text-display text-white tracking-tighter">AtomSync</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-white max-w-[280px] leading-tight">
+                Precision in every <span class="text-primary-container">Synchronization</span>
+</h1>
+</header>
+<!-- Middle Section: Command Center Modules -->
+<div class="relative z-10 px-margin-mobile flex flex-col gap-8 my-12">
+<!-- Module 1: System Reliability -->
+<div class="z-depth-card glass-module rounded-xl p-6 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="font-label-md text-primary-container mb-1 uppercase tracking-widest">System Reliability</p>
+<h2 class="font-headline-md text-white">99.9% Uptime</h2>
+</div>
+<div class="relative w-16 h-16 flex items-center justify-center">
+<div class="absolute inset-0 status-ring rounded-full animate-pulse opacity-20"></div>
+<div class="absolute inset-0 status-ring rounded-full"></div>
+<span class="material-symbols-outlined text-primary-container text-2xl">speed</span>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="h-1 flex-1 bg-primary-container rounded-full shadow-[0_0_8px_rgba(253,185,19,0.5)]"></div>
+<div class="h-1 flex-1 bg-primary-container rounded-full shadow-[0_0_8px_rgba(253,185,19,0.5)]"></div>
+<div class="h-1 flex-1 bg-primary-container rounded-full shadow-[0_0_8px_rgba(253,185,19,0.5)]"></div>
+<div class="h-1 flex-1 bg-white/20 rounded-full"></div>
+</div>
+<p class="mt-4 text-white/50 font-caption">Live nodes synchronized across 12 global regions.</p>
+</div>
+<!-- Module 2: Protocol Security -->
+<div class="z-depth-card glass-module rounded-xl p-6 relative overflow-hidden group translate-x-4">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="font-label-md text-primary-container mb-1 uppercase tracking-widest">Protocol Security</p>
+<h2 class="font-headline-md text-white">Tier-4 Encrypted</h2>
+</div>
+<div class="bg-primary-container/10 p-3 rounded-lg border border-primary-container/30">
+<span class="material-symbols-outlined text-primary-container text-2xl" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+</div>
+</div>
+<!-- Data Visualizer Scan Bars -->
+<div class="flex items-end gap-1 h-12 mb-4">
+<div class="w-full bg-primary-container/40 h-[40%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[70%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container/20 h-[30%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[90%] rounded-t-sm shadow-[0_0_10px_rgba(253,185,19,0.3)]"></div>
+<div class="w-full bg-primary-container/60 h-[50%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[80%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container/30 h-[20%] rounded-t-sm"></div>
+</div>
+<div class="flex justify-between items-center text-white/40 font-caption">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 bg-primary-container rounded-full"></span> Active Scan</span>
+<span>AES-256 Verified</span>
+</div>
+</div>
+</div>
+<!-- Login Interactive Overlay (Simulated) -->
+<div class="relative z-20 mt-auto bg-white rounded-t-[32px] p-8 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+<div class="w-12 h-1 bg-outline-variant/30 mx-auto rounded-full mb-8"></div>
+<div class="space-y-6">
+<h3 class="font-headline-md text-on-surface">Enter Terminal</h3>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="font-label-md text-on-surface-variant block">ENGINEER ID</label>
+<div class="relative">
+<input class="w-full bg-surface-gray border border-outline-variant rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all outline-none" placeholder="ASYNC-XXXX-XX" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-on-surface-variant block">ACCESS PROTOCOL</label>
+<div class="relative">
+<input class="w-full bg-surface-gray border border-outline-variant rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all outline-none" placeholder="••••••••" type="password"/>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-[#000000] font-bold py-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_4px_15px_rgba(253,185,19,0.3)]">
+                    INITIATE SYNC
+                    <span class="material-symbols-outlined">bolt</span>
+</button>
+<div class="text-center">
+<a class="text-secondary font-label-md hover:text-primary transition-colors underline underline-offset-4" href="#">Authorized Personnel Only</a>
+</div>
+</div>
+</div>
+<!-- Footer Visual Detail -->
+<div class="absolute bottom-0 left-0 w-full h-[500px] pointer-events-none opacity-20">
+<img class="w-full h-full object-cover mix-blend-overlay" data-alt="A macro cinematic close-up shot of a high-end black industrial circuit board with gold-plated trace lines. The lighting is low-key with intense gold highlights that create a deep 3D engineering aesthetic. Subtle bokeh effects and sharp metallic textures reinforce the premium hardware feel. The atmosphere is professional, tech-forward, and highly precise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3G04VjEb4sEY9at3WhFCxkWwGp4HeBDrCIn4B5UrJYQ39xf3WtOGp5dGf4KI-tC4q9WrfpwUqYr4ZB0QEwde5MmDYlybVPHKJTfgy_lnYZ7ZMgBnxFEtlUjk2CeiNkyJJjPLO-us6i7LQOyIXk7su50jijRRkC0u4-spKzkWwhCF-0ROO7uNXZXu5y2N2l8EUTc3i0v9FPV3I_zEftW94UicqVJ_iS4Osey6CZFzZ-IVj53wwQZBvqOMIo2vEng3I3e64zB7wb9dF"/>
+</div>
+</div>
+</body></html>

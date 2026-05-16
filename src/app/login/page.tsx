@@ -147,11 +147,14 @@ export default function LoginPage() {
               </div>
               <div className="command-module-body">
                 <div className="cmd-security-visual" style={{ transform: "translateZ(30px)" }}>
-                  <div className="cmd-scan-line"></div>
-                  <div className="cmd-tech-bars">
-                    {[...Array(12)].map((_, i) => (
-                      <div key={i} className="cmd-bar" style={{ height: `${40 + Math.random() * 60}%`, animationDelay: `${i * 0.1}s` }}></div>
-                    ))}
+                  <div className="cmd-stitch-bars flex items-end gap-1 h-12 w-full">
+                    <div className="w-full bg-[#fdb913]/40 h-[40%] rounded-t-sm animation-pulse-fast"></div>
+                    <div className="w-full bg-[#fdb913] h-[70%] rounded-t-sm"></div>
+                    <div className="w-full bg-[#fdb913]/20 h-[30%] rounded-t-sm animation-pulse-slow"></div>
+                    <div className="w-full bg-[#fdb913] h-[90%] rounded-t-sm shadow-[0_0_10px_rgba(253,185,19,0.3)] animate-pulse"></div>
+                    <div className="w-full bg-[#fdb913]/60 h-[50%] rounded-t-sm"></div>
+                    <div className="w-full bg-[#fdb913] h-[80%] rounded-t-sm animation-pulse-fast"></div>
+                    <div className="w-full bg-[#fdb913]/30 h-[20%] rounded-t-sm"></div>
                   </div>
                 </div>
                 <div className="cmd-details">
@@ -406,11 +409,17 @@ export default function LoginPage() {
           position: absolute;
           inset: 0;
           background-image: 
-            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-          background-size: 30px 30px;
-          mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-          -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+            linear-gradient(60deg, #1f1f1f 25%, transparent 25.5%, transparent 75%, #1f1f1f 75%, #1f1f1f),
+            linear-gradient(60deg, #1f1f1f 25%, transparent 25.5%, transparent 75%, #1f1f1f 75%, #1f1f1f);
+          background-size: 80px 140px;
+          background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+          opacity: 0.35;
+          mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
+          -webkit-mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
         }
         .login-brand-content {
           position: relative;
@@ -475,13 +484,13 @@ export default function LoginPage() {
           perspective: 1200px;
         }
         .command-module {
-          background: rgba(15, 15, 15, 0.6);
+          background: rgba(255, 255, 255, 0.03);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 16px;
           padding: 1.5rem;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+          box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.8), -5px -5px 20px rgba(253, 185, 19, 0.05), inset 0 1px 0 rgba(255,255,255,0.05);
           position: relative;
           overflow: hidden;
           will-change: transform;
@@ -576,34 +585,18 @@ export default function LoginPage() {
 
         /* Security Visualization */
         .cmd-security-visual {
-          width: 64px; height: 48px;
+          width: 80px; height: 48px;
           position: relative;
           display: flex;
           align-items: flex-end;
-          gap: 2px;
-          overflow: hidden;
           flex-shrink: 0;
-          background: rgba(0,0,0,0.2);
-          border-radius: 4px;
-          padding: 4px;
+          background: rgba(0,0,0,0.3);
+          border-radius: 6px;
+          padding: 6px;
+          border: 1px solid rgba(253,185,19,0.1);
         }
-        .cmd-bar {
-          flex: 1;
-          background: #3b82f6;
-          opacity: 0.7;
-          border-radius: 1px;
-          animation: eq-bars 1s ease-in-out infinite alternate;
-        }
-        .cmd-scan-line {
-          position: absolute;
-          left: 0; right: 0;
-          height: 2px;
-          background: rgba(255,255,255,0.8);
-          box-shadow: 0 0 8px #fff;
-          top: 0;
-          animation: scan 2s linear infinite;
-          z-index: 2;
-        }
+        .animation-pulse-fast { animation: pulse 1s infinite alternate; }
+        .animation-pulse-slow { animation: pulse 3s infinite alternate; }
 
         /* Detail Rows */
         .cmd-details {
