@@ -705,15 +705,15 @@ body {
    Progress Bar — Atomberg Gold
    ========================================== */
 .progress-bar {
-  height: 6px;
+  height: 14px;
   background: rgba(255, 255, 255, 0.06);
-  border-radius: 3px;
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 3px;
+  border-radius: 8px;
   transition: width 0.5s ease;
   background: linear-gradient(90deg, #fdb913, #ffca4d);
 }
