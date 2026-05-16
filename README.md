@@ -97,6 +97,79 @@ Performance is not linear. AtomSync calculates achievement scores dynamically ba
 
 ## 🏗️ Architecture
 
+### System Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph CLIENT["🖥️  Client (Browser)"]
+        UI["React 19 UI\nServer & Client Components"]
+        FORMS["React Hook Form\n+ Zod v4 Validation"]
+    end
+
+    subgraph NEXTJS["⚙️  Next.js 16 — App Router (Vercel Edge)"]
+        MW["Middleware\nSession Refresh & Route Guard"]
+        SC["Server Components\nSSR Data Fetching"]
+        SA["Server Actions\nauth.ts · goals.ts\nachievements.ts · admin.ts"]
+        API["API Routes\n/api/cron/escalations\n/api/seed"]
+        LIB["Shared Libraries\nscoring.ts · email.ts\nteams.ts · validations.ts"]
+    end
+
+    subgraph SUPABASE["🗄️  Supabase (PostgreSQL)"]
+        AUTH["Supabase Auth\nJWT · Session Cookies"]
+        DB[("PostgreSQL\nRow Level Security")]
+        subgraph TABLES["Core Tables"]
+            T1["profiles · cycles\nthrust_areas · goal_sheets"]
+            T2["goals · achievements\ncheck_ins · audit_log"]
+            T3["escalation_rules\nescalation_log"]
+        end
+    end
+
+    subgraph EXTERNAL["🌐  External Services"]
+        RESEND["Resend API\nTransactional Email"]
+        VA["Vercel Analytics\nPerformance Monitoring"]
+        VERCEL_CRON["Vercel Cron\nScheduled Escalations"]
+    end
+
+    %% Client ↔ Next.js
+    UI -->|"User interactions"| FORMS
+    FORMS -->|"Form submissions"| SA
+    UI -->|"Page navigation"| MW
+    MW -->|"Session validation"| AUTH
+    MW -->|"Authorized request"| SC
+    SC -->|"RSC data fetch"| DB
+
+    %% Server Actions ↔ Supabase
+    SA -->|"CRUD operations\n(with RLS)"| DB
+    SA -->|"Auth operations"| AUTH
+    SA -->|"Writes"| LIB
+
+    %% API Routes
+    VERCEL_CRON -->|"Scheduled trigger"| API
+    API -->|"Query overdue records"| DB
+    API -->|"Fire notifications"| RESEND
+
+    %% Email
+    SA -->|"Goal approved / returned"| LIB
+    LIB -->|"Send email"| RESEND
+
+    %% Analytics
+    UI -->|"Page view events"| VA
+
+    %% DB internal
+    DB --- TABLES
+
+    %% Styles
+    classDef clientStyle fill:#1a1a2e,stroke:#fdb913,stroke-width:2px,color:#fff
+    classDef nextStyle fill:#0f0f23,stroke:#fdb913,stroke-width:2px,color:#fff
+    classDef supaStyle fill:#0a2e1a,stroke:#3ECF8E,stroke-width:2px,color:#fff
+    classDef extStyle fill:#1a1a1a,stroke:#888,stroke-width:1px,color:#ccc
+
+    class UI,FORMS clientStyle
+    class MW,SC,SA,API,LIB nextStyle
+    class AUTH,DB,T1,T2,T3 supaStyle
+    class RESEND,VA,VERCEL_CRON extStyle
+```
+
 ### Technology Stack
 
 | Layer | Technology |
@@ -108,7 +181,7 @@ Performance is not linear. AtomSync calculates achievement scores dynamically ba
 | **Data Visualization** | [Recharts](https://recharts.org/) + Custom SVG Elements |
 | **Form Handling** | React Hook Form + Zod v4 |
 | **Email** | [Resend API](https://resend.com/) |
-| **Deployment** | [Vercel](https://vercel.com/) |
+| **Deployment** | [Vercel](https://vercel.com/) with Cron Jobs |
 
 ### Database Schema
 
